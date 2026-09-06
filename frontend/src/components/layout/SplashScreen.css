@@ -11,7 +11,8 @@
   --splash-ground-color: #5F6368;
   --splash-text-color: rgba(255, 255, 255, 0.65);
   --splash-glow-opacity: 1;
-  --splash-rings-opacity: 0.75;
+  --splash-rings-opacity: 0.85;
+  --scatter-scale: 1.05;
   /* Equal presence of all 4 brand colors in 4 quadrants + neutral core */
   --splash-glow-gradient:
     radial-gradient(circle at 35% 35%, rgba(234, 67, 53, 0.40) 0%, rgba(234, 67, 53, 0.16) 40%, transparent 68%),
@@ -27,14 +28,15 @@
   --splash-dino-color: #5F6368;
   --splash-ground-color: #9AA0A6;
   --splash-text-color: rgba(15, 23, 42, 0.65);
-  --splash-glow-opacity: 0.7;
-  --splash-rings-opacity: 0.45;
+  --splash-glow-opacity: 0.85;
+  --splash-rings-opacity: 0.70;
+  --scatter-scale: 1.05;
   --splash-glow-gradient:
-    radial-gradient(circle at 35% 35%, rgba(234, 67, 53, 0.30) 0%, rgba(234, 67, 53, 0.12) 40%, transparent 68%),
-    radial-gradient(circle at 65% 35%, rgba(52, 168, 83, 0.30) 0%, rgba(52, 168, 83, 0.12) 40%, transparent 68%),
-    radial-gradient(circle at 35% 65%, rgba(66, 133, 244, 0.30) 0%, rgba(66, 133, 244, 0.12) 40%, transparent 68%),
-    radial-gradient(circle at 65% 65%, rgba(251, 188, 4, 0.30) 0%, rgba(251, 188, 4, 0.12) 40%, transparent 68%),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 55%);
+    radial-gradient(circle at 35% 35%, rgba(234, 67, 53, 0.35) 0%, rgba(234, 67, 53, 0.15) 40%, transparent 68%),
+    radial-gradient(circle at 65% 35%, rgba(52, 168, 83, 0.35) 0%, rgba(52, 168, 83, 0.15) 40%, transparent 68%),
+    radial-gradient(circle at 35% 65%, rgba(66, 133, 244, 0.35) 0%, rgba(66, 133, 244, 0.15) 40%, transparent 68%),
+    radial-gradient(circle at 65% 65%, rgba(251, 188, 4, 0.35) 0%, rgba(251, 188, 4, 0.15) 40%, transparent 68%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.06) 0%, transparent 55%);
 }
 
 /* =========================================================================
@@ -117,6 +119,85 @@
   pointer-events: none;
   opacity: 0;
   animation: splashGlowPulse 5.4s ease-in-out both;
+}
+
+/* Central Magnetic Pull Core (soft colored light during dispersion & convergence — zero ring/outline) */
+.splash-pull-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 96px;
+  height: 96px;
+  margin-left: -48px;
+  margin-top: -48px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  filter: blur(18px);
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.95) 0%, rgba(66, 133, 244, 0.85) 28%, rgba(234, 67, 53, 0.5) 52%, rgba(251, 188, 4, 0.2) 72%, transparent 100%);
+  animation: splashPullCorePulse 5.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.splash-overlay[data-splash-theme="light"] .splash-pull-core {
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.95) 0%, rgba(66, 133, 244, 0.9) 28%, rgba(234, 67, 53, 0.6) 52%, rgba(251, 188, 4, 0.3) 72%, transparent 100%);
+}
+
+@keyframes splashPullCorePulse {
+  0%, 36% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  /* 39%: Emerges right as Dino dissolves and particles burst outward */
+  39% {
+    opacity: 0.8;
+    transform: scale(0.65);
+    filter: blur(16px) brightness(1.2);
+  }
+
+  /* 50%: Dispersed particles far out, pure soft glow without any border/ring outline */
+  50% {
+    opacity: 0.85;
+    transform: scale(0.85);
+    filter: blur(18px) brightness(1.3);
+  }
+
+  /* 62%: Continued steady magnetic pull at maximum spread */
+  62% {
+    opacity: 0.9;
+    transform: scale(0.95);
+    filter: blur(18px) brightness(1.4);
+  }
+
+  /* 76%: Inward gathering begins — soft glow intensifies gently */
+  76% {
+    opacity: 0.95;
+    transform: scale(1.15);
+    filter: blur(18px) brightness(1.6);
+  }
+
+  /* 84%: Convergence peak energy flare */
+  84% {
+    opacity: 1;
+    transform: scale(1.35);
+    filter: blur(16px) brightness(1.8);
+  }
+
+  /* 89%: Fuses into the assembled logo */
+  89% {
+    opacity: 0.3;
+    transform: scale(0.75);
+    filter: blur(18px);
+  }
+
+  92%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4);
+    filter: blur(18px);
+    visibility: hidden;
+  }
 }
 
 @keyframes splashGlowPulse {
@@ -601,48 +682,52 @@
     transform: translate(var(--x0), var(--y0)) scale(1.4);
   }
 
-  /* 2.7s (47%): Far-reaching wide scatter explosion across the screen */
+  /* 2.6s (48%): Far-reaching wide scatter explosion across the screen into quadrants */
   48% {
     opacity: 1;
-    transform: translate(calc(var(--sx) * var(--scatter-scale, 1)), calc(var(--sy) * var(--scatter-scale, 1))) scale(1.25);
+    transform: translate(calc(var(--sx) * var(--scatter-scale, 1)), calc(var(--sy) * var(--scatter-scale, 1))) scale(1.2);
   }
 
-  /* 3.4s (58%): Continued orbital swirling motion during maximum spread */
-  59% {
+  /* 3.1s (58%): Particles hold their wide dispersed position briefly */
+  58% {
     opacity: 0.95;
-    transform: translate(calc(var(--mx) * var(--scatter-scale, 1)), calc(var(--my) * var(--scatter-scale, 1))) scale(1.1);
+    transform: translate(calc(var(--sx) * var(--scatter-scale, 1)), calc(var(--sy) * var(--scatter-scale, 1))) scale(1.1);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* 4.2s (72%): Slower, deliberate magnetic suction through inward vortex arc */
-  73% {
-    opacity: 0.95;
-    transform: translate(var(--vx), var(--vy)) scale(1);
-  }
-
-  /* 4.7s (83%): Convergence into exact shape pill coordinates */
+  /* 4.5s (84%): Direct path straight into final shape position — calm, precise gathering in */
   84% {
     opacity: 1;
-    transform: translate(var(--tx), var(--ty)) scale(1.2);
+    transform: translate(var(--tx), var(--ty)) scale(2.2);
+    filter: drop-shadow(0 0 8px var(--color));
   }
 
-  /* 4.85s (87%): Fuses into the final logo */
+  /* 4.75s (88%): Fuses into the solid shapes and final logo */
   88% {
-    opacity: 0.55;
-    transform: translate(var(--tx), var(--ty)) scale(0.45);
+    opacity: 0.85;
+    transform: translate(var(--tx), var(--ty)) scale(1.2);
+    filter: drop-shadow(0 0 10px var(--color));
   }
 
-  91%,
+  92%,
   100% {
     opacity: 0;
     transform: translate(var(--tx), var(--ty)) scale(0);
   }
 }
 
+/* Tablet viewport scaling for particle burst */
+@media (max-width: 1024px) {
+  .splash-particle {
+    --scatter-scale: 0.65;
+  }
+}
+
 /* Responsive & Performance Optimization for Mobile */
 @media (max-width: 640px) {
   .splash-particle {
-    /* Slightly scaled scatter radius on mobile screens */
-    --scatter-scale: 0.55;
+    /* Scaled scatter radius on mobile screens so particles reach near edges without going off-canvas */
+    --scatter-scale: 0.28;
   }
 
   /* Reduce particle count by 50% on mobile for buttery framerate */
@@ -805,21 +890,68 @@
 }
 
 /* =========================================================================
+   Stage 3: Solid Assembled Logo Shapes
+   ========================================================================= */
+
+.splash-assembled-shapes {
+  position: absolute;
+  width: clamp(140px, 20vw, 190px);
+  height: clamp(140px, 20vw, 190px);
+  z-index: 8;
+  opacity: 0;
+  pointer-events: none;
+  overflow: visible;
+  animation: splashShapesMorph 5.4s cubic-bezier(0.2, 0.8, 0.35, 1) both;
+}
+
+@keyframes splashShapesMorph {
+  0%, 78% {
+    opacity: 0;
+    transform: scale(0.9);
+    filter: blur(4px) brightness(1.2);
+  }
+
+  /* 84%: Particles converge onto the exact pill paths, solid shapes fade in to form solid shapes with no gaps */
+  84% {
+    opacity: 1;
+    transform: scale(1.04);
+    filter: blur(0px) brightness(1.15) drop-shadow(0 0 12px rgba(66, 133, 244, 0.6));
+  }
+
+  /* 88%: Solid lock-in state before cross-fading to final image */
+  88% {
+    opacity: 0.95;
+    transform: scale(1);
+    filter: drop-shadow(0 0 16px rgba(66, 133, 244, 0.8));
+  }
+
+  /* 92%: Cross-faded completely into splash-final-logo */
+  92%,
+  100% {
+    opacity: 0;
+    transform: scale(1.02);
+    filter: blur(2px);
+    visibility: hidden;
+  }
+}
+
+/* =========================================================================
    Decorative Rotating Orbit Rings
    ========================================================================= */
 
-.splash-rings {
+.splash-rings-container {
   position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
   opacity: 0;
   z-index: 2;
-  /* Fades in on logo lock-in and smoothly rotates */
-  animation: ringsAppear 0.6s ease-out 4.75s both, ringsSpin 24s linear 4.75s infinite;
+  /* Fades in strictly AFTER logo is fully assembled */
+  animation: ringsContainerAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) 5.05s both;
 }
 
-@keyframes ringsAppear {
+@keyframes ringsContainerAppear {
   0% {
     opacity: 0;
     transform: scale(0.85);
@@ -829,6 +961,14 @@
     opacity: var(--splash-rings-opacity);
     transform: scale(1);
   }
+}
+
+.splash-rings {
+  width: 100%;
+  height: 100%;
+  /* Continuous smooth 360-degree rotation without any transform conflict */
+  animation: ringsSpin 24s linear infinite;
+  transform-origin: center center;
 }
 
 @keyframes ringsSpin {
@@ -886,6 +1026,9 @@
 
   .splash-dino-scene,
   .splash-particles-layer,
+  .splash-pull-core,
+  .splash-assembled-shapes,
+  .splash-rings-container,
   .splash-rings {
     display: none !important;
   }
