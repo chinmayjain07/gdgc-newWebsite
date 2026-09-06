@@ -6,7 +6,8 @@ export function InteractiveLogo({
   size = 'md',
   className = '',
   enableSpinOnClick = true,
-  showGlow = true,
+  showGlow = false,
+  onSecretTrigger,
 }) {
   const containerRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -22,24 +23,67 @@ export function InteractiveLogo({
   const rotateY = useSpring(useTransform(mouseX, [-100, 100], [-25, 25]), springConfig);
   const rotateZ = useSpring(useTransform(mouseX, [-100, 100], [-15, 15]), springConfig);
 
+  // Secret 3-spin easter egg tracking (supports 3 clicks or 3 cursor swirls)
+  const totalSpinsRef = useRef(0);
+  const lastAngleRef = useRef(null);
+  const accumulatedAngleRef = useRef(0);
+  const triggeredRef = useRef(false);
+
+  const registerSpin = () => {
+    totalSpinsRef.current += 1;
+    if (totalSpinsRef.current >= 3 && !triggeredRef.current) {
+      triggeredRef.current = true;
+      setTimeout(() => {
+        if (onSecretTrigger) {
+          onSecretTrigger();
+        } else {
+          window.dispatchEvent(new CustomEvent('gdgc:secret-mystery'));
+        }
+        setTimeout(() => {
+          triggeredRef.current = false;
+          totalSpinsRef.current = 0;
+          accumulatedAngleRef.current = 0;
+        }, 4000);
+      }, 350);
+    }
+  };
+
   const handleMouseMove = (e) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    mouseX.set(e.clientX - centerX);
-    mouseY.set(e.clientY - centerY);
+    const dx = e.clientX - centerX;
+    const dy = e.clientY - centerY;
+    mouseX.set(dx);
+    mouseY.set(dy);
+
+    // Track circular motion around center
+    const angle = Math.atan2(dy, dx);
+    if (lastAngleRef.current !== null) {
+      let delta = angle - lastAngleRef.current;
+      if (delta > Math.PI) delta -= 2 * Math.PI;
+      if (delta < -Math.PI) delta += 2 * Math.PI;
+      accumulatedAngleRef.current += Math.abs(delta);
+      if (accumulatedAngleRef.current >= 2 * Math.PI) {
+        accumulatedAngleRef.current = 0;
+        registerSpin();
+      }
+    }
+    lastAngleRef.current = angle;
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
     mouseX.set(0);
     mouseY.set(0);
+    lastAngleRef.current = null;
   };
 
   const handleClick = () => {
     if (enableSpinOnClick) {
       setClickSpins((prev) => prev + 1);
+      registerSpin();
     }
   };
 
@@ -47,9 +91,10 @@ export function InteractiveLogo({
     xs: 'w-7 h-7',
     sm: 'w-9 h-9',
     md: 'w-12 h-12',
-    lg: 'w-20 h-20',
-    xl: 'w-28 h-28',
-    hero: 'w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36',
+    navbar: 'w-14 h-14 sm:w-16 sm:h-16 lg:w-[70px] lg:h-[70px]',
+    lg: 'w-16 h-16',
+    xl: 'w-24 h-24',
+    hero: 'w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28',
   };
 
   return (
@@ -65,23 +110,20 @@ export function InteractiveLogo({
         sizeClasses[size] || sizeClasses.md,
         className
       )}
-      title="Rotate me with your cursor or click for 360° spin!"
     >
-      {/* Google 4-Color Ambient Radial Glow */}
+      {/* Subtle Google Ambient Glow (only if enabled, very soft) */}
       {showGlow && (
         <motion.div
           animate={{
-            scale: isHovered ? [1, 1.25, 1] : 1,
-            opacity: isHovered ? 0.85 : 0.35,
-            rotate: isHovered ? 360 : 0,
+            scale: isHovered ? [1, 1.15, 1] : 1,
+            opacity: isHovered ? 0.25 : 0.1,
           }}
           transition={{
-            rotate: { duration: 8, repeat: Infinity, ease: 'linear' },
-            scale: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
+            scale: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
           }}
           className="absolute inset-0 rounded-full blur-xl pointer-events-none"
           style={{
-            background: 'conic-gradient(from 0deg, #4285F4, #EA4335, #FBBC04, #34A853, #4285F4)',
+            background: 'radial-gradient(circle, rgba(66, 133, 244, 0.4), transparent 70%)',
           }}
         />
       )}
@@ -96,13 +138,13 @@ export function InteractiveLogo({
         }}
         animate={{
           rotate: clickSpins * 360,
-          scale: isHovered ? 1.1 : 1,
+          scale: isHovered ? 1.08 : 1,
         }}
         transition={{
           rotate: { duration: 0.9, ease: [0.34, 1.56, 0.64, 1] },
           scale: { duration: 0.25 },
         }}
-        className="relative w-full h-full flex items-center justify-center filter drop-shadow-lg"
+        className="relative w-full h-full flex items-center justify-center filter drop-shadow-md"
       >
         <img
           src="/gdgc-logo.png"
@@ -111,17 +153,6 @@ export function InteractiveLogo({
           draggable="false"
         />
       </motion.div>
-
-      {/* Interactive 360° Tooltip hint on hover */}
-      {size === 'hero' && (
-        <motion.span
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 10 }}
-          className="absolute -bottom-8 whitespace-nowrap text-xs font-semibold px-2.5 py-1 rounded-full bg-background/90 border border-primary/30 text-primary shadow-sm pointer-events-none"
-        >
-          ✨ Move cursor or click to spin!
-        </motion.span>
-      )}
     </div>
   );
 }

@@ -17,12 +17,14 @@ export function ThemeProvider({ children }) {
     const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
     setTheme(initialTheme);
     document.documentElement.classList.toggle('dark', initialTheme === 'dark');
+    document.documentElement.setAttribute('data-theme', initialTheme);
   }, []);
 
   useEffect(() => {
     if (!mounted) return;
     const root = document.documentElement;
     root.classList.toggle('dark', theme === 'dark');
+    root.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
   }, [theme, mounted]);
 

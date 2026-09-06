@@ -6,12 +6,13 @@ import { Card, CardContent } from '@/components/ui/Card';
 import { SectionHeader } from '@/components/sections/SectionHeader';
 import { AnimatedBackground } from '@/components/sections/AnimatedBackground';
 import { InteractiveLogo } from '@/components/ui/InteractiveLogo';
+import { CountUp } from '@/hooks/useCountUp';
 
 const values = [
   { icon: Target, title: 'Learning First', description: 'We prioritize hands-on, practical learning over theory. Every event is designed to give you real skills you can apply immediately.' },
   { icon: Users, title: 'Community Driven', description: 'Built by students, for students. Our community shapes every decision, from event topics to leadership opportunities.' },
-  { icon: Lightbulb, title: 'Innovation Focused', description: 'We explore cutting-edge technologies before they hit the mainstream. Stay ahead with Google\'s latest tools and platforms.' },
-  { icon: Globe, title: 'Global Impact', description: 'Connect with Google Developer Groups worldwide. Your projects can reach global audiences through Google\'s platforms.' },
+  { icon: Lightbulb, title: 'Innovation Focused', description: "We explore cutting-edge technologies before they hit the mainstream. Stay ahead with Google's latest tools and platforms." },
+  { icon: Globe, title: 'Global Impact', description: "Connect with Google Developer Groups worldwide. Your projects can reach global audiences through Google's platforms." },
   { icon: Heart, title: 'Inclusive & Welcoming', description: 'No experience required. We celebrate diverse backgrounds and create safe spaces for everyone to learn and grow.' },
   { icon: CheckCircle, title: 'Career Ready', description: 'Bridge the gap between campus and industry. Access mentorship, internships, and job opportunities through our network.' },
 ];
@@ -59,12 +60,9 @@ export function About() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6"
+              className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 text-foreground"
             >
-              Empowering Student{' '}
-              <span className="text-gradient-gdg">
-                Developers Worldwide
-              </span>
+              Empowering Student Developers Worldwide
               <InteractiveLogo size="md" className="inline-flex ml-3 align-middle" />
             </motion.h1>
             <motion.p
@@ -73,7 +71,7 @@ export function About() {
               transition={{ delay: 0.4 }}
               className="text-lg text-muted-foreground leading-relaxed"
             >
-              We\'re a global community of student developers backed by Google, dedicated to bridging the gap between theory and practice through hands-on learning, mentorship, and real-world projects.
+              We're a global community of student developers backed by Google, dedicated to bridging the gap between theory and practice through hands-on learning, mentorship, and real-world projects.
             </motion.p>
           </motion.div>
         </div>
@@ -92,7 +90,7 @@ export function About() {
                 key={value.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
+                viewport={{ once: false, amount: 0.2 }}
                 transition={{ delay: index * 0.1 }}
                 className="p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/50 transition-colors"
                 role="listitem"
@@ -118,22 +116,25 @@ export function About() {
             align="left"
           />
           <div className="relative max-w-3xl">
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary to-accent" />
+            <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-primary/60 to-accent" />
             {milestones.map((milestone, index) => (
               <motion.div
-                key={milestone.year}
-                initial={{ opacity: 0, x: -30 }}
+                key={milestone.year + index}
+                initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
+                viewport={{ once: false, amount: 0.2 }}
                 transition={{ delay: index * 0.1 }}
-                className="relative pl-20 pb-12"
+                className="relative pl-14 pb-10 group"
               >
-                <div className="absolute left-0 top-2 w-4 h-4 rounded-full bg-primary border-4 border-background shadow-lg" />
-                <div className="absolute left-2 top-4 -translate-y-1/2 text-sm font-medium text-primary">{milestone.year}</div>
-                <Card>
-                  <CardContent className="pt-0">
-                    <h3 className="font-bold text-lg">{milestone.title}</h3>
-                    <p className="text-muted-foreground mt-1">{milestone.description}</p>
+                {/* Timeline node centered on left-6 line */}
+                <div className="absolute left-[17px] top-1.5 w-3.5 h-3.5 rounded-full bg-primary ring-4 ring-background shadow-md group-hover:scale-125 transition-transform" />
+                <Card className="hover:border-primary/40 transition-colors">
+                  <CardContent className="p-5">
+                    <span className="inline-block px-3 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-bold mb-2">
+                      {milestone.year}
+                    </span>
+                    <h3 className="font-bold text-lg text-foreground">{milestone.title}</h3>
+                    <p className="text-muted-foreground text-sm mt-1 leading-relaxed">{milestone.description}</p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -151,24 +152,24 @@ export function About() {
           />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { label: 'Students Reached', value: '5000+', icon: Users },
-              { label: 'Events Hosted', value: '120+', icon: Lightbulb },
-              { label: 'Projects Built', value: '200+', icon: Globe },
-              { label: 'Countries Connected', value: '15+', icon: Heart },
+              { label: 'Students Reached', value: 5000, icon: Users },
+              { label: 'Events Hosted', value: 120, icon: Lightbulb },
+              { label: 'Projects Built', value: 200, icon: Globe },
+              { label: 'Countries Connected', value: 15, icon: Heart },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.2 }}
                 transition={{ delay: index * 0.1 }}
-                className="text-center p-6 rounded-2xl bg-card border border-border/50"
+                className="text-center p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/40 transition-all shadow-sm group"
               >
-                <stat.icon className="w-10 h-10 mx-auto mb-4 text-primary" />
-                <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  {stat.value}
+                <stat.icon className="w-9 h-9 mx-auto mb-3 text-primary group-hover:scale-110 transition-transform" />
+                <div className="text-3xl md:text-5xl font-extrabold text-foreground tracking-tight">
+                  <CountUp to={stat.value} suffix="+" duration={1400} />
                 </div>
-                <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
+                <p className="text-xs md:text-sm text-muted-foreground font-medium mt-1.5">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -188,7 +189,7 @@ export function About() {
                 key={member.name}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
+                viewport={{ once: false, amount: 0.2 }}
                 transition={{ delay: index * 0.1 }}
                 className="p-6 rounded-2xl bg-card border border-border/50"
                 role="listitem"

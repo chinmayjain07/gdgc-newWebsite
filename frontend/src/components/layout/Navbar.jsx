@@ -22,9 +22,6 @@ const navItems = [
     ],
   },
   { label: 'Team', href: '/team' },
-  { label: 'Domains', href: '/domains' },
-  { label: 'Achievements', href: '/achievements' },
-  { label: 'Resources', href: '/resources' },
   { label: 'Contact', href: '/contact' },
 ];
 
@@ -64,9 +61,8 @@ export function Navbar() {
 
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
         <div className="flex items-center justify-between h-16 lg:h-20">
-          <Link to="/" className="flex items-center gap-2.5 group" aria-label="GDGC Home">
-            <InteractiveLogo size="sm" showGlow={false} />
-            <GdgText className="text-2xl" />
+          <Link to="/" className="flex items-center group py-1" aria-label="GDGC Home" title="GDGC Home">
+            <InteractiveLogo size="navbar" showGlow={false} onSecretTrigger={() => setIsMysteryOpen(true)} />
           </Link>
 
           <div className="hidden lg:flex items-center gap-7">
@@ -93,11 +89,11 @@ export function Navbar() {
                 <AnimatePresence>
                   {item.children && hoveredDropdown === index && (
                     <motion.div
-                      initial={{ opacity: 0, y: -10, scaleY: 0.9 }}
-                      animate={{ opacity: 1, y: 0, scaleY: 1 }}
-                      exit={{ opacity: 0, y: -10, scaleY: 0.9 }}
-                      transition={{ duration: 0.2, ease: 'easeOut' }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-1 min-w-[200px] glass-strong rounded-2xl p-2 shadow-xl border border-border/50 bg-background/95 backdrop-blur-xl"
+                      initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                      transition={{ duration: 0.18, ease: 'easeOut' }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 min-w-[220px] rounded-2xl p-2.5 shadow-2xl border border-border bg-white dark:bg-[#111827] z-50"
                       role="menu"
                     >
                       {item.children.map((child) => (
@@ -105,10 +101,10 @@ export function Navbar() {
                           key={child.href}
                           to={child.href}
                           className={cn(
-                            'block px-4 py-2.5 rounded-xl text-sm font-medium transition-all',
+                            'block px-4 py-2.5 rounded-xl text-sm font-medium transition-colors',
                             location.pathname === child.href
-                              ? 'bg-primary/10 text-primary'
-                              : 'text-foreground/70 hover:bg-accent/10 hover:text-foreground'
+                              ? 'bg-primary/10 text-primary font-semibold'
+                              : 'text-foreground/80 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-foreground'
                           )}
                           role="menuitem"
                         >
@@ -123,29 +119,25 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* BLACKOUT Mystery Game Button */}
+            {/* Theme Toggle with Sun/Moon Icon and Text label */}
             <button
-              onClick={() => setIsMysteryOpen(true)}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/30 transition-all hover:scale-105 shadow-sm"
-              title="Play BLACKOUT Clue Hunt Challenge"
-            >
-              <ShieldAlert className="w-3.5 h-3.5 animate-pulse" />
-              <span>BLACKOUT Clue Hunt</span>
-            </button>
-
-            <Button
-              variant="ghost"
-              size="icon"
+              type="button"
               onClick={toggleTheme}
               aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-              className="rounded-full hover:bg-primary/10"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border border-border bg-card/90 hover:bg-slate-100 dark:hover:bg-slate-800 text-foreground transition-all duration-200 cursor-pointer shadow-sm"
             >
-              {theme === 'light' ? <Moon className="w-5 h-5 text-slate-700" /> : <Sun className="w-5 h-5 text-yellow-400" />}
-            </Button>
-
-            <Button variant="primary" size="sm" className="hidden lg:inline-flex shadow-gdg-glow bg-[#4285F4] hover:bg-[#1a73e8]" asChild>
-              <Link to="/contact">Join GDGC</Link>
-            </Button>
+              {theme === 'light' ? (
+                <>
+                  <Moon className="w-4 h-4 text-slate-700" />
+                  <span>Dark</span>
+                </>
+              ) : (
+                <>
+                  <Sun className="w-4 h-4 text-yellow-400" />
+                  <span>Light</span>
+                </>
+              )}
+            </button>
 
             <button
               className="lg:hidden p-2 rounded-xl text-foreground/70 hover:text-foreground hover:bg-accent/10 transition-colors"
@@ -170,21 +162,15 @@ export function Navbar() {
               className="lg:hidden overflow-hidden border-t border-border/50 bg-background/95 backdrop-blur-xl"
             >
               <div className="px-4 py-4 space-y-3">
-                <div className="flex items-center justify-between pb-2 border-b border-border/50">
+                <div className="flex items-center justify-end pb-2 border-b border-border/50">
                   <button
-                    onClick={() => {
-                      setIsOpen(false);
-                      setIsMysteryOpen(true);
-                    }}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-red-500/10 text-red-500 border border-red-500/30"
+                    type="button"
+                    onClick={toggleTheme}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border border-border bg-card/80 text-foreground"
                   >
-                    <ShieldAlert className="w-4 h-4 animate-pulse" />
-                    <span>BLACKOUT Clue Hunt</span>
-                  </button>
-                  <Button variant="ghost" size="sm" onClick={toggleTheme} className="flex items-center gap-2">
-                    {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4 text-yellow-400" />}
+                    {theme === 'light' ? <Moon className="w-4 h-4 text-slate-700" /> : <Sun className="w-4 h-4 text-yellow-400" />}
                     <span>{theme === 'light' ? 'Dark' : 'Light'}</span>
-                  </Button>
+                  </button>
                 </div>
 
                 {navItems.map((item) => (
@@ -217,12 +203,6 @@ export function Navbar() {
                     )}
                   </div>
                 ))}
-
-                <div className="pt-4 border-t border-border/50">
-                  <Button variant="primary" className="w-full bg-[#4285F4]" asChild>
-                    <Link to="/contact" onClick={() => setIsOpen(false)}>Join GDGC</Link>
-                  </Button>
-                </div>
               </div>
             </motion.div>
           )}

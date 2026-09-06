@@ -9,9 +9,6 @@ import { Events } from '@/pages/Events';
 import { UpcomingEvents } from '@/pages/UpcomingEvents';
 import { PastEvents } from '@/pages/PastEvents';
 import { Team } from '@/pages/Team';
-import { Domains } from '@/pages/Domains';
-import { Achievements } from '@/pages/Achievements';
-import { Resources } from '@/pages/Resources';
 import { Contact } from '@/pages/Contact';
 
 function ScrollToTop() {
@@ -42,9 +39,6 @@ function App() {
             <Route path="events/upcoming" element={<UpcomingEvents />} />
             <Route path="events/past" element={<PastEvents />} />
             <Route path="team" element={<Team />} />
-            <Route path="domains" element={<Domains />} />
-            <Route path="achievements" element={<Achievements />} />
-            <Route path="resources" element={<Resources />} />
             <Route path="contact" element={<Contact />} />
           </Route>
         </Routes>

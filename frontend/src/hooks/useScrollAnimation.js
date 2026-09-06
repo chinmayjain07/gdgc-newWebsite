@@ -8,10 +8,11 @@ export function useScrollAnimation(options = {}) {
   const elementRef = useRef(null);
   const {
     trigger,
-    start = 'top 80%',
+    start = 'top 85%',
     end = 'bottom 20%',
     scrub = false,
     markers = false,
+    toggleActions = 'play none none reset',
     onEnter,
     onLeave,
     onEnterBack,
@@ -24,6 +25,7 @@ export function useScrollAnimation(options = {}) {
     if (!element) return;
 
     const ctx = gsap.context(() => {
+      const resolvedTrigger = (typeof trigger === 'string' ? document.querySelector(trigger) : trigger) || element;
       gsap.fromTo(element,
         { opacity: 0, y: 50, ...animationProps.from },
         {
@@ -32,11 +34,12 @@ export function useScrollAnimation(options = {}) {
           duration: 1,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: trigger || element,
+            trigger: resolvedTrigger,
             start,
             end,
             scrub,
             markers,
+            toggleActions,
             onEnter,
             onLeave,
             onEnterBack,
@@ -57,8 +60,9 @@ export function useStaggerAnimation(options = {}) {
   const containerRef = useRef(null);
   const {
     stagger = 0.1,
-    start = 'top 80%',
+    start = 'top 85%',
     end = 'bottom 20%',
+    toggleActions = 'play none none reset',
     from = { opacity: 0, y: 30 },
     to = { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
   } = options;
@@ -69,15 +73,18 @@ export function useStaggerAnimation(options = {}) {
 
     const ctx = gsap.context(() => {
       const children = container.querySelectorAll('[data-stagger]');
-      gsap.fromTo(children, from, {
-        ...to,
-        stagger,
-        scrollTrigger: {
-          trigger: container,
-          start,
-          end,
-        },
-      });
+      if (children && children.length > 0) {
+        gsap.fromTo(children, from, {
+          ...to,
+          stagger,
+          scrollTrigger: {
+            trigger: container,
+            start,
+            end,
+            toggleActions,
+          },
+        });
+      }
     }, container);
 
     return () => ctx.revert();

@@ -31,9 +31,9 @@ export function PastEvents() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6"
+              className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 text-foreground"
             >
-              Past Tenure <span className="text-gradient-gdg">Highlights</span>
+              Past Tenure Highlights
               <InteractiveLogo size="md" className="inline-flex ml-3 align-middle" />
             </motion.h1>
             <motion.p
