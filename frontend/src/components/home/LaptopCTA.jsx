@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import './LaptopCTA.css';
 import { EasterEggManager } from '@/components/easteregg/EasterEggManager';
+import { PixelDino, MatrixRain, useKonami } from '@/components/easteregg/TerminalEggs';
+import '@/components/easteregg/terminalEggs.css';
 
 const TOTAL_FRAMES = 125;
 
@@ -112,7 +114,7 @@ const BUILTIN_COMMANDS = {
   ],
 };
 
-// ── Secret command detector (NEVER shown in help / UI) ──────────────────
+// ── Secret command detectors (NEVER shown in help / UI) ─────────────────
 const EASTER_EGG_PHRASES = [
   'enter a game',
   'enter game',
@@ -125,9 +127,58 @@ const EASTER_EGG_PHRASES = [
   'play a game',
 ];
 
+const BLACKOUT_PHRASES = [
+  'launch blackout',
+  'start blackout',
+  'initiate blackout',
+  'begin blackout',
+  'run blackout',
+  'blackout protocol',
+];
+
 function detectSecretCommand(input) {
   const normalized = input.toLowerCase().trim();
   return EASTER_EGG_PHRASES.some((phrase) => normalized === phrase || normalized.includes(phrase));
+}
+
+function detectBlackoutCommand(input) {
+  const normalized = input.toLowerCase().trim();
+  if (normalized === 'blackout') return true;
+  return BLACKOUT_PHRASES.some((phrase) => normalized === phrase || normalized.includes(phrase));
+}
+
+// ── Harmless terminal Easter eggs (never listed in help) ────────────────
+const TERMINAL_EGGS = {
+  'sudo gdgc': [
+    { type: 'output', text: '$ sudo gdgc --auth' },
+    { type: 'success', text: '  ACCESS LEVEL: STUDENT' },
+    { type: 'accent', text: '  Nice try.' },
+  ],
+  'sudo make coffee': [
+    { type: 'output', text: '$ sudo make coffee' },
+    { type: 'error', text: '  Access denied.' },
+    { type: 'output', text: '  Reason:' },
+    { type: 'accent', text: '  The developers already drank it.' },
+  ],
+  'sudo coffee': [
+    { type: 'output', text: '$ sudo coffee' },
+    { type: 'error', text: '  Access denied.' },
+    { type: 'output', text: '  Reason:' },
+    { type: 'accent', text: '  The developers already drank it.' },
+  ],
+  'make coffee': [
+    { type: 'output', text: '$ make coffee' },
+    { type: 'error', text: '  Access denied.' },
+    { type: 'output', text: '  Reason:' },
+    { type: 'accent', text: '  The developers already drank it.' },
+  ],
+};
+
+function detectTerminalEgg(input) {
+  const normalized = input.toLowerCase().trim().replace(/\s+/g, ' ');
+  if (normalized === '404') return '404';
+  if (normalized === 'matrix') return 'matrix';
+  return TERMINAL_EGGS[normalized] || null;
 }
 
 // ── Backend AI Chat helper ───────────────────────────────────────────────
@@ -192,7 +243,11 @@ export function LaptopCTA() {
   const [inputValue, setInputValue] = useState('');
   const [isAIThinking, setIsAIThinking] = useState(false);
   const [easterEggActive, setEasterEggActive] = useState(false);
-  const [postGameMode, setPostGameMode] = useState(false);
+  const [easterEggMode, setEasterEggMode] = useState('fps');
+  const [dinoActive, setDinoActive] = useState(false);
+  const [matrixActive, setMatrixActive] = useState(false);
+  const [konamiActive, setKonamiActive] = useState(false);
+  const [postGameMode, setPostGameMode] = useState(null); // 'fps' | 'blackout'
 
   // Sticky Scroll
   const { scrollYProgress } = useScroll({
@@ -302,7 +357,7 @@ export function LaptopCTA() {
 
   // After game returns, inject farewell messages
   useEffect(() => {
-    if (postGameMode) {
+    if (postGameMode === 'fps') {
       setTerminalLogs((prev) => [
         ...prev,
         makeLog('info', ''),
@@ -311,9 +366,37 @@ export function LaptopCTA() {
         makeLog('info', '─────────────────────────────────────────'),
         makeLog('output', 'System nominal. GDGC terminal operational.'),
       ]);
-      setPostGameMode(false);
+      setPostGameMode(null);
+      setIsAIThinking(false);
+    }
+    if (postGameMode === 'blackout') {
+      setTerminalLogs((prev) => [
+        ...prev,
+        makeLog('info', ''),
+        makeLog('success', '> connection terminated'),
+        makeLog('success', '> protocol terminated'),
+        makeLog('success', '> system restored'),
+        makeLog('accent', '> welcome back, developer.'),
+        makeLog('info', '─────────────────────────────────────────'),
+        makeLog('output', 'System nominal. GDGC terminal operational.'),
+      ]);
+      setPostGameMode(null);
+      setIsAIThinking(false);
     }
   }, [postGameMode]);
+
+  const handleKonamiUnlock = useCallback(() => {
+    setKonamiActive(true);
+    setTerminalLogs((prev) => [
+      ...prev,
+      makeLog('override', '> SYSTEM OVERRIDE'),
+      makeLog('info', '  Visual kernel patched. Do not tell anyone.'),
+    ]);
+    setTimeout(() => setKonamiActive(false), 8000);
+  }, []);
+
+  // Konami sequence inside the terminal → SYSTEM OVERRIDE
+  useKonami(activeTab === 'terminal' && !easterEggActive, handleKonamiUnlock);
 
   const handleCopyCommand = () => {
     navigator.clipboard?.writeText('npx gdgc-pccoe join');
@@ -333,7 +416,8 @@ export function LaptopCTA() {
     ]);
     setInputValue('');
 
-    // ── 1. Detect secret Easter egg command (client-side, deterministic) ─
+    // ── 1. Detect secret Easter egg commands (client-side, deterministic) ─
+    // FPS secret
     if (detectSecretCommand(trimmed)) {
       setTerminalLogs((prev) => [
         ...prev,
@@ -342,10 +426,67 @@ export function LaptopCTA() {
         makeLog('accent', '> Initializing...'),
         makeLog('info', ''),
       ]);
-      // Brief delay for dramatic effect, then launch Easter egg
+      setIsAIThinking(true);
       setTimeout(() => {
+        setEasterEggMode('fps');
         setEasterEggActive(true);
       }, 900);
+      return;
+    }
+
+    // Blackout secret
+    if (detectBlackoutCommand(trimmed)) {
+      setTerminalLogs((prev) => [
+        ...prev,
+        makeLog('error', '> BLACKOUT PROTOCOL INITIALIZED'),
+        makeLog('accent', '> SYSTEM OVERRIDE DETECTED'),
+        makeLog('info', '> Connection unstable...'),
+        makeLog('info', ''),
+      ]);
+      setIsAIThinking(true);
+      setTimeout(() => {
+        setEasterEggMode('blackout');
+        setEasterEggActive(true);
+      }, 900);
+      return;
+    }
+
+    // ── 1b. Harmless terminal Easter eggs ───────────────────────────────
+    const egg = detectTerminalEgg(trimmed);
+    if (egg === '404') {
+      setTerminalLogs((prev) => [
+        ...prev,
+        makeLog('output', '$ search --query "404"'),
+        makeLog('info', '  Searching...'),
+        makeLog('error', '  404: Page not found.'),
+        makeLog('info', ''),
+        makeLog('accent', '  But somehow... you found this.'),
+      ]);
+      setDinoActive(true);
+      setTimeout(() => setDinoActive(false), 3800);
+      return;
+    }
+    if (egg === 'matrix') {
+      setMatrixActive(true);
+      setTerminalLogs((prev) => [
+        ...prev,
+        makeLog('output', '$ wake_up neo'),
+        makeLog('success', '  Follow the white rabbit.'),
+      ]);
+      setTimeout(() => {
+        setMatrixActive(false);
+        setTerminalLogs((prev) => [
+          ...prev,
+          makeLog('info', '  ...knock, knock.'),
+        ]);
+      }, 4200);
+      return;
+    }
+    if (Array.isArray(egg)) {
+      setTerminalLogs((prev) => [
+        ...prev,
+        ...egg.map((l) => makeLog(l.type, l.text)),
+      ]);
       return;
     }
 
@@ -418,17 +559,19 @@ export function LaptopCTA() {
 
   // When player returns from game
   const handleEasterEggClose = useCallback(() => {
+    const mode = easterEggMode;
     setEasterEggActive(false);
-    setPostGameMode(true);
+    setPostGameMode(mode);
     // Switch to terminal tab so user sees the farewell messages
     setActiveTab('terminal');
-  }, []);
+  }, [easterEggMode]);
 
   return (
     <>
-      {/* ── Easter Egg Overlay (lazy-loaded Three.js FPS) ─────────────── */}
+      {/* ── Hidden Experiences Overlay (lazy-loaded, secrets) ─────────── */}
       <EasterEggManager
         isActive={easterEggActive}
+        mode={easterEggMode}
         onClose={handleEasterEggClose}
       />
 
@@ -625,18 +768,22 @@ export function LaptopCTA() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -6 }}
                         transition={{ duration: 0.2 }}
-                        className="terminal-workspace gdgc-ai-terminal"
+                        className={`terminal-workspace gdgc-ai-terminal ${
+                          konamiActive ? 'terminal-override egg-overlay' : ''
+                        } ${dinoActive || matrixActive ? 'egg-overlay' : ''}`}
                       >
+                        {dinoActive && <PixelDino />}
+                        {matrixActive && <MatrixRain />}
                         {/* Terminal Header */}
                         <div className="gdgc-terminal-header">
                           <div className="gdgc-terminal-title-row">
                             <span className="gdgc-terminal-title">GDGC DEV TERMINAL</span>
-                            <span className="gdgc-terminal-version">v2.0.0 • PCCOE</span>
+                            <span className="gdgc-terminal-version">v2.6 • PCCOE</span>
                           </div>
                           <div className="gdgc-terminal-sep">────────────────────────────</div>
                           <div className="gdgc-terminal-status-row">
-                            <span className="gdgc-terminal-connected">✓ System initialized.</span>
-                            <span className="gdgc-terminal-connected-net">✓ GDGC network connected.</span>
+                            <span className="gdgc-terminal-connected">✓ SYSTEM STATUS: CONNECTED</span>
+                            <span className="gdgc-terminal-connected-net">✓ GDGC NETWORK: ONLINE</span>
                           </div>
                           <div className="gdgc-terminal-sep">────────────────────────────</div>
                         </div>
