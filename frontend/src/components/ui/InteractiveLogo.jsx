@@ -91,7 +91,7 @@ export function InteractiveLogo({
     xs: 'w-7 h-7',
     sm: 'w-9 h-9',
     md: 'w-12 h-12',
-    navbar: 'w-12 h-12 sm:w-14 sm:h-14',
+    navbar: 'w-14 h-14 sm:w-16 sm:h-16 lg:w-[70px] lg:h-[70px]',
     lg: 'w-16 h-16',
     xl: 'w-24 h-24',
     hero: 'w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28',
