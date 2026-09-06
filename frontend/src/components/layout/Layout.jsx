@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { DotParticleCanvas } from '@/components/ui/DotParticleCanvas';
+import { AIAssistant } from '@/components/ai/AIAssistant';
 
 export function Layout() {
   return (
@@ -20,6 +21,7 @@ export function Layout() {
         </motion.div>
       </main>
       <Footer />
+      <AIAssistant />
     </div>
   );
 }
