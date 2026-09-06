@@ -1,0 +1,904 @@
+/* SplashScreen.css - Refined Dino Game Run -> Wide Scatter -> Slower Hero Assembly */
+
+/* =========================================================================
+   Theme Tokens — Light & Dark
+   ========================================================================= */
+
+/* Dark theme (default — matching site dark bg #0B0F17) */
+.splash-overlay {
+  --splash-bg: #0B0F17;
+  --splash-dino-color: #BDC1C6;
+  --splash-ground-color: #5F6368;
+  --splash-text-color: rgba(255, 255, 255, 0.65);
+  --splash-glow-opacity: 1;
+  --splash-rings-opacity: 0.75;
+  /* Equal presence of all 4 brand colors in 4 quadrants + neutral core */
+  --splash-glow-gradient:
+    radial-gradient(circle at 35% 35%, rgba(234, 67, 53, 0.40) 0%, rgba(234, 67, 53, 0.16) 40%, transparent 68%),
+    radial-gradient(circle at 65% 35%, rgba(52, 168, 83, 0.40) 0%, rgba(52, 168, 83, 0.16) 40%, transparent 68%),
+    radial-gradient(circle at 35% 65%, rgba(66, 133, 244, 0.40) 0%, rgba(66, 133, 244, 0.16) 40%, transparent 68%),
+    radial-gradient(circle at 65% 65%, rgba(251, 188, 4, 0.40) 0%, rgba(251, 188, 4, 0.16) 40%, transparent 68%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 55%);
+}
+
+/* Light theme overrides */
+.splash-overlay[data-splash-theme="light"] {
+  --splash-bg: #F8FAFC;
+  --splash-dino-color: #5F6368;
+  --splash-ground-color: #9AA0A6;
+  --splash-text-color: rgba(15, 23, 42, 0.65);
+  --splash-glow-opacity: 0.7;
+  --splash-rings-opacity: 0.45;
+  --splash-glow-gradient:
+    radial-gradient(circle at 35% 35%, rgba(234, 67, 53, 0.30) 0%, rgba(234, 67, 53, 0.12) 40%, transparent 68%),
+    radial-gradient(circle at 65% 35%, rgba(52, 168, 83, 0.30) 0%, rgba(52, 168, 83, 0.12) 40%, transparent 68%),
+    radial-gradient(circle at 35% 65%, rgba(66, 133, 244, 0.30) 0%, rgba(66, 133, 244, 0.12) 40%, transparent 68%),
+    radial-gradient(circle at 65% 65%, rgba(251, 188, 4, 0.30) 0%, rgba(251, 188, 4, 0.12) 40%, transparent 68%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 55%);
+}
+
+/* =========================================================================
+   Overlay & Exit Transition
+   ========================================================================= */
+
+.splash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--splash-bg);
+  overflow: hidden;
+  user-select: none;
+  pointer-events: auto;
+  /* Exit: Hold through 5.4s, then smooth scale + blur + fade out over 0.75s */
+  animation: splashOverlayExit 0.75s cubic-bezier(0.4, 0, 0.6, 1) 5.45s forwards;
+}
+
+@keyframes splashOverlayExit {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px);
+    visibility: visible;
+  }
+
+  35% {
+    opacity: 0.85;
+    transform: scale(1.02);
+    filter: blur(2px);
+  }
+
+  75% {
+    opacity: 0.25;
+    transform: scale(1.05);
+    filter: blur(8px);
+  }
+
+  99% {
+    opacity: 0;
+    transform: scale(1.07);
+    filter: blur(14px);
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.07);
+    filter: blur(14px);
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+/* =========================================================================
+   Centered Animation Stage
+   ========================================================================= */
+
+.splash-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(220px, 32vw, 300px);
+  height: clamp(220px, 32vw, 300px);
+}
+
+/* Ambient Radial Energy Glow */
+.splash-glow {
+  position: absolute;
+  width: 140%;
+  height: 140%;
+  border-radius: 50%;
+  background: var(--splash-glow-gradient);
+  filter: blur(28px);
+  pointer-events: none;
+  opacity: 0;
+  animation: splashGlowPulse 5.4s ease-in-out both;
+}
+
+@keyframes splashGlowPulse {
+
+  0%,
+  32% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  /* Dissolve energy flare */
+  40% {
+    opacity: calc(var(--splash-glow-opacity) * 0.7);
+    transform: scale(1.1);
+  }
+
+  /* Wide scatter outward */
+  55% {
+    opacity: calc(var(--splash-glow-opacity) * 0.45);
+    transform: scale(1.3);
+  }
+
+  /* Logo lock-in peak energy */
+  85% {
+    opacity: var(--splash-glow-opacity);
+    transform: scale(1.18);
+  }
+
+  92%,
+  100% {
+    opacity: calc(var(--splash-glow-opacity) * 0.65);
+    transform: scale(1);
+  }
+}
+
+/* =========================================================================
+   Stage 1: Dino Game Run with Cactuses and Timed Jump Arcs
+   ========================================================================= */
+
+.splash-dino-scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  color: var(--splash-dino-color);
+  pointer-events: none;
+}
+
+/* Cactuses along the running path */
+.dino-cactus {
+  position: absolute;
+  bottom: 40px;
+  z-index: 4;
+  color: var(--splash-dino-color);
+  animation: cactusFadeOut 0.35s ease-out 2.1s both;
+}
+
+.dino-cactus-1 {
+  left: calc(50% - 180px);
+  margin-left: -12px;
+}
+
+.dino-cactus-2 {
+  left: calc(50% - 80px);
+  margin-left: -11px;
+}
+
+.dino-cactus svg {
+  display: block;
+  shape-rendering: crispEdges;
+}
+
+@keyframes cactusFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+    visibility: hidden;
+  }
+}
+
+/* Dino Horizontal Travel & Synced Parabolic Cactus Jumps */
+.dino-runner {
+  position: absolute;
+  bottom: 38px;
+  left: 50%;
+  margin-left: -40px;
+  /* Center 80px wide dino SVG directly on reference point */
+  z-index: 5;
+  animation: dinoRunAndJump 2.1s linear both;
+}
+
+/* Perfectly synced parabolic hops over Cactus 1 (-180px) and Cactus 2 (-80px) */
+@keyframes dinoRunAndJump {
+
+  /* ── RUN-UP 1: Approach Cactus 1 on ground ── */
+  0% {
+    transform: translateX(-290px) translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+
+  8% {
+    transform: translateX(-268px) translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+
+  24% {
+    transform: translateX(-220px) translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+
+  /* ── JUMP 1: Clear Cactus 1 (-180px, height 34px) with high parabolic arc ── */
+  28% {
+    transform: translateX(-208px) translateY(-28px) rotate(5deg);
+  }
+
+  33% {
+    transform: translateX(-194px) translateY(-48px) rotate(7deg);
+  }
+
+  38% {
+    /* PEAK: Exactly centered above Cactus 1 at X: -180px, 56px high */
+    transform: translateX(-180px) translateY(-56px) rotate(8deg);
+  }
+
+  43% {
+    transform: translateX(-166px) translateY(-48px) rotate(6deg);
+  }
+
+  48% {
+    transform: translateX(-152px) translateY(-28px) rotate(3deg);
+  }
+
+  52% {
+    /* LAND: Ground contact right after clearing Cactus 1 */
+    transform: translateX(-140px) translateY(0) rotate(0deg);
+  }
+
+  /* ── RUN-UP 2: Ground strides between Cactus 1 and Cactus 2 ── */
+  55% {
+    transform: translateX(-130px) translateY(0) rotate(0deg);
+  }
+
+  58% {
+    transform: translateX(-120px) translateY(0) rotate(0deg);
+  }
+
+  /* ── JUMP 2: Clear Cactus 2 (-80px, height 36px) with high parabolic arc ── */
+  62% {
+    transform: translateX(-108px) translateY(-28px) rotate(5deg);
+  }
+
+  67% {
+    transform: translateX(-94px) translateY(-48px) rotate(7deg);
+  }
+
+  72% {
+    /* PEAK: Exactly centered above Cactus 2 at X: -80px, 56px high */
+    transform: translateX(-80px) translateY(-56px) rotate(8deg);
+  }
+
+  77% {
+    transform: translateX(-66px) translateY(-48px) rotate(6deg);
+  }
+
+  82% {
+    transform: translateX(-52px) translateY(-28px) rotate(3deg);
+  }
+
+  86% {
+    /* LAND: Ground contact right after clearing Cactus 2 */
+    transform: translateX(-40px) translateY(0) rotate(0deg);
+  }
+
+  /* ── RUN-IN 3: Stride to center stage and halt ── */
+  93% {
+    transform: translateX(-20px) translateY(0) rotate(0deg);
+  }
+
+  100% {
+    transform: translateX(0px) translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Dino Dissolve Container (decoupled from movement so transform never conflicts) */
+.dino-dissolver {
+  animation: dinoDissolve 0.35s ease-out 2.1s both;
+}
+
+@keyframes dinoDissolve {
+  0% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+
+  30% {
+    opacity: 1;
+    transform: scale(1.04) translate(1px, -1px);
+    filter: brightness(1.5) drop-shadow(0 0 12px rgba(66, 133, 244, 0.8));
+  }
+
+  65% {
+    opacity: 0.7;
+    transform: scale(0.95) translate(-2px, 1px);
+    filter: brightness(1.8) drop-shadow(0 0 18px rgba(234, 67, 53, 0.9));
+  }
+
+  90% {
+    opacity: 0.2;
+    transform: scale(0.85);
+    filter: blur(4px) drop-shadow(0 0 22px rgba(251, 188, 4, 0.9));
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.75);
+    filter: blur(8px);
+    visibility: hidden;
+  }
+}
+
+.splash-dino-svg {
+  display: block;
+  width: 80px;
+  height: 82px;
+  shape-rendering: crispEdges;
+}
+
+.dino-eye-cut,
+.dino-mouth-cut {
+  fill: var(--splash-bg);
+  transition: fill 0.3s ease;
+}
+
+/* Running Leg Cycle with Jump Tucking */
+.dino-leg-left {
+  transform-origin: 39px 62px;
+  animation: dinoLegLeftSequence 2.1s linear both;
+}
+
+.dino-leg-right {
+  transform-origin: 29px 62px;
+  animation: dinoLegRightSequence 2.1s linear both;
+}
+
+@keyframes dinoLegLeftSequence {
+
+  /* Run 1 (0% to 24%) */
+  0%,
+  6%,
+  12%,
+  18% {
+    transform: rotate(-24deg);
+  }
+
+  3%,
+  9%,
+  15%,
+  21% {
+    transform: rotate(24deg);
+  }
+
+  /* Jump 1 (24% to 52%): Leg tucked back in midair pose */
+  24%,
+  50% {
+    transform: translateY(-5px) rotate(-14deg);
+  }
+
+  /* Run 2 (52% to 58%) */
+  52% {
+    transform: rotate(0deg);
+  }
+
+  54% {
+    transform: rotate(-24deg);
+  }
+
+  56% {
+    transform: rotate(24deg);
+  }
+
+  /* Jump 2 (58% to 86%): Leg tucked back in midair pose */
+  58%,
+  84% {
+    transform: translateY(-5px) rotate(-14deg);
+  }
+
+  /* Run 3 (86% to 100%): Stride to halt */
+  86%,
+  92%,
+  98% {
+    transform: rotate(-24deg);
+  }
+
+  89%,
+  95% {
+    transform: rotate(24deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes dinoLegRightSequence {
+
+  /* Run 1 (0% to 24%) */
+  0%,
+  6%,
+  12%,
+  18% {
+    transform: rotate(24deg);
+  }
+
+  3%,
+  9%,
+  15%,
+  21% {
+    transform: rotate(-24deg);
+  }
+
+  /* Jump 1 (24% to 52%): Leg tucked forward in midair pose */
+  24%,
+  50% {
+    transform: translateY(-5px) rotate(16deg);
+  }
+
+  /* Run 2 (52% to 58%) */
+  52% {
+    transform: rotate(0deg);
+  }
+
+  54% {
+    transform: rotate(24deg);
+  }
+
+  56% {
+    transform: rotate(-24deg);
+  }
+
+  /* Jump 2 (58% to 86%): Leg tucked forward in midair pose */
+  58%,
+  84% {
+    transform: translateY(-5px) rotate(16deg);
+  }
+
+  /* Run 3 (86% to 100%): Stride to halt */
+  86%,
+  92%,
+  98% {
+    transform: rotate(24deg);
+  }
+
+  89%,
+  95% {
+    transform: rotate(-24deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Running Ground Track */
+.dino-ground-track {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 380px;
+  height: 12px;
+  overflow: hidden;
+  opacity: 0.9;
+  animation: dinoGroundFade 0.35s ease-out 2.1s both;
+}
+
+@keyframes dinoGroundFade {
+  0% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.dino-ground-line {
+  position: absolute;
+  top: 4px;
+  left: -24px;
+  width: 430px;
+  height: 2px;
+  background-image: repeating-linear-gradient(90deg,
+      var(--splash-ground-color) 0px,
+      var(--splash-ground-color) 12px,
+      transparent 12px,
+      transparent 16px,
+      var(--splash-ground-color) 16px,
+      var(--splash-ground-color) 24px,
+      transparent 24px,
+      transparent 29px);
+  animation: groundTrackScroll 0.38s linear infinite;
+}
+
+.dino-ground-pebbles {
+  position: absolute;
+  top: 8px;
+  left: -24px;
+  width: 430px;
+  height: 2px;
+  background-image: repeating-linear-gradient(90deg,
+      transparent 0px,
+      transparent 20px,
+      var(--splash-ground-color) 20px,
+      var(--splash-ground-color) 23px,
+      transparent 23px,
+      transparent 42px,
+      var(--splash-ground-color) 42px,
+      var(--splash-ground-color) 44px,
+      transparent 44px,
+      transparent 60px);
+  animation: groundTrackScroll 0.38s linear infinite;
+}
+
+@keyframes groundTrackScroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-24px);
+  }
+}
+
+/* =========================================================================
+   Stage 2 & 3: Wide Particle Scatter & Slower Deliberate Assembly
+   ========================================================================= */
+
+.splash-particles-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.splash-particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--size, 6px);
+  height: var(--size, 6px);
+  margin-left: calc(var(--size, 6px) * -0.5);
+  margin-top: calc(var(--size, 6px) * -0.5);
+  border-radius: 50%;
+  background-color: var(--color, #4285F4);
+  box-shadow: 0 0 8px var(--color, #4285F4);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: splashParticleFlow 5.4s cubic-bezier(0.2, 0.8, 0.35, 1) var(--delay, 0s) both;
+}
+
+@keyframes splashParticleFlow {
+
+  /* 0s to 2.1s (0% to 36%): Hidden while Dino runs and hops */
+  0%,
+  36% {
+    opacity: 0;
+    transform: translate(var(--x0), var(--y0)) scale(0);
+  }
+
+  /* 2.2s (38%): Dino disintegrates -> particles emerge excited */
+  39% {
+    opacity: 1;
+    transform: translate(var(--x0), var(--y0)) scale(1.4);
+  }
+
+  /* 2.7s (47%): Far-reaching wide scatter explosion across the screen */
+  48% {
+    opacity: 1;
+    transform: translate(calc(var(--sx) * var(--scatter-scale, 1)), calc(var(--sy) * var(--scatter-scale, 1))) scale(1.25);
+  }
+
+  /* 3.4s (58%): Continued orbital swirling motion during maximum spread */
+  59% {
+    opacity: 0.95;
+    transform: translate(calc(var(--mx) * var(--scatter-scale, 1)), calc(var(--my) * var(--scatter-scale, 1))) scale(1.1);
+  }
+
+  /* 4.2s (72%): Slower, deliberate magnetic suction through inward vortex arc */
+  73% {
+    opacity: 0.95;
+    transform: translate(var(--vx), var(--vy)) scale(1);
+  }
+
+  /* 4.7s (83%): Convergence into exact shape pill coordinates */
+  84% {
+    opacity: 1;
+    transform: translate(var(--tx), var(--ty)) scale(1.2);
+  }
+
+  /* 4.85s (87%): Fuses into the final logo */
+  88% {
+    opacity: 0.55;
+    transform: translate(var(--tx), var(--ty)) scale(0.45);
+  }
+
+  91%,
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(0);
+  }
+}
+
+/* Responsive & Performance Optimization for Mobile */
+@media (max-width: 640px) {
+  .splash-particle {
+    /* Slightly scaled scatter radius on mobile screens */
+    --scatter-scale: 0.55;
+  }
+
+  /* Reduce particle count by 50% on mobile for buttery framerate */
+  .splash-particle:nth-child(even) {
+    display: none;
+  }
+
+  /* Viewport-relative cactus positions matching mobile jump arc keyframes */
+  .dino-cactus-1 {
+    left: calc(50% - 34.5vw);
+  }
+
+  .dino-cactus-2 {
+    left: calc(50% - 16vw);
+  }
+
+  .dino-ground-track {
+    width: min(320px, 92vw);
+  }
+
+  .dino-runner {
+    animation-name: dinoRunAndJumpMobile;
+  }
+}
+
+/* Viewport-relative Dino jump arc synchronized with mobile cactus positions */
+@keyframes dinoRunAndJumpMobile {
+
+  /* ── RUN-UP 1: Approach Cactus 1 on ground ── */
+  0% {
+    transform: translateX(-56vw) translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+
+  8% {
+    transform: translateX(-50vw) translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+
+  24% {
+    /* Takeoff: 9vw before Cactus 1 */
+    transform: translateX(-43.5vw) translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+
+  /* ── JUMP 1: Clear Cactus 1 (-34.5vw, height 34px) with high parabolic arc ── */
+  28% {
+    transform: translateX(-40.5vw) translateY(-26px) rotate(5deg);
+  }
+
+  33% {
+    transform: translateX(-37.5vw) translateY(-46px) rotate(7deg);
+  }
+
+  38% {
+    /* PEAK: Centered directly above Cactus 1 at X: -34.5vw */
+    transform: translateX(-34.5vw) translateY(-52px) rotate(8deg);
+  }
+
+  43% {
+    transform: translateX(-31.5vw) translateY(-46px) rotate(6deg);
+  }
+
+  48% {
+    transform: translateX(-28.5vw) translateY(-26px) rotate(3deg);
+  }
+
+  52% {
+    /* LAND: Ground contact cleanly 9vw past Cactus 1 */
+    transform: translateX(-25.5vw) translateY(0) rotate(0deg);
+  }
+
+  /* ── RUN-UP 2: Ground strides between Cactus 1 and Cactus 2 ── */
+  55% {
+    transform: translateX(-24vw) translateY(0) rotate(0deg);
+  }
+
+  58% {
+    /* Takeoff: 6.5vw before Cactus 2 */
+    transform: translateX(-22.5vw) translateY(0) rotate(0deg);
+  }
+
+  /* ── JUMP 2: Clear Cactus 2 (-16vw, height 36px) with high parabolic arc ── */
+  62% {
+    transform: translateX(-20.5vw) translateY(-26px) rotate(5deg);
+  }
+
+  67% {
+    transform: translateX(-18vw) translateY(-46px) rotate(7deg);
+  }
+
+  72% {
+    /* PEAK: Centered directly above Cactus 2 at X: -16vw */
+    transform: translateX(-16vw) translateY(-52px) rotate(8deg);
+  }
+
+  77% {
+    transform: translateX(-13.5vw) translateY(-46px) rotate(6deg);
+  }
+
+  82% {
+    transform: translateX(-11vw) translateY(-26px) rotate(3deg);
+  }
+
+  86% {
+    /* LAND: Ground contact cleanly 7.5vw past Cactus 2 */
+    transform: translateX(-8.5vw) translateY(0) rotate(0deg);
+  }
+
+  /* ── RUN-IN 3: Stride to center stage and halt ── */
+  93% {
+    transform: translateX(-4vw) translateY(0) rotate(0deg);
+  }
+
+  100% {
+    transform: translateX(0vw) translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* =========================================================================
+   Final Assembled Logo with Lock-in Impact Pulse & Morph
+   ========================================================================= */
+
+.splash-final-logo {
+  position: absolute;
+  width: clamp(140px, 20vw, 190px);
+  height: auto;
+  object-fit: contain;
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  /* Snaps into place as particles converge and fuse at ~4.75s */
+  animation: splashLogoImpact 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 4.75s both;
+}
+
+@keyframes splashLogoImpact {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+    filter: blur(4px) drop-shadow(0 0 0px transparent);
+  }
+
+  45% {
+    opacity: 1;
+    transform: scale(1.15);
+    filter: blur(0px) drop-shadow(0 0 30px rgba(66, 133, 244, 0.8));
+  }
+
+  75% {
+    transform: scale(0.97);
+    filter: drop-shadow(0 0 12px rgba(66, 133, 244, 0.35));
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px transparent);
+  }
+}
+
+/* =========================================================================
+   Decorative Rotating Orbit Rings
+   ========================================================================= */
+
+.splash-rings {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+  /* Fades in on logo lock-in and smoothly rotates */
+  animation: ringsAppear 0.6s ease-out 4.75s both, ringsSpin 24s linear 4.75s infinite;
+}
+
+@keyframes ringsAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  100% {
+    opacity: var(--splash-rings-opacity);
+    transform: scale(1);
+  }
+}
+
+@keyframes ringsSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================================
+   Brand Subtitle
+   ========================================================================= */
+
+.splash-brand-text {
+  margin-top: 1.5rem;
+  font-family: var(--font-family, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  font-size: clamp(0.9rem, 2.4vw, 1.15rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: var(--splash-text-color);
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  padding: 0 1rem;
+  animation: splashBrandReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1) 4.95s both;
+}
+
+@keyframes splashBrandReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+    letter-spacing: 0.16em;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0.08em;
+  }
+}
+
+/* =========================================================================
+   Accessibility: Reduced Motion Preference
+   ========================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-overlay {
+    animation-duration: 0.4s;
+    animation-delay: 1.6s;
+  }
+
+  .splash-dino-scene,
+  .splash-particles-layer,
+  .splash-rings {
+    display: none !important;
+  }
+
+  .splash-final-logo {
+    opacity: 1;
+    animation: none;
+    transform: scale(1);
+  }
+
+  .splash-brand-text {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+}
