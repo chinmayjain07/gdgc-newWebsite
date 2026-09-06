@@ -25,7 +25,7 @@ export const upcomingEvents = [
     type: 'Workshop',
     domain: 'AI/ML',
     image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop',
-    description: 'Hands-on workshop exploring Google\'s Generative AI tools including Gemini, Vertex AI, and Multimodal APIs. Build production-ready AI apps.',
+    description: "Hands-on workshop exploring Google's Generative AI tools including Gemini, Vertex AI, and Multimodal APIs. Build production-ready AI apps.",
     speakers: ['Dr. Sarah Chen', 'Alex Kumar'],
     registered: 145,
     capacity: 180,

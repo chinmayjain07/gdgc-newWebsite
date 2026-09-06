@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-primary: #4285F4;
   --color-accent: #EA4335;
@@ -171,6 +173,41 @@
   box-shadow: 0 0 25px -5px rgba(66, 133, 244, 0.35), 0 0 15px -3px rgba(234, 67, 53, 0.25);
 }
 
+/* === Floating Tag / Pill from gdgc-pccoe === */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+}
+.tag:hover {
+  transform: translateY(-5px) scale(1.08);
+  box-shadow: 0 10px 25px rgba(66, 133, 244, 0.2);
+}
+.tag-blue   { background: rgba(232, 240, 254, 0.92); color: #1a73e8; border: 1px solid rgba(66, 133, 244, 0.35); }
+.tag-red    { background: rgba(254, 234, 232, 0.92); color: #d93025; border: 1px solid rgba(234, 67, 53, 0.35); }
+.tag-yellow { background: rgba(254, 247, 224, 0.92); color: #b06000; border: 1px solid rgba(251, 188, 4, 0.4); }
+.tag-green  { background: rgba(230, 244, 234, 0.92); color: #188038; border: 1px solid rgba(52, 168, 83, 0.35); }
+
+.dark .tag-blue   { background: rgba(66, 133, 244, 0.16); color: #8ab4f8; border-color: rgba(66, 133, 244, 0.35); }
+.dark .tag-red    { background: rgba(234, 67, 53, 0.16);  color: #f28b82; border-color: rgba(234, 67, 53, 0.35); }
+.dark .tag-yellow { background: rgba(251, 188, 4, 0.16);  color: #fdd663; border-color: rgba(251, 188, 4, 0.35); }
+.dark .tag-green  { background: rgba(52, 168, 83, 0.16);  color: #81c995; border-color: rgba(52, 168, 83, 0.35); }
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-14px); }
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -178,9 +215,22 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    background-image: 
+      radial-gradient(rgba(66, 133, 244, 0.08) 1.2px, transparent 1.2px),
+      linear-gradient(rgba(66, 133, 244, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(66, 133, 244, 0.02) 1px, transparent 1px);
+    background-size: 28px 28px, 56px 56px, 56px 56px;
+    background-attachment: fixed;
+    min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  .dark body {
+    background-image: 
+      radial-gradient(rgba(66, 133, 244, 0.06) 1.2px, transparent 1.2px),
+      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
   }
   html {
     scroll-behavior: smooth;

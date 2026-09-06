@@ -7,7 +7,7 @@ export function SectionHeader({
   badge,
   className,
   align = 'center',
-  gradient = true,
+  gradient = false,
 }) {
   return (
     <motion.div
@@ -22,7 +22,7 @@ export function SectionHeader({
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20 mb-6"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold border border-primary/20 mb-6"
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
@@ -36,10 +36,7 @@ export function SectionHeader({
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.5 }}
         className={cn(
-          'text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6',
-          gradient
-            ? 'text-gradient-gdg'
-            : 'text-foreground'
+          'text-3xl md:text-5xl font-bold tracking-tight mb-4 text-foreground'
         )}
       >
         {title}

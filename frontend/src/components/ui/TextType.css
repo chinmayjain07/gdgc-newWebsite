@@ -1,0 +1,32 @@
+.text-type {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  position: relative;
+  max-width: 100%;
+}
+
+.text-type__content {
+  display: inline-block;
+  white-space: nowrap;
+  vertical-align: baseline;
+  min-height: 1em;
+}
+
+.text-type__cursor {
+  display: inline-block;
+  margin-left: 2px;
+  opacity: 1;
+  font-weight: 700;
+  vertical-align: baseline;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1;
+  user-select: none;
+}
+
+.text-type__cursor--hidden {
+  display: none;
+}

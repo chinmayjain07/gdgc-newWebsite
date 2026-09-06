@@ -1,0 +1,200 @@
+/* ===================================================
+   ArrowFillButton — Ported from gdgc-pccoe
+   =================================================== */
+
+.arrow-fill-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 9999px;
+  border: 1.5px solid var(--btn-bg, #4285F4);
+  --icon-circle: 36px;
+  --icon-right: 6px;
+  --circle-inset-y: calc((100% - var(--icon-circle)) / 2);
+
+  height: 50px;
+  padding: 0 22px;
+  padding-right: calc(var(--icon-circle) + var(--icon-right) + 14px);
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+
+  background-color: var(--btn-bg, #4285F4);
+  color: var(--btn-text, #ffffff);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  box-shadow: 0 3px 12px rgba(66, 133, 244, 0.2);
+}
+
+.arrow-fill-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(66, 133, 244, 0.28);
+}
+
+.arrow-fill-btn:active {
+  transform: translateY(0px) scale(0.98);
+}
+
+/* Small variant */
+.arrow-fill-btn--sm {
+  --icon-circle: 26px !important;
+  --icon-right: 4px !important;
+  height: 36px !important;
+  padding: 0 12px !important;
+  padding-right: calc(var(--icon-circle) + var(--icon-right) + 10px) !important;
+  font-size: 12.5px !important;
+}
+
+.arrow-fill-btn--sm .arrow-fill-btn__overlay {
+  padding: 0 12px !important;
+  padding-right: calc(var(--icon-circle) + var(--icon-right) + 10px) !important;
+}
+
+.arrow-fill-btn--sm .arrow-fill-btn__arrow {
+  width: 13px !important;
+  height: 13px !important;
+}
+
+/* Fill sweep circle */
+.arrow-fill-btn__fill {
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+  border-radius: 9999px;
+  background-color: var(--btn-fill-bg, #ffffff);
+
+  top: var(--circle-inset-y);
+  bottom: var(--circle-inset-y);
+  right: var(--icon-right);
+  left: calc(100% - var(--icon-right) - var(--icon-circle));
+
+  transition:
+    top 400ms cubic-bezier(0.785, 0.135, 0.15, 0.86),
+    bottom 400ms cubic-bezier(0.785, 0.135, 0.15, 0.86),
+    left 400ms cubic-bezier(0.785, 0.135, 0.15, 0.86),
+    right 400ms cubic-bezier(0.785, 0.135, 0.15, 0.86),
+    background-color 400ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+.arrow-fill-btn:hover .arrow-fill-btn__fill,
+.arrow-fill-btn:active .arrow-fill-btn__fill,
+.arrow-fill-btn[data-pressed="true"] .arrow-fill-btn__fill {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--btn-fill-bg-hover, #ffffff);
+}
+
+/* Clipped overlay text */
+.arrow-fill-btn__overlay {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  padding-right: calc(var(--icon-circle) + var(--icon-right) + 14px);
+  white-space: nowrap;
+  color: var(--btn-fill-text, #1a73e8);
+
+  clip-path: inset(
+    var(--circle-inset-y)
+    var(--icon-right)
+    var(--circle-inset-y)
+    calc(100% - var(--icon-right) - var(--icon-circle))
+  );
+
+  transition:
+    clip-path 400ms cubic-bezier(0.785, 0.135, 0.15, 0.86),
+    color 400ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+.arrow-fill-btn:hover .arrow-fill-btn__overlay,
+.arrow-fill-btn:active .arrow-fill-btn__overlay,
+.arrow-fill-btn[data-pressed="true"] .arrow-fill-btn__overlay {
+  clip-path: inset(0 0 0 0);
+  color: var(--btn-fill-text-hover, #1a73e8);
+}
+
+.arrow-fill-btn__overlay-text {
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.arrow-fill-btn__text {
+  position: relative;
+  z-index: 1;
+}
+
+.arrow-fill-btn__icon {
+  pointer-events: none;
+  position: absolute;
+  right: var(--icon-right);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-circle);
+  height: var(--icon-circle);
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--btn-fill-bg, #ffffff);
+  color: var(--btn-arrow, #4285F4);
+  transition:
+    background-color 300ms ease,
+    color 300ms ease,
+    transform 300ms ease;
+}
+
+.arrow-fill-btn:hover .arrow-fill-btn__icon,
+.arrow-fill-btn:active .arrow-fill-btn__icon,
+.arrow-fill-btn[data-pressed="true"] .arrow-fill-btn__icon {
+  background-color: var(--btn-fill-bg-hover, #ffffff);
+  color: var(--btn-arrow-hover, #1a73e8);
+}
+
+.arrow-fill-btn__arrow {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Slide arrow forward on hover and click - NEVER disappears */
+.arrow-fill-btn:hover .arrow-fill-btn__arrow,
+.arrow-fill-btn:active .arrow-fill-btn__arrow,
+.arrow-fill-btn[data-pressed="true"] .arrow-fill-btn__arrow {
+  transform: translateX(3px);
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Transparent / Outline variant */
+.arrow-fill-btn--transparent {
+  background-color: transparent !important;
+  color: var(--color-foreground, #1e293b) !important;
+  border: 1.5px solid var(--color-border, rgba(0,0,0,0.15));
+  box-shadow: none;
+}
+.arrow-fill-btn--transparent .arrow-fill-btn__icon {
+  background-color: rgba(66, 133, 244, 0.1);
+  color: #4285F4;
+}
+.arrow-fill-btn--transparent:hover {
+  border-color: #4285F4;
+}

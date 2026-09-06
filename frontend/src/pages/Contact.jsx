@@ -31,7 +31,7 @@ const faqs = [
   },
   {
     question: 'Is there a membership fee?',
-    answer: 'No! All GDGC events, workshops, and resources are completely free for students. We\'re funded by Google and our generous sponsors.'
+    answer: "No! All GDGC events, workshops, and resources are completely free for students. We're funded by Google and our generous sponsors."
   },
   {
     question: 'How do I stay updated on events?',
@@ -106,12 +106,9 @@ export function Contact() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6"
+              className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 text-foreground"
             >
-              Let\'s Start a{' '}
-              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                Conversation
-              </span>
+              Let's Start a Conversation
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -119,7 +116,7 @@ export function Contact() {
               transition={{ delay: 0.4 }}
               className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed"
             >
-              Have questions? Want to partner? Ready to join? We\'d love to hear from you.
+              Have questions? Want to partner? Ready to join? We'd love to hear from you.
             </motion.p>
           </motion.div>
         </div>
@@ -128,25 +125,23 @@ export function Contact() {
       <section className="relative py-10 lg:py-16" aria-labelledby="contact-info-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {contactInfo.map((info, index) => (
-              <motion.div
-                key={info.title}
+            {contactInfo.map((card, index) => (
+              <motion.a
+                key={card.title}
+                href={card.href}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.05 }}
+                className="p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/50 transition-colors group block"
               >
-                <Card hover className="h-full">
-                  <CardContent className="p-6">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
-                      <info.icon className="w-6 h-6" />
-                    </div>
-                    <h3 className="font-bold mb-2">{info.title}</h3>
-                    <a href={info.href} className="text-primary hover:underline font-medium">{info.value}</a>
-                    <p className="text-sm text-muted-foreground mt-1">{info.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                  <card.icon className="w-6 h-6" />
+                </div>
+                <h3 className="font-semibold text-lg mb-1">{card.title}</h3>
+                <p className="text-sm text-primary font-medium mb-1">{card.value}</p>
+                <p className="text-xs text-muted-foreground">{card.description}</p>
+              </motion.a>
             ))}
           </div>
         </div>
@@ -158,7 +153,7 @@ export function Contact() {
             <div>
               <SectionHeader
                 title="Send Us a Message"
-                subtitle="Fill out the form and we\'ll get back to you within 24 hours."
+                subtitle="Fill out the form and we'll get back to you within 24 hours."
                 align="left"
                 badge="Contact Form"
               />
@@ -176,7 +171,7 @@ export function Contact() {
                     <CheckCircle className="w-6 h-6 flex-shrink-0" />
                     <div>
                       <p className="font-semibold">Message Sent Successfully!</p>
-                      <p className="text-sm">We\'ll get back to you within 24 hours.</p>
+                      <p className="text-sm">We'll get back to you within 24 hours.</p>
                     </div>
                   </motion.div>
                 ) : submitStatus === 'error' ? (
