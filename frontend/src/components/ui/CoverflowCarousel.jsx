@@ -571,11 +571,6 @@ export function CoverflowCarousel({
 
                   {/* Bottom Info Glass Scrim */}
                   <div className="absolute bottom-3.5 left-3.5 right-3.5 text-white pointer-events-none z-20">
-                    {isBlackout && (
-                      <div className="inline-flex items-center gap-1 mb-1.5 px-2 py-0.5 rounded text-[10px] font-extrabold bg-red-600 text-white uppercase tracking-wider animate-pulse shadow-sm">
-                        🔥 Flagship Opener
-                      </div>
-                    )}
                     <h3 className="text-sm sm:text-base font-bold text-white drop-shadow-md line-clamp-2 leading-snug">
                       {slide.title}
                     </h3>

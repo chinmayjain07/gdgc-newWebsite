@@ -13,7 +13,7 @@ export const upcomingEvents = [
     speakers: ['GDGC Core Team', 'Campus Tech Mentors'],
     registered: 312,
     capacity: 400,
-    tags: ['Flagship Opener', 'Detective Clue Hunt', 'Hackathon', 'Unstop Registration', 'Cash Prizes'],
+    tags: ['Detective Clue Hunt', 'Hackathon', 'Unstop Registration', 'Cash Prizes'],
     registrationUrl: 'https://unstop.com',
   },
   {

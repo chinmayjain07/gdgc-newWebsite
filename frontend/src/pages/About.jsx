@@ -1,12 +1,11 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Target, Users, Lightbulb, Globe, Heart, CheckCircle } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
+import { Target, Users, Lightbulb, Globe, Heart, CheckCircle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/Card';
 import { SectionHeader } from '@/components/sections/SectionHeader';
 import { AnimatedBackground } from '@/components/sections/AnimatedBackground';
 import { InteractiveLogo } from '@/components/ui/InteractiveLogo';
 import { CountUp } from '@/hooks/useCountUp';
+import { ArrowFillButton } from '@/components/ui/ArrowFillButton';
 
 const values = [
   { icon: Target, title: 'Learning First', description: 'We prioritize hands-on, practical learning over theory. Every event is designed to give you real skills you can apply immediately.' },
@@ -243,15 +242,22 @@ export function About() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4"
+              className="flex flex-wrap items-center justify-center gap-4"
             >
-              <Button size="lg" asChild className="w-full sm:w-auto group">
-                <Link to="/contact">Join Us Today</Link>
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link to="/team">Meet the Team</Link>
-              </Button>
+              <ArrowFillButton
+                to="/contact"
+                btnText="Join Us Today"
+                bgColor="#4285F4"
+                textColor="#ffffff"
+                fillBgColor="#ffffff"
+                fillTextColor="#1a73e8"
+              />
+              <ArrowFillButton
+                to="/team"
+                btnText="Meet the Team"
+                transparent={true}
+                className="border-border hover:border-primary"
+              />
             </motion.div>
           </motion.div>
         </div>
