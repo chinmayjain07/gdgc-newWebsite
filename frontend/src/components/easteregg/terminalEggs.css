@@ -1,0 +1,91 @@
+/* ── Terminal Easter Eggs (scoped inside laptop terminal) ─────────────── */
+
+.egg-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Pixel dinosaur run track */
+.egg-dino-track {
+  height: 52px;
+  overflow: hidden;
+  position: relative;
+  margin: 2px 0 4px;
+}
+
+.egg-dino {
+  position: absolute;
+  bottom: 2px;
+  animation: egg-dino-run 3.2s linear forwards;
+}
+
+@keyframes egg-dino-run {
+  from { left: -80px; }
+  to { left: 100%; }
+}
+
+/* Matrix rain */
+.egg-matrix {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  height: 110px;
+  overflow: hidden;
+  margin: 3px 0;
+  font-size: 9px;
+  line-height: 1.1;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+
+.egg-matrix-col {
+  color: rgba(52, 211, 153, 0.75);
+  display: flex;
+  flex-direction: column;
+  animation: egg-matrix-fall linear infinite;
+  white-space: pre;
+}
+
+.egg-matrix-col span.head {
+  color: #a7f3d0;
+  text-shadow: 0 0 6px rgba(52, 211, 153, 0.9);
+}
+
+@keyframes egg-matrix-fall {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(220%); }
+}
+
+/* Konami override state on the terminal */
+.gdgc-ai-terminal.terminal-override {
+  animation: egg-terminal-flicker 0.35s steps(2) 3;
+  outline: 1px solid rgba(52, 211, 153, 0.5);
+  outline-offset: -1px;
+}
+
+.gdgc-ai-terminal.terminal-override .gdgc-terminal-title {
+  color: #34d399;
+  text-shadow: 0 0 10px rgba(52, 211, 153, 0.8);
+}
+
+.gdgc-log-line.override {
+  color: #34d399;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-shadow: 0 0 8px rgba(52, 211, 153, 0.55);
+}
+
+@keyframes egg-terminal-flicker {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.6) hue-rotate(60deg); }
+  100% { filter: brightness(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .egg-dino,
+  .egg-matrix-col,
+  .gdgc-ai-terminal.terminal-override {
+    animation: none;
+  }
+}

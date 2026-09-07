@@ -1007,3 +1007,105 @@
   }
 }
 
+
+/* ==========================================================================
+   GDGC AI DEV TERMINAL � Tab 2
+   ========================================================================== */
+
+.gdgc-ai-terminal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  font-family: 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 10px;
+  color: #a8b4c8;
+  gap: 0;
+}
+.gdgc-terminal-header { padding: 6px 10px 2px; flex-shrink: 0; }
+.gdgc-terminal-title-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2px; }
+.gdgc-terminal-title { font-size: 9.5px; font-weight: 700; letter-spacing: .08em; color: #4285F4; text-shadow: 0 0 8px rgba(66,133,244,.5); }
+.gdgc-terminal-version { font-size: 7.5px; color: #555f74; }
+.gdgc-terminal-sep { font-size: 7px; color: #2a3040; margin: 2px 0; line-height: 1; }
+.gdgc-terminal-status-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2px; }
+.gdgc-terminal-connected,.gdgc-terminal-connected-net { font-size: 8.5px; color: #34A853; }
+.gdgc-terminal-body { flex: 1; overflow-y: auto; padding: 4px 10px; min-height: 0; scrollbar-width: thin; scrollbar-color: rgba(66,133,244,.2) transparent; display: flex; flex-direction: column; gap: 1px; }
+.gdgc-terminal-body::-webkit-scrollbar { width: 3px; }
+.gdgc-terminal-body::-webkit-scrollbar-track { background: transparent; }
+.gdgc-terminal-body::-webkit-scrollbar-thumb { background: rgba(66,133,244,.25); border-radius: 2px; }
+.gdgc-log-line { font-size: 9px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+.gdgc-log-line.success  { color: #34A853; }
+.gdgc-log-line.info     { color: #7e8fa8; }
+.gdgc-log-line.accent   { color: #FBBC04; }
+.gdgc-log-line.command  { color: #4285F4; font-weight: 600; }
+.gdgc-log-line.output   { color: #a8b4c8; }
+.gdgc-log-line.ai       { color: #c678dd; font-style: italic; }
+.gdgc-log-line.thinking { color: #555f74; }
+.gdgc-log-line.error    { color: #EA4335; }
+.gdgc-terminal-input-row { display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(66,133,244,.04); border-top: 1px solid rgba(66,133,244,.1); flex-shrink: 0; }
+.gdgc-terminal-prompt-prefix { display: flex; font-size: 9px; font-weight: 600; flex-shrink: 0; white-space: nowrap; letter-spacing: .02em; }
+.gdgc-terminal-input { flex: 1; background: transparent; border: none; outline: none; color: #c9d1d9; font-family: inherit; font-size: 9.5px; caret-color: #4285F4; padding: 1px 4px; min-width: 0; }
+.gdgc-terminal-input::placeholder { color: #3a4255; }
+.gdgc-terminal-input:disabled { opacity: .5; }
+.gdgc-terminal-send-btn { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 4px; background: rgba(66,133,244,.15); color: #4285F4; border: 1px solid rgba(66,133,244,.25); cursor: pointer; transition: background .15s, transform .1s; }
+.gdgc-terminal-send-btn:hover:not(:disabled) { background: rgba(66,133,244,.3); transform: scale(1.05); }
+.gdgc-terminal-send-btn:disabled { opacity: .35; cursor: not-allowed; }
+.gdgc-terminal-chips { display: flex; gap: 4px; flex-wrap: wrap; padding: 3px 10px 5px; flex-shrink: 0; }
+.terminal-chip-btn { font-family: inherit; font-size: 8px; padding: 1.5px 7px; border-radius: 3px; background: rgba(66,133,244,.08); color: #4285F4; border: 1px solid rgba(66,133,244,.2); cursor: pointer; transition: background .15s, transform .1s; }
+.terminal-chip-btn:hover:not(:disabled) { background: rgba(66,133,244,.2); transform: scale(1.04); }
+.terminal-chip-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+/* ==========================================================================
+   GDGC AI DEV TERMINAL - Tab 2
+   ========================================================================== */
+
+.gdgc-ai-terminal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  font-family: 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 10px;
+  color: #a8b4c8;
+  gap: 0;
+}
+.gdgc-terminal-header { padding: 6px 10px 2px; flex-shrink: 0; }
+.gdgc-terminal-title-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2px; }
+.gdgc-terminal-title { font-size: 9.5px; font-weight: 700; letter-spacing: .08em; color: #4285F4; text-shadow: 0 0 8px rgba(66,133,244,.5); }
+.gdgc-terminal-version { font-size: 7.5px; color: #555f74; }
+.gdgc-terminal-sep { font-size: 7px; color: #2a3040; margin: 2px 0; line-height: 1; }
+.gdgc-terminal-status-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2px; }
+.gdgc-terminal-connected, .gdgc-terminal-connected-net { font-size: 8.5px; color: #34A853; }
+.gdgc-terminal-body { flex: 1; overflow-y: auto; padding: 4px 10px; min-height: 0; scrollbar-width: thin; scrollbar-color: rgba(66,133,244,.2) transparent; display: flex; flex-direction: column; gap: 1px; }
+.gdgc-terminal-body::-webkit-scrollbar { width: 3px; }
+.gdgc-terminal-body::-webkit-scrollbar-track { background: transparent; }
+.gdgc-terminal-body::-webkit-scrollbar-thumb { background: rgba(66,133,244,.25); border-radius: 2px; }
+.gdgc-log-line { font-size: 9px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+.gdgc-log-line.success  { color: #34A853; }
+.gdgc-log-line.info     { color: #7e8fa8; }
+.gdgc-log-line.accent   { color: #FBBC04; }
+.gdgc-log-line.command  { color: #4285F4; font-weight: 600; }
+.gdgc-log-line.output   { color: #a8b4c8; }
+.gdgc-log-line.ai       { color: #c678dd; font-style: italic; }
+.gdgc-log-line.thinking { color: #555f74; }
+.gdgc-log-line.error    { color: #EA4335; }
+.gdgc-terminal-input-row { display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(66,133,244,.04); border-top: 1px solid rgba(66,133,244,.1); flex-shrink: 0; }
+.gdgc-terminal-prompt-prefix { display: flex; font-size: 9px; font-weight: 600; flex-shrink: 0; white-space: nowrap; letter-spacing: .02em; }
+.gdgc-terminal-input { flex: 1; background: transparent; border: none; outline: none; color: #c9d1d9; font-family: inherit; font-size: 9.5px; caret-color: #4285F4; padding: 1px 4px; min-width: 0; }
+.gdgc-terminal-input::placeholder { color: #3a4255; }
+.gdgc-terminal-input:disabled { opacity: .5; }
+.gdgc-terminal-send-btn { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 4px; background: rgba(66,133,244,.15); color: #4285F4; border: 1px solid rgba(66,133,244,.25); cursor: pointer; transition: background .15s, transform .1s; }
+.gdgc-terminal-send-btn:hover:not(:disabled) { background: rgba(66,133,244,.3); transform: scale(1.05); }
+.gdgc-terminal-send-btn:disabled { opacity: .35; cursor: not-allowed; }
+.gdgc-terminal-chips { display: flex; gap: 4px; flex-wrap: wrap; padding: 3px 10px 5px; flex-shrink: 0; }
+.terminal-chip-btn { font-family: inherit; font-size: 8px; padding: 1.5px 7px; border-radius: 3px; background: rgba(66,133,244,.08); color: #4285F4; border: 1px solid rgba(66,133,244,.2); cursor: pointer; transition: background .15s, transform .1s; }
+.terminal-chip-btn:hover:not(:disabled) { background: rgba(66,133,244,.2); transform: scale(1.04); }
+.terminal-chip-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+@media (max-width: 640px) {
+  .gdgc-ai-terminal { font-size: 8px; }
+  .gdgc-terminal-title { font-size: 8px; }
+  .gdgc-log-line { font-size: 7.5px; }
+  .gdgc-terminal-input { font-size: 8px; }
+  .terminal-chip-btn { font-size: 7px; padding: 1px 5px; }
+}
