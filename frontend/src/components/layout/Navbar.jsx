@@ -7,7 +7,6 @@ import { useTheme } from '@/context/ThemeContext';
 import { cn } from '@/utils/cn';
 import { InteractiveLogo } from '@/components/ui/InteractiveLogo';
 import { GdgText } from '@/components/ui/GdgText';
-import { BlackoutMysteryGame } from '@/components/events/BlackoutMysteryGame';
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -29,7 +28,6 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredDropdown, setHoveredDropdown] = useState(null);
-  const [isMysteryOpen, setIsMysteryOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
 
@@ -62,7 +60,7 @@ export function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
         <div className="flex items-center justify-between h-16 lg:h-20">
           <Link to="/" className="flex items-center group py-1" aria-label="GDGC Home" title="GDGC Home">
-            <InteractiveLogo size="navbar" showGlow={false} onSecretTrigger={() => setIsMysteryOpen(true)} />
+            <InteractiveLogo size="navbar" showGlow={false} />
           </Link>
 
           <div className="hidden lg:flex items-center gap-7">
@@ -208,22 +206,6 @@ export function Navbar() {
           )}
         </AnimatePresence>
       </nav>
-
-      {/* Mystery Game Modal */}
-      <AnimatePresence>
-        {isMysteryOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="w-full max-w-2xl max-h-[90vh] overflow-y-auto"
-            >
-              <BlackoutMysteryGame isModal onClose={() => setIsMysteryOpen(false)} />
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </motion.header>
   );
 }

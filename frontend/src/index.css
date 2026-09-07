@@ -497,9 +497,63 @@
     display: none;
   }
 
-  .perspective-1000 { perspective: 1000px; }
-  .transform-style-3d { transform-style: preserve-3d; }
-  .backface-hidden { backface-visibility: hidden; }
+  .perspective-1000 {
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+  }
+  .transform-style-3d {
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+  }
+  .rotate-y-0 {
+    transform: rotateY(0deg);
+    -webkit-transform: rotateY(0deg);
+  }
+
+  /* 3D Flip Card Component Styles */
+  .flip-card {
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+  }
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .flip-card-inner.is-flipped {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+  }
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+  }
+  .flip-card-front {
+    transform: rotateY(0deg);
+    -webkit-transform: rotateY(0deg);
+  }
+  .flip-card-back {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+  }
 
   @keyframes grid-move {
     0% { transform: translate(0, 0); }
@@ -509,3 +563,35 @@
     animation: grid-move 20s linear infinite;
   }
 }
+
+/* ==========================================================================
+   Why Join GDGC Feature Card 4-Color Blended Glow & Lift Animations
+   Google 4-Color Palette: Blue (#4285F4), Red (#EA4335), Yellow (#FBBC04), Green (#34A853)
+   ========================================================================== */
+
+.feature-card {
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1), border-color 250ms ease !important;
+  will-change: transform, box-shadow;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px) !important;
+  border-color: rgba(66, 133, 244, 0.35) !important;
+  box-shadow:
+    -12px -10px 22px -3px rgba(66, 133, 244, 0.26),   /* Blue: top-left */
+    12px -10px 22px -3px rgba(234, 67, 53, 0.24),    /* Red: top-right */
+    12px 12px 24px -3px rgba(251, 188, 4, 0.25),     /* Yellow: bottom-right */
+    -12px 12px 24px -3px rgba(52, 168, 83, 0.24)      /* Green: bottom-left */
+    !important;
+}
+
+.feature-card:active {
+  transform: translateY(-4px) scale(0.99) !important;
+  border-color: rgba(66, 133, 244, 0.5) !important;
+  box-shadow:
+    -8px -6px 16px -2px rgba(66, 133, 244, 0.32),
+    8px -6px 16px -2px rgba(234, 67, 53, 0.30),
+    8px 8px 16px -2px rgba(251, 188, 4, 0.32),
+    -8px 8px 16px -2px rgba(52, 168, 83, 0.30)
+    !important;
+}

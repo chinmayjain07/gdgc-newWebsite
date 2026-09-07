@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { InteractiveLogo } from '@/components/ui/InteractiveLogo';
+import './Footer.css';
 
 const footerLinks = {
   navigate: [
@@ -53,9 +54,18 @@ export function Footer() {
 
   return (
     <footer className="relative bg-white dark:bg-[#070A0F] text-foreground overflow-hidden border-t border-slate-200 dark:border-slate-800/80 transition-colors duration-300">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-500/5 via-transparent to-transparent pointer-events-none" />
+      {/* Subtle Google Ambient Animated Blobs & Micro-Texture */}
+      <div className="footer-ambient-container" aria-hidden="true">
+        <div className="footer-gradient-aurora" />
+        <div className="footer-motion-waves" />
+        <div className="footer-texture-grid" />
+        <span className="footer-blob footer-blob--blue" />
+        <span className="footer-blob footer-blob--cyan" />
+        <span className="footer-blob footer-blob--yellow" />
+        <span className="footer-blob footer-blob--green" />
+      </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

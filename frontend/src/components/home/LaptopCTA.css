@@ -5,9 +5,16 @@
 
 /* Outer scroll track for sticky pinning */
 .acm-laptop-section {
+  --laptop-navbar-offset: 80px;
   position: relative;
   height: 300vh;
   width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .acm-laptop-section {
+    --laptop-navbar-offset: 64px;
+  }
 }
 
 /* Ambient Radial Glow */
@@ -37,7 +44,7 @@
 
 .acm-laptop-stage {
   position: relative;
-  width: min(1080px, 95vw, calc((100vh - 40px) * 16 / 9));
+  width: min(1080px, 95vw, calc((100vh - var(--laptop-navbar-offset, 80px) - 30px) * 16 / 9));
   aspect-ratio: 16 / 9;
   display: flex;
   align-items: center;
@@ -96,21 +103,22 @@
   padding: 2px 12px;
 }
 
-.lid-badge-surface svg {
+.lid-badge-surface svg,
+.lid-badge-surface img {
   filter: drop-shadow(0 0 3px rgba(66, 133, 244, 0.5));
 }
 
 /* ==========================================================================
-   SCREEN OVERLAY (Fitted 100% flush inside the laptop display glass)
+   SCREEN OVERLAY (Fitted 100% edge-to-edge inside the laptop display glass)
    ========================================================================== */
 
 .acm-screen-overlay {
   position: absolute;
-  top: 19.8%;
-  left: 49.6%;
+  top: 5.60%;
+  left: 50.60%;
   transform: translateX(-50%);
-  width: 51.2%;
-  height: 56.4%;
+  width: 59.00%;
+  height: 69.80%;
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -123,20 +131,20 @@
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 8px 8px 0 0;
+  border-radius: 10px 10px 0 0;
   overflow: hidden;
   background: #ffffff;
   border: none;
   display: flex;
   flex-direction: column;
-  box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .dark .acm-screen-inner {
-  background: #090d16;
+  background: #080c14;
   border: none;
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.7);
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 /* Screen Glass Sheen */
@@ -319,14 +327,258 @@
 .blob-yellow { bottom: 10%; right: 25%; background: #FBBC04; }
 
 /* --------------------------------------------------------------------------
-   Tab 1: Primary "Ready to Shape the Future?" View
+   Tab 1: Condensed Contact Form (Default)
    -------------------------------------------------------------------------- */
+
+.laptop-contact-card {
+  position: relative;
+  z-index: 6;
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto 0;
+  padding: 6px 0;
+}
+
+.laptop-contact-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.laptop-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 4px;
+}
+
+.laptop-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  width: 100%;
+}
+
+.laptop-input-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.laptop-input-field {
+  width: 100%;
+  padding: 4px 8px;
+  font-size: 9.5px;
+  border-radius: 4px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.laptop-input-field:focus {
+  border-color: #4285F4;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.18);
+}
+
+.dark .laptop-input-field {
+  background: #111724;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+}
+
+.dark .laptop-input-field:focus {
+  border-color: #4285F4;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.28);
+}
+
+.laptop-select-field {
+  cursor: pointer;
+  appearance: auto;
+  height: 25px;
+}
+
+.laptop-textarea-field {
+  resize: none;
+  height: 25px;
+  min-height: 25px;
+  line-height: 1.3;
+}
+
+.laptop-status-msg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 8.5px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.laptop-status-msg--error {
+  background: rgba(234, 67, 53, 0.1);
+  color: #EA4335;
+  border: 1px solid rgba(234, 67, 53, 0.25);
+}
+
+.laptop-status-msg--success {
+  background: rgba(52, 168, 83, 0.1);
+  color: #34A853;
+  border: 1px solid rgba(52, 168, 83, 0.25);
+}
+
+.laptop-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 1px;
+}
+
+.laptop-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 3.5px 12px;
+  font-size: 9.5px;
+  font-weight: 600;
+  border-radius: 4px;
+  background: #4285F4;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(66, 133, 244, 0.3);
+}
+
+.laptop-submit-btn:hover:not(:disabled) {
+  background: #1a73e8;
+  transform: translateY(-1px);
+}
+
+.laptop-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   Tab 2: Leadership Team View (team.json)
+   -------------------------------------------------------------------------- */
+
+.team-workspace {
+  position: relative;
+  z-index: 6;
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.team-header-mini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.team-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+.team-lead-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 8px 6px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  gap: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+
+.dark .team-lead-card {
+  background: #131926;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.team-lead-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.team-avatar-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 11px;
+  border: 1.5px solid;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: -0.02em;
+}
+
+.team-lead-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.team-lead-name {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.dark .team-lead-name {
+  color: #f8fafc;
+}
+
+.team-lead-role {
+  font-size: 8.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.team-footer-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2px;
+}
 
 .laptop-cta-card {
   position: relative;
   z-index: 6;
   width: 100%;
-  max-width: 500px;
+  max-width: 560px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -337,14 +589,14 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 2px 8px;
+  padding: 2.5px 9px;
   border-radius: 9999px;
   background: rgba(66, 133, 244, 0.09);
   border: 1px solid rgba(66, 133, 244, 0.25);
   color: #1a73e8;
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .dark .laptop-badge {
@@ -354,12 +606,12 @@
 }
 
 .laptop-inner-title {
-  font-size: clamp(14px, 1.6vw, 18px);
+  font-size: clamp(16px, 1.8vw, 22px);
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.22;
   color: #0f172a;
   letter-spacing: -0.02em;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
 }
 
 .dark .laptop-inner-title {
@@ -367,11 +619,11 @@
 }
 
 .laptop-desc {
-  font-size: clamp(9px, 0.9vw, 10.5px);
-  line-height: 1.35;
+  font-size: clamp(10px, 1.05vw, 12px);
+  line-height: 1.45;
   color: #475569;
-  max-width: 380px;
-  margin-bottom: 7px;
+  max-width: 440px;
+  margin-bottom: 10px;
 }
 
 .dark .laptop-desc {
@@ -458,7 +710,7 @@
   position: relative;
   z-index: 6;
   width: 100%;
-  max-width: 500px;
+  max-width: 560px;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
@@ -589,7 +841,7 @@
   position: relative;
   z-index: 6;
   width: 100%;
-  max-width: 500px;
+  max-width: 560px;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -661,58 +913,6 @@
   justify-content: center;
 }
 
-/* --------------------------------------------------------------------------
-   Terminal Preview Strip (Bottom)
-   -------------------------------------------------------------------------- */
-
-.screen-terminal-strip {
-  position: relative;
-  z-index: 6;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 2px 7px;
-  border-radius: 4px;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
-  color: #475569;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.screen-terminal-strip:hover {
-  background: #e2e8f0;
-  color: #0f172a;
-}
-
-.dark .screen-terminal-strip {
-  background: rgba(0, 0, 0, 0.45);
-  border-color: rgba(255, 255, 255, 0.08);
-  color: #94a3b8;
-}
-
-.dark .screen-terminal-strip:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-}
-
-.dark .screen-terminal-strip {
-  background: rgba(0, 0, 0, 0.45);
-  border-color: rgba(255, 255, 255, 0.08);
-  color: #94a3b8;
-}
-
-.terminal-accent {
-  color: #16a34a;
-  font-weight: 600;
-}
-
-.dark .terminal-accent {
-  color: #34A853;
-}
-
 /* ==========================================================================
    RESPONSIVE SCALING (Tablets & Mobile)
    ========================================================================== */
@@ -743,9 +943,6 @@
 }
 
 @media (max-width: 520px) {
-  .screen-terminal-strip {
-    display: none;
-  }
   .laptop-desc {
     display: none;
   }
@@ -772,6 +969,40 @@
   .terminal-log-body {
     min-height: 55px;
     max-height: 65px;
+    font-size: 8.5px;
+  }
+  .team-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .team-lead-card {
+    flex-direction: row;
+    padding: 3px 6px;
+    text-align: left;
+    gap: 6px;
+  }
+  .team-lead-info {
+    align-items: flex-start;
+  }
+  .team-avatar-badge {
+    width: 24px;
+    height: 24px;
+    font-size: 9px;
+  }
+  .laptop-form-grid {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+  .laptop-input-field {
+    padding: 3px 6px;
+    font-size: 8.5px;
+  }
+  .laptop-textarea-field {
+    height: 22px;
+    min-height: 22px;
+  }
+  .laptop-submit-btn {
+    padding: 2.5px 8px;
     font-size: 8.5px;
   }
 }

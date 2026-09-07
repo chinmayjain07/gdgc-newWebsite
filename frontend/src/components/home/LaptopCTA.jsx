@@ -10,8 +10,12 @@ import {
   Trophy,
   Copy,
   Check,
-  TerminalSquare
+  Mail,
+  Loader2,
+  AlertCircle,
+  CheckCircle2,
 } from 'lucide-react';
+import { useContactForm, SUBJECT_OPTIONS } from '@/hooks/useContactForm';
 import './LaptopCTA.css';
 
 const TOTAL_FRAMES = 125;
@@ -48,6 +52,27 @@ const PERKS = [
   },
 ];
 
+const LEADERSHIP_TEAM = [
+  {
+    name: 'Mayur Kharat',
+    role: 'Chapter Lead',
+    initials: 'MK',
+    color: '#4285F4',
+  },
+  {
+    name: 'Soumil Chandra',
+    role: 'Co-Lead Organizer',
+    initials: 'SC',
+    color: '#EA4335',
+  },
+  {
+    name: 'Sharvari Bangar',
+    role: 'Co-Lead Organizer',
+    initials: 'SB',
+    color: '#34A853',
+  },
+];
+
 const INITIAL_LOGS = [
   { id: 1, type: 'success', text: '✓ [SYSTEM] Connected to Google Developer Groups • PCCOE Chapter' },
   { id: 2, type: 'info', text: 'ℹ Platform: Linux / Node.js 20+ • Google Cloud SDK Active' },
@@ -57,15 +82,54 @@ const INITIAL_LOGS = [
 export function LaptopCTA() {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
-  const [activeTab, setActiveTab] = useState('welcome'); // 'welcome' | 'terminal' | 'perks'
+  const [activeTab, setActiveTab] = useState('contact'); // 'contact' | 'team' | 'terminal' | 'perks'
   const [copied, setCopied] = useState(false);
   const [terminalLogs, setTerminalLogs] = useState(INITIAL_LOGS);
+  const { formData, submitStatus, errorMessage, handleChange, handleSubmit } = useContactForm();
 
   // Sticky Scroll: Pins section to viewport while scroll scrubs through the 125 laptop frames
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
+
+  // Easter Egg Listener: Logo 3x spin redirects here, opens laptop, and switches to DevTerminal.sh
+  useEffect(() => {
+    const handleOpenTerminal = () => {
+      setActiveTab('terminal');
+      setTerminalLogs((prev) => {
+        if (prev.some((l) => l.text.includes('DevTerminal.sh Unlocked'))) return prev;
+        return [
+          ...prev,
+          {
+            id: Date.now(),
+            type: 'accent',
+            text: '⚡ [EASTER EGG] 3x Logo Spin Triggered! DevTerminal.sh Unlocked.',
+          },
+          {
+            id: Date.now() + 1,
+            type: 'success',
+            text: '✓ Connected to GDGC Developer Workstation. Ready for commands.',
+          },
+        ];
+      });
+
+      const container = containerRef.current || document.getElementById('cta-section');
+      if (container) {
+        const rect = container.getBoundingClientRect();
+        const containerTop = window.scrollY + rect.top;
+        const scrollableDistance = container.offsetHeight - window.innerHeight;
+        const targetScrollY = containerTop + Math.max(0, scrollableDistance * 0.65);
+        window.scrollTo({
+          top: targetScrollY,
+          behavior: 'smooth',
+        });
+      }
+    };
+
+    window.addEventListener('gdgc:open-laptop-terminal', handleOpenTerminal);
+    return () => window.removeEventListener('gdgc:open-laptop-terminal', handleOpenTerminal);
+  }, []);
 
   // Map scroll progress to laptop frame progress (0.0 to 1.0)
   // - 0.00 -> 0.08: Resting closed (Photo 1)
@@ -221,8 +285,8 @@ export function LaptopCTA() {
       className="acm-laptop-section relative w-full h-[300vh]"
       aria-labelledby="cta-title"
     >
-      {/* Sticky Viewport Container (Fixed at top-0 while scrolling) */}
-      <div className="sticky top-0 left-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden">
+      {/* Sticky Viewport Container (Fixed at top-0 while scrolling with navbar clearance) */}
+      <div className="sticky top-0 left-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden pt-16 lg:pt-20">
         {/* Soft Ambient Background Glow */}
         <div className="acm-ambient-glow" aria-hidden="true" />
 
@@ -242,21 +306,11 @@ export function LaptopCTA() {
             aria-hidden="true"
           >
             <div className="lid-badge-surface">
-              <svg
-                viewBox="0 0 48 48"
-                className="w-full h-full"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
-                  {/* Left Chevron: Blue top, Red bottom */}
-                  <path d="M 20 13 L 9 24" stroke="#4285F4" />
-                  <path d="M 9 24 L 20 35" stroke="#EA4335" />
-                  {/* Right Chevron: Yellow top, Green bottom */}
-                  <path d="M 28 13 L 39 24" stroke="#FBBC04" />
-                  <path d="M 39 24 L 28 35" stroke="#34A853" />
-                </g>
-              </svg>
+              <img
+                src="/GDGC-dark.png"
+                alt="GDGC Logo"
+                className="h-full w-auto object-contain pointer-events-none"
+              />
             </div>
           </motion.div>
 
@@ -281,11 +335,20 @@ export function LaptopCTA() {
                 <div className="window-tabs-container">
                   <button
                     type="button"
-                    onClick={() => setActiveTab('welcome')}
-                    className={`screen-tab-btn ${activeTab === 'welcome' ? 'screen-tab-btn--active' : ''}`}
+                    onClick={() => setActiveTab('contact')}
+                    className={`screen-tab-btn ${activeTab === 'contact' ? 'screen-tab-btn--active' : ''}`}
                   >
-                    <Sparkles className="w-3.5 h-3.5 text-[#FBBC04]" />
-                    <span>Welcome.tsx</span>
+                    <Mail className="w-3.5 h-3.5 text-[#EA4335]" />
+                    <span>contact.html</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('team')}
+                    className={`screen-tab-btn ${activeTab === 'team' ? 'screen-tab-btn--active' : ''}`}
+                  >
+                    <Users className="w-3.5 h-3.5 text-[#4285F4]" />
+                    <span>team.json</span>
                   </button>
 
                   <button
@@ -293,7 +356,7 @@ export function LaptopCTA() {
                     onClick={() => setActiveTab('terminal')}
                     className={`screen-tab-btn ${activeTab === 'terminal' ? 'screen-tab-btn--active' : ''}`}
                   >
-                    <Terminal className="w-3.5 h-3.5 text-[#4285F4]" />
+                    <Terminal className="w-3.5 h-3.5 text-[#FBBC04]" />
                     <span>DevTerminal.sh</span>
                   </button>
 
@@ -324,36 +387,184 @@ export function LaptopCTA() {
                   <span className="screen-blob blob-yellow" />
                 </div>
 
-                {/* Tab 1: Primary "Ready to Shape the Future?" CTA */}
+                {/* Tab 1: Condensed Contact Form (Default) */}
                 <AnimatePresence mode="wait">
-                  {activeTab === 'welcome' && (
+                  {activeTab === 'contact' && (
                     <motion.div
-                      key="welcome"
+                      key="contact"
                       initial={{ opacity: 0, y: 6 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -6 }}
                       transition={{ duration: 0.2 }}
-                      className="laptop-cta-card"
+                      className="laptop-contact-card"
                     >
-                      <span className="laptop-badge">
-                        <Sparkles className="w-3.5 h-3.5 text-[#FBBC04]" />
-                        <span>Build With Next-Gen Devs</span>
-                      </span>
+                      <div className="laptop-contact-header">
+                        <span className="laptop-badge">
+                          <Sparkles className="w-3 h-3 text-[#EA4335]" />
+                          <span>Get in Touch • PCCOE Chapter</span>
+                        </span>
+                        <h3 className="laptop-inner-title">
+                          Send Us a <span className="title-gradient-accent">Message</span>
+                        </h3>
+                      </div>
 
-                      <h3 className="laptop-inner-title">
-                        Build The Future With{' '}
-                        <span className="title-gradient-accent">GDGC</span>
-                      </h3>
+                      <form onSubmit={handleSubmit} className="laptop-form">
+                        <div className="laptop-form-grid">
+                          <div className="laptop-input-wrap">
+                            <input
+                              type="text"
+                              name="name"
+                              value={formData.name}
+                              onChange={handleChange}
+                              placeholder="Full Name *"
+                              className="laptop-input-field"
+                              disabled={submitStatus === 'loading'}
+                              required
+                            />
+                          </div>
+                          <div className="laptop-input-wrap">
+                            <input
+                              type="email"
+                              name="email"
+                              value={formData.email}
+                              onChange={handleChange}
+                              placeholder="Email Address *"
+                              className="laptop-input-field"
+                              disabled={submitStatus === 'loading'}
+                              required
+                            />
+                          </div>
+                        </div>
 
-                      <p className="laptop-desc">
-                        Join passionate student developers at PCCOE. Collaborate on
-                        real-world projects, master Google technologies, and launch your engineering career.
-                      </p>
+                        <div className="laptop-form-grid">
+                          <div className="laptop-input-wrap">
+                            <select
+                              name="subject"
+                              value={formData.subject}
+                              onChange={handleChange}
+                              className="laptop-input-field laptop-select-field"
+                              disabled={submitStatus === 'loading'}
+                            >
+                              {SUBJECT_OPTIONS.map((opt) => (
+                                <option key={opt.value} value={opt.value}>
+                                  {opt.label}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="laptop-input-wrap">
+                            <textarea
+                              name="message"
+                              value={formData.message}
+                              onChange={handleChange}
+                              placeholder="How can we help you? *"
+                              rows={2}
+                              className="laptop-input-field laptop-textarea-field"
+                              disabled={submitStatus === 'loading'}
+                              required
+                            />
+                          </div>
+                        </div>
 
-                      <div className="laptop-actions">
+                        {/* Submission Feedback Alert */}
+                        {submitStatus === 'error' && (
+                          <div className="laptop-status-msg laptop-status-msg--error">
+                            <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                            <span>{errorMessage || 'Please fill in all required fields.'}</span>
+                          </div>
+                        )}
+                        {submitStatus === 'success' && (
+                          <div className="laptop-status-msg laptop-status-msg--success">
+                            <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                            <span>Thank you! Your message has been sent.</span>
+                          </div>
+                        )}
+
+                        {/* Actions */}
+                        <div className="laptop-form-actions">
+                          <button
+                            type="submit"
+                            disabled={submitStatus === 'loading'}
+                            className="laptop-submit-btn"
+                          >
+                            {submitStatus === 'loading' ? (
+                              <>
+                                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                <span>Sending...</span>
+                              </>
+                            ) : submitStatus === 'success' ? (
+                              <>
+                                <CheckCircle2 className="w-3.5 h-3.5" />
+                                <span>Sent!</span>
+                              </>
+                            ) : (
+                              <>
+                                <Mail className="w-3.5 h-3.5" />
+                                <span>Submit Message</span>
+                              </>
+                            )}
+                          </button>
+
+                          <ArrowFillButton
+                            to="/contact"
+                            btnText="Open Full Contact Page"
+                            size="sm"
+                            transparent={true}
+                          />
+                        </div>
+                      </form>
+                    </motion.div>
+                  )}
+
+                  {/* Tab 2: Leadership Team */}
+                  {activeTab === 'team' && (
+                    <motion.div
+                      key="team"
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.2 }}
+                      className="team-workspace"
+                    >
+                      <div className="team-header-mini">
+                        <span className="laptop-badge">
+                          <Users className="w-3 h-3 text-[#4285F4]" />
+                          <span>GDGC Chapter Leadership</span>
+                        </span>
+                        <h3 className="laptop-inner-title">
+                          Core <span className="title-gradient-accent">Team</span>
+                        </h3>
+                      </div>
+
+                      <div className="team-cards-grid">
+                        {LEADERSHIP_TEAM.map((lead, idx) => (
+                          <div key={idx} className="team-lead-card">
+                            <div
+                              className="team-avatar-badge"
+                              style={{
+                                backgroundColor: `${lead.color}18`,
+                                borderColor: `${lead.color}40`,
+                                color: lead.color,
+                              }}
+                            >
+                              <span>{lead.initials}</span>
+                            </div>
+                            <div className="team-lead-info">
+                              <h4 className="team-lead-name">{lead.name}</h4>
+                              <span
+                                className="team-lead-role"
+                                style={{ color: lead.color }}
+                              >
+                                {lead.role}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                                <div className="team-footer-cta">
                         <ArrowFillButton
-                          to="/contact"
-                          btnText="Join GDGC Today"
+                          to="/team"
+                          btnText="View Full Team"
                           size="sm"
                           bgColor="#4285F4"
                           textColor="#ffffff"
@@ -362,50 +573,6 @@ export function LaptopCTA() {
                           arrowColor="#4285F4"
                           hoverArrowColor="#1a73e8"
                         />
-                        <ArrowFillButton
-                          to="/events"
-                          btnText="Explore Events"
-                          size="sm"
-                          transparent={true}
-                        />
-                      </div>
-
-                      {/* Highlights Strip */}
-                      <div className="laptop-stats-pills">
-                        <span className="stat-pill">
-                          <Users className="w-3 h-3 text-[#4285F4]" />
-                          <span>Collaborative Community</span>
-                        </span>
-                        <span className="stat-pill">
-                          <Trophy className="w-3 h-3 text-[#EA4335]" />
-                          <span>25+ Hackathons</span>
-                        </span>
-                        <span className="stat-pill">
-                          <Cpu className="w-3 h-3 text-[#34A853]" />
-                          <span>12 Tech Domains</span>
-                        </span>
-                      </div>
-
-                      {/* Quick Tab Switcher */}
-                      <div className="laptop-quick-tab-links">
-                        <button
-                          type="button"
-                          onClick={() => setActiveTab('terminal')}
-                          className="quick-tab-link"
-                          title="Open interactive DevTerminal"
-                        >
-                          <Terminal className="w-3 h-3 text-[#4285F4]" />
-                          <span>DevTerminal.sh</span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setActiveTab('perks')}
-                          className="quick-tab-link"
-                          title="Explore official member perks"
-                        >
-                          <Gift className="w-3 h-3 text-[#34A853]" />
-                          <span>MemberPerks.json</span>
-                        </button>
                       </div>
                     </motion.div>
                   )}
@@ -509,14 +676,6 @@ export function LaptopCTA() {
                           >
                             <span>clear</span>
                           </button>
-                          <button
-                            type="button"
-                            onClick={() => setActiveTab('welcome')}
-                            className="terminal-chip-btn text-foreground font-semibold"
-                            title="Return to Welcome view"
-                          >
-                            <span>← Welcome</span>
-                          </button>
                         </div>
 
                         <ArrowFillButton
@@ -566,15 +725,7 @@ export function LaptopCTA() {
                         })}
                       </div>
 
-                      <div className="perks-footer-cta flex items-center justify-center gap-3">
-                        <button
-                          type="button"
-                          onClick={() => setActiveTab('welcome')}
-                          className="quick-tab-link"
-                          title="Return to Welcome view"
-                        >
-                          <span>← Back to Welcome</span>
-                        </button>
+                      <div className="perks-footer-cta flex items-center justify-center">
                         <ArrowFillButton
                           to="/contact"
                           btnText="Unlock All Member Perks"
@@ -588,18 +739,6 @@ export function LaptopCTA() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-
-                {/* Developer Terminal Live Preview Strip at bottom */}
-                <button
-                  type="button"
-                  onClick={() => setActiveTab(activeTab === 'terminal' ? 'welcome' : 'terminal')}
-                  className="screen-terminal-strip"
-                  title={activeTab === 'terminal' ? "Click to return to Welcome view" : "Click to launch interactive DevTerminal"}
-                >
-                  <TerminalSquare className="w-3 h-3 text-[#4285F4]" />
-                  <span>$ gdgc connect --peer-network</span>
-                  <span className="terminal-accent">✓ [OK: NODE CONNECTED]</span>
-                </button>
               </div>
             </div>
           </motion.div>

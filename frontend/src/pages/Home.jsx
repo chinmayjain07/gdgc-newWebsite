@@ -1,41 +1,67 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Users, Award, Code, Zap, Sparkles, ShieldAlert, ArrowRight } from 'lucide-react';
+import { Users, Award, Code, Zap, Sparkles, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { SectionHeader } from '@/components/sections/SectionHeader';
 import { AnimatedBackground } from '@/components/sections/AnimatedBackground';
 import { useScrollAnimation, useStaggerAnimation } from '@/hooks/useScrollAnimation';
-import { upcomingEvents } from '@/data/events';
+import { upcomingEvents, spotlightEvents } from '@/data/events';
 import { stats } from '@/data/achievements';
 import { InteractiveLogo } from '@/components/ui/InteractiveLogo';
 import { GdgText } from '@/components/ui/GdgText';
-import { BlackoutMysteryGame } from '@/components/events/BlackoutMysteryGame';
 import { FloatingDomains } from '@/components/home/FloatingDomains';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { CountUp } from '@/hooks/useCountUp';
 import { ArrowFillButton } from '@/components/ui/ArrowFillButton';
 import { LaptopCTA } from '@/components/home/LaptopCTA';
+import { cn } from '@/utils/cn';
+import { AboutPreview } from '@/components/home/AboutPreview';
 
 function HeroHeadline({ onSecretTrigger }) {
   const fullText = 'Build the Future with GDGC';
   const [displayedLength, setDisplayedLength] = useState(0);
 
   useEffect(() => {
-    let index = 0;
-    const startDelay = setTimeout(() => {
-      const timer = setInterval(() => {
-        index += 1;
-        setDisplayedLength(index);
-        if (index >= fullText.length) {
-          clearInterval(timer);
-        }
-      }, 55);
-      return () => clearInterval(timer);
-    }, 200);
+    let timer = null;
+    let startDelay = null;
 
-    return () => clearTimeout(startDelay);
+    const startTyping = () => {
+      let index = 0;
+      setDisplayedLength(0);
+      startDelay = setTimeout(() => {
+        timer = setInterval(() => {
+          index += 1;
+          setDisplayedLength(index);
+          if (index >= fullText.length) {
+            clearInterval(timer);
+          }
+        }, 55);
+      }, 250);
+    };
+
+    // Check if splash screen is currently active
+    const isSplashActive = !window.__gdgc_splash_completed && !!document.querySelector('.splash-overlay');
+
+    if (isSplashActive) {
+      const handleSplashDone = () => {
+        window.removeEventListener('gdgc:splash-complete', handleSplashDone);
+        startTyping();
+      };
+      window.addEventListener('gdgc:splash-complete', handleSplashDone);
+      return () => {
+        window.removeEventListener('gdgc:splash-complete', handleSplashDone);
+        clearTimeout(startDelay);
+        clearInterval(timer);
+      };
+    } else {
+      startTyping();
+      return () => {
+        clearTimeout(startDelay);
+        clearInterval(timer);
+      };
+    }
   }, []);
 
   const currentStr = fullText.slice(0, displayedLength);
@@ -83,10 +109,38 @@ function HeroHeadline({ onSecretTrigger }) {
 }
 
 const features = [
-  { icon: Users, title: 'Vibrant Community', description: 'Connect with 1000+ passionate student developers across all tech domains.', stat: '1250+ Members' },
-  { icon: Code, title: 'Hands-on Learning', description: 'Workshops, study jams, and hackathons with industry mentors and Google experts.', stat: '120+ Events' },
-  { icon: Award, title: 'Global Recognition', description: 'Win prizes, earn certifications, and compete in Google Solution Challenge.', stat: '12 Hackathon Wins' },
-  { icon: Zap, title: 'Career Growth', description: 'Internship opportunities, resume reviews, and direct connections to tech companies.', stat: '500+ Alumni' },
+  {
+    icon: Users,
+    title: 'Vibrant Community',
+    description: 'Connect with 1000+ passionate student developers across all tech domains.',
+    stat: '1250+ Members',
+    iconBox: 'bg-[#4285F4]/10 text-[#4285F4] border-[#4285F4]/25',
+    statColor: 'text-[#4285F4]',
+  },
+  {
+    icon: Code,
+    title: 'Hands-on Learning',
+    description: 'Workshops, study jams, and hackathons with industry mentors and Google experts.',
+    stat: '120+ Events',
+    iconBox: 'bg-[#EA4335]/10 text-[#EA4335] border-[#EA4335]/25',
+    statColor: 'text-[#EA4335]',
+  },
+  {
+    icon: Award,
+    title: 'Global Recognition',
+    description: 'Win prizes, earn certifications, and compete in Google Solution Challenge.',
+    stat: '12 Hackathon Wins',
+    iconBox: 'bg-[#FBBC04]/10 text-[#d99b00] dark:text-[#FBBC04] border-[#FBBC04]/25',
+    statColor: 'text-[#b06000] dark:text-[#FBBC04]',
+  },
+  {
+    icon: Zap,
+    title: 'Career Growth',
+    description: 'Internship opportunities, resume reviews, and direct connections to tech companies.',
+    stat: '500+ Alumni',
+    iconBox: 'bg-[#34A853]/10 text-[#34A853] border-[#34A853]/25',
+    statColor: 'text-[#34A853]',
+  },
 ];
 
 const statsData = [
@@ -99,7 +153,6 @@ const statsData = [
 ];
 
 export function Home() {
-  const [isMysteryOpen, setIsMysteryOpen] = useState(false);
   const heroRef = useScrollAnimation({ start: 'top 80%' });
   const statsRef = useStaggerAnimation({ stagger: 0.1 });
   const featuresRef = useStaggerAnimation({ stagger: 0.15 });
@@ -107,9 +160,12 @@ export function Home() {
   const ctaRef = useScrollAnimation({ start: 'top 80%' });
 
   useEffect(() => {
-    const handleSecret = () => setIsMysteryOpen(true);
-    window.addEventListener('gdgc:secret-mystery', handleSecret);
-    return () => window.removeEventListener('gdgc:secret-mystery', handleSecret);
+    if (window.location.hash === '#laptop-terminal') {
+      const timer = setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('gdgc:open-laptop-terminal'));
+      }, 400);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   return (
@@ -122,24 +178,8 @@ export function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 z-20 w-full">
           {/* Centered Hero Container */}
           <div className="max-w-4xl mx-auto text-center flex flex-col items-center justify-center">
-            {/* Tenure Announcement Pill */}
-            <motion.a
-              href="#upcoming-events"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 hover:bg-red-500/20 text-red-500 text-sm font-semibold border border-red-500/30 mb-8 transition-all hover:scale-105 shadow-sm cursor-pointer"
-            >
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
-              </span>
-              <span>⚡ First Event of the Tenure: <span className="underline font-bold">BLACKOUT</span> Hackathon</span>
-              <ArrowRight className="w-4 h-4 ml-1" />
-            </motion.a>
-            
             {/* Centered Hero Headline with Typewriter Animation matching gdgc-pccoe */}
-            <HeroHeadline onSecretTrigger={() => setIsMysteryOpen(true)} />
+            <HeroHeadline onSecretTrigger={() => window.dispatchEvent(new CustomEvent('gdgc:open-laptop-terminal'))} />
 
             {/* Centered Subtitle with blur-to-clear animation */}
             <ScrollReveal
@@ -219,21 +259,19 @@ export function Home() {
                 key={feature.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                whileTap={{ y: -12, scale: 0.98, transition: { type: 'spring', stiffness: 500, damping: 20 } }}
+                viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: index * 0.1 }}
-                className="group relative p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/40 hover:shadow-xl transition-all duration-300 cursor-pointer select-none"
+                className="group relative p-6 rounded-2xl bg-card border border-border/50 cursor-pointer select-none feature-card"
                 role="listitem"
               >
-                <div className="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-5 border border-primary/20 transition-transform duration-200 group-hover:scale-110">
+                <div className={cn("w-14 h-14 rounded-xl flex items-center justify-center mb-5 border transition-transform duration-200 group-hover:scale-110", feature.iconBox)}>
                   <feature.icon className="w-7 h-7" />
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-foreground">{feature.title}</h3>
                 <ScrollReveal as="p" blurStrength={4} duration={0.5} className="text-muted-foreground mb-4 text-sm leading-relaxed">
                   {feature.description}
                 </ScrollReveal>
-                <span className="text-sm font-medium text-primary flex items-center gap-1">
+                <span className={cn("text-sm font-medium flex items-center gap-1", feature.statColor)}>
                   {feature.stat}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
@@ -243,6 +281,9 @@ export function Home() {
         </div>
       </section>
 
+      {/* About GDGC PCCOE Preview Section */}
+      <AboutPreview />
+
       {/* Upcoming Events Spotlight with BLACKOUT */}
       <section ref={eventsRef} id="upcoming-events" className="relative py-20 lg:py-28 bg-muted/20" aria-labelledby="events-title">
         <AnimatedBackground variant="particles" />
@@ -250,7 +291,7 @@ export function Home() {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-4">
             <SectionHeader
               title="Tenure Event Spotlight"
-              subtitle="Get ready for our debut flagship event followed by workshops and hackathons."
+              subtitle="Get ready for lots of fun events , workshops and hackathons."
               align="left"
               badge="Tenure Kickoff"
             />
@@ -263,8 +304,11 @@ export function Home() {
             />
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
-            {upcomingEvents.slice(0, 3).map((event, index) => {
-              const isBlackout = event.title.includes('BLACKOUT');
+            {spotlightEvents.map((event, index) => {
+              const isBlackout = event.title?.includes('BLACKOUT');
+              const isPast = event.registrationUrl === '/events/past' || event.type === 'Coding Contest';
+              const isUnstop = event.registrationUrl?.includes('unstop');
+
               return (
                 <motion.article
                   key={event.id}
@@ -275,22 +319,40 @@ export function Home() {
                   className="group relative overflow-hidden"
                   role="listitem"
                 >
-                  <Card hover className={`h-full ${isBlackout ? 'border-red-500/40 shadow-lg shadow-red-500/5' : ''}`}>
-                    <div className="relative h-48 overflow-hidden">
+                  <Card
+                    hover
+                    className={`h-full ${
+                      isBlackout
+                        ? 'border-red-500/50 shadow-lg shadow-red-500/10 ring-1 ring-red-500/30'
+                        : isPast
+                        ? 'border-green-500/40 shadow-lg shadow-green-500/5'
+                        : ''
+                    }`}
+                  >
+                    <div className="relative h-52 overflow-hidden">
                       <img
                         src={event.image}
-                        alt=""
+                        alt={event.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+                      
+                      {/* Top Badges */}
                       <div className="absolute top-3 left-3 flex flex-wrap gap-2">
                         {isBlackout && (
                           <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-red-600 text-white shadow-md animate-pulse">
-                            🔥 FIRST EVENT OF TENURE
+                             FIRST EVENT OF TENURE
+                          </span>
+                        )}
+                        {isPast && (
+                          <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-md">
+                             COMPLETED CONTEST
                           </span>
                         )}
                       </div>
+
+                      {/* Bottom Type & Domain Pills */}
                       <div className="absolute bottom-3 left-3 right-3 flex flex-wrap gap-2">
                         <span className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/20 backdrop-blur-md text-white border border-white/20">
                           {event.type}
@@ -300,33 +362,66 @@ export function Home() {
                         </span>
                       </div>
                     </div>
+
                     <CardContent className="p-6">
                       <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3 font-medium">
                         <span>{event.date}</span>
                         <span>·</span>
                         <span>{event.time}</span>
                       </div>
-                      <h3 className="text-xl font-bold mb-2 text-foreground group-hover:text-primary transition-colors">{event.title}</h3>
+                      <h3 className="text-xl font-bold mb-2 text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                        {event.title}
+                      </h3>
                       <ScrollReveal as="p" blurStrength={4} duration={0.5} className="text-muted-foreground text-sm mb-4 line-clamp-2 leading-relaxed">
                         {event.description}
                       </ScrollReveal>
                       
                       <div className="flex items-center justify-between pt-4 border-t border-border/50">
                         <span className="text-xs text-muted-foreground font-medium">
-                          {event.registered}/{event.capacity} registered
+                          {isPast
+                            ? `${event.registered} Registrations · ${event.participants || 18} Live`
+                            : `${event.registered}/${event.capacity} registered`}
                         </span>
                         <div className="flex items-center gap-2">
-                          <ArrowFillButton
-                            to="/contact"
-                            btnText="Register"
-                            size="sm"
-                            bgColor="#4285F4"
-                            textColor="#ffffff"
-                            fillBgColor="#ffffff"
-                            fillTextColor="#1a73e8"
-                            arrowColor="#4285F4"
-                            hoverArrowColor="#1a73e8"
-                          />
+                          {isUnstop ? (
+                            <ArrowFillButton
+                              href={event.registrationUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              btnText="Register on Unstop"
+                              size="sm"
+                              bgColor="#EA4335"
+                              textColor="#ffffff"
+                              fillBgColor="#ffffff"
+                              fillTextColor="#d93025"
+                              arrowColor="#EA4335"
+                              hoverArrowColor="#d93025"
+                            />
+                          ) : isPast ? (
+                            <ArrowFillButton
+                              to="/events/past"
+                              btnText="View Report"
+                              size="sm"
+                              bgColor="#34A853"
+                              textColor="#ffffff"
+                              fillBgColor="#ffffff"
+                              fillTextColor="#1e8e3e"
+                              arrowColor="#34A853"
+                              hoverArrowColor="#1e8e3e"
+                            />
+                          ) : (
+                            <ArrowFillButton
+                              to="/contact"
+                              btnText="Register"
+                              size="sm"
+                              bgColor="#4285F4"
+                              textColor="#ffffff"
+                              fillBgColor="#ffffff"
+                              fillTextColor="#1a73e8"
+                              arrowColor="#4285F4"
+                              hoverArrowColor="#1a73e8"
+                            />
+                          )}
                         </div>
                       </div>
                     </CardContent>
@@ -340,22 +435,6 @@ export function Home() {
 
       {/* 3D Interactive Laptop CTA Workstation (acm-vit inspired) */}
       <LaptopCTA />
-
-      {/* Mystery Game Modal */}
-      <AnimatePresence>
-        {isMysteryOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="w-full max-w-2xl max-h-[90vh] overflow-y-auto"
-            >
-              <BlackoutMysteryGame isModal onClose={() => setIsMysteryOpen(false)} />
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </>
   );
 }

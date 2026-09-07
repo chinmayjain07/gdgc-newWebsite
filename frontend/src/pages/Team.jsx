@@ -1,30 +1,26 @@
 import { motion } from 'framer-motion';
-import { Link, GitBranch, X, Mail, ChevronDown, ChevronUp, Users, Award, Code, Heart } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Badge } from '@/components/ui/Badge';
-import { SectionHeader } from '@/components/sections/SectionHeader';
+import { Users, GraduationCap, Award, Layers } from 'lucide-react';
 import { AnimatedBackground } from '@/components/sections/AnimatedBackground';
-import { coreTeam, domainLeads, allTeam } from '@/data/team';
+import { faculties, leads, domainHeads, domainGroups, allTeam } from '@/data/team';
 import { useState } from 'react';
 import { useStaggerAnimation } from '@/hooks/useScrollAnimation';
 import { InteractiveLogo } from '@/components/ui/InteractiveLogo';
+import { TeamFlipCard } from '@/components/team/TeamFlipCard';
 
 const teamTabs = [
-  { id: 'core', label: 'Core Team', count: coreTeam.length },
-  { id: 'leads', label: 'Domain Leads', count: domainLeads.length },
+  { id: 'faculties', label: 'Faculties', count: faculties.length },
+  { id: 'leads', label: 'Leads', count: leads.length },
+  { id: 'domainHeads', label: 'Domain Heads', count: domainHeads.length },
   { id: 'all', label: 'All Members', count: allTeam.length },
 ];
 
 export function Team() {
-  const [activeTab, setActiveTab] = useState('core');
-  const [expandedMember, setExpandedMember] = useState(null);
+  const [activeTab, setActiveTab] = useState('faculties');
   const teamRef = useStaggerAnimation({ stagger: 0.1 });
-
-  const currentTeam = activeTab === 'core' ? coreTeam : activeTab === 'leads' ? domainLeads : allTeam;
 
   return (
     <>
+      {/* Hero Section */}
       <section className="relative min-h-[50vh] flex items-center overflow-hidden" aria-labelledby="team-hero-title">
         <AnimatedBackground variant="orb" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 text-center">
@@ -47,9 +43,12 @@ export function Team() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 text-foreground"
+              className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 text-foreground"
             >
-              The People Behind GDGC
+              The People Behind{' '}
+              <span className="text-black dark:text-white">
+                GDGC
+              </span>
               <InteractiveLogo size="md" className="inline-flex ml-3 align-middle" />
             </motion.h1>
             <motion.p
@@ -58,179 +57,221 @@ export function Team() {
               transition={{ delay: 0.4 }}
               className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed"
             >
-              Passionate student leaders dedicated to building the best developer community on campus.
+              Dedicated mentors, chapter leadership, and domain heads building the premier developer community at PCCOE.
             </motion.p>
           </motion.div>
         </div>
       </section>
 
-      <section className="relative py-10 lg:py-16" aria-labelledby="team-filter-title">
+      {/* Filter Tabs */}
+      <section className="relative py-8" aria-labelledby="team-filter-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex gap-2 flex-wrap justify-center" role="tablist" aria-label="Team filters">
+            className="flex gap-2 flex-wrap justify-center"
+            role="tablist"
+            aria-label="Team filters"
+          >
             {teamTabs.map((tab) => (
               <button
                 key={tab.id}
                 role="tab"
                 aria-selected={activeTab === tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                   activeTab === tab.id
-                    ? 'bg-primary text-primary-foreground shadow-glow'
+                    ? 'bg-primary text-primary-foreground shadow-md'
                     : 'bg-card text-foreground/70 hover:bg-accent/50 hover:text-foreground border border-border/50'
                 }`}
               >
-                {tab.label} <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-background/50">{tab.count}</span>
+                {tab.label}{' '}
+                <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-background/50">
+                  {tab.count}
+                </span>
               </button>
             ))}
           </motion.div>
         </div>
       </section>
 
+      {/* Team Content Showcase */}
       <section ref={teamRef} className="relative py-10 lg:py-16" aria-labelledby="team-list-title">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 id="team-list-title" className="sr-only">Team Members</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" role="list">
-            {currentTeam.map((member, index) => (
-              <motion.article
-                key={member.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ delay: index * 0.05 }}
-                className="group relative"
-                role="listitem"
-              >
-                <Card hover className="h-full relative overflow-hidden">
-                  <div className="relative aspect-square overflow-hidden">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300 flex gap-2">
-                      {member.social.linkedin && (
-                        <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/20 backdrop-blur text-white hover:bg-white/30 transition-colors" aria-label={`${member.name} on LinkedIn`}>
-                          <Link className="w-5 h-5" />
-                        </a>
-                      )}
-                      {member.social.github && (
-                        <a href={member.social.github} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/20 backdrop-blur text-white hover:bg-white/30 transition-colors" aria-label={`${member.name} on GitHub`}>
-                          <GitBranch className="w-5 h-5" />
-                        </a>
-                      )}
-                      {member.social.twitter && (
-                        <a href={member.social.twitter} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/20 backdrop-blur text-white hover:bg-white/30 transition-colors" aria-label={`${member.name} on Twitter`}>
-                          <X className="w-5 h-5" />
-                        </a>
-                      )}
-                      {member.social.email && (
-                        <a href={`mailto:${member.social.email}`} className="p-2 rounded-full bg-white/20 backdrop-blur text-white hover:bg-white/30 transition-colors" aria-label={`Email ${member.name}`}>
-                          <Mail className="w-5 h-5" />
-                        </a>
-                      )}
+
+          {/* TAB 1: FACULTIES (First position) */}
+          {activeTab === 'faculties' && (
+            <div className="space-y-8">
+              <div className="text-center max-w-2xl mx-auto mb-8">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-500 border border-blue-500/20 mb-2">
+                  <GraduationCap className="w-3.5 h-3.5" />
+                  Academic Mentorship
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-bold text-foreground">Faculty Advisors & Mentors</h3>
+                <p className="text-muted-foreground text-sm mt-1">Guiding student developers and institutional excellence.</p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto gap-6" role="list">
+                {faculties.map((member, index) => (
+                  <motion.article
+                    key={member.id}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="h-full"
+                    role="listitem"
+                  >
+                    <TeamFlipCard member={member} />
+                  </motion.article>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: LEADS (3 Cards) */}
+          {activeTab === 'leads' && (
+            <div className="space-y-8">
+              <div className="text-center max-w-2xl mx-auto mb-8">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-red-500/10 text-red-500 border border-red-500/20 mb-2">
+                  <Award className="w-3.5 h-3.5" />
+                  Chapter Executive Leadership
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-bold text-foreground">Chapter Leads</h3>
+                <p className="text-muted-foreground text-sm mt-1">Directing chapter vision, partnerships, and technical programs.</p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-4xl mx-auto gap-5" role="list">
+                {leads.map((member, index) => (
+                  <motion.article
+                    key={member.id}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="h-full"
+                    role="listitem"
+                  >
+                    <TeamFlipCard member={member} />
+                  </motion.article>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: DOMAIN HEADS (15 cards across 3 domains, with domain heading above and cards in a row) */}
+          {activeTab === 'domainHeads' && (
+            <div className="space-y-16">
+              {domainGroups.map((group, gIdx) => (
+                <div key={group.id} className="space-y-6">
+                  {/* Domain Name Heading Above */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-border/60">
+                    <div className="flex items-center gap-3">
+                      <span className="w-3 h-3 rounded-full bg-primary" />
+                      <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                        {group.name}
+                      </h3>
+                      <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary">
+                        {group.members.length} Heads
+                      </span>
+                    </div>
+                    <p className="text-xs sm:text-sm text-muted-foreground">
+                      {group.description}
+                    </p>
+                  </div>
+
+                  {/* 5 Cards in a Row */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5" role="list">
+                    {group.members.map((member, index) => (
+                      <motion.article
+                        key={member.id}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: (gIdx * 0.1) + (index * 0.05) }}
+                        className="h-full"
+                        role="listitem"
+                      >
+                        <TeamFlipCard member={member} />
+                      </motion.article>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* TAB 4: ALL MEMBERS (Hierarchical view of all sections) */}
+          {activeTab === 'all' && (
+            <div className="space-y-20">
+              {/* Section 1: Faculties */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 pb-3 border-b border-border/60">
+                  <GraduationCap className="w-5 h-5 text-blue-500" />
+                  <h3 className="text-2xl font-bold text-foreground">Faculties</h3>
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-500">
+                    {faculties.length} Advisors
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto gap-6" role="list">
+                  {faculties.map((member) => (
+                    <div key={member.id} role="listitem">
+                      <TeamFlipCard member={member} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Section 2: Leads (3 Cards) */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 pb-3 border-b border-border/60">
+                  <Award className="w-5 h-5 text-red-500" />
+                  <h3 className="text-2xl font-bold text-foreground">Leads</h3>
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-500/10 text-red-500">
+                    {leads.length} Organizers
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-4xl mx-auto gap-5" role="list">
+                  {leads.map((member) => (
+                    <div key={member.id} role="listitem">
+                      <TeamFlipCard member={member} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Section 3: Domain Heads (3 Domains x 5 Cards) */}
+              <div className="space-y-12">
+                <div className="flex items-center gap-3 pb-3 border-b border-border/60">
+                  <Layers className="w-5 h-5 text-green-500" />
+                  <h3 className="text-2xl font-bold text-foreground">Domain Heads</h3>
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-500/10 text-green-500">
+                    {domainHeads.length} Heads
+                  </span>
+                </div>
+
+                {domainGroups.map((group) => (
+                  <div key={group.id} className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-lg sm:text-xl font-bold text-foreground">
+                        {group.name}
+                      </h4>
+                      <span className="text-xs text-muted-foreground">{group.description}</span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5" role="list">
+                      {group.members.map((member) => (
+                        <div key={member.id} role="listitem">
+                          <TeamFlipCard member={member} />
+                        </div>
+                      ))}
                     </div>
                   </div>
-                  <CardContent className="pb-4 relative">
-                    <div className="absolute -top-6 left-6 right-6 flex justify-end">
-                      <button
-                        onClick={() => setExpandedMember(member.id === expandedMember ? null : member.id)}
-                        className="p-2 rounded-full bg-card shadow-lg hover:bg-accent/50 transition-colors"
-                        aria-label={expandedMember === member.id ? 'Collapse' : 'Expand'}
-                        aria-expanded={expandedMember === member.id}
-                      >
-                        {expandedMember === member.id ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-                      </button>
-                    </div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Badge variant="primary">{member.domain}</Badge>
-                    </div>
-                    <h3 className="text-lg font-bold">{member.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-3">{member.role}</p>
-                    <div className="flex flex-wrap gap-1">
-                      {member.skills.slice(0, 3).map(skill => (
-                        <Badge key={skill} variant="outline" className="text-xs">{skill}</Badge>
-                      ))}
-                      {member.skills.length > 3 && (
-                        <Badge variant="outline" className="text-xs">+{member.skills.length - 3}</Badge>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.article>
-            ))}
-          </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
-
-      {expandedMember && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-          onClick={() => setExpandedMember(null)}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="member-detail-title"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            onClick={e => e.stopPropagation()}
-            className="relative max-w-2xl w-full max-h-[90vh] overflow-y-auto bg-card rounded-2xl shadow-2xl"
-          >
-            <MemberDetail member={currentTeam.find(m => m.id === expandedMember)} onClose={() => setExpandedMember(null)} />
-          </motion.div>
-        </motion.div>
-      )}
     </>
-  );
-}
-
-function MemberDetail({ member, onClose }) {
-  return (
-    <div className="p-6">
-      <div className="flex items-start justify-between mb-6">
-        <div>
-          <Badge variant="primary" className="mb-2">{member.domain}</Badge>
-          <h2 id="member-detail-title" className="text-2xl font-bold">{member.name}</h2>
-          <p className="text-muted-foreground">{member.role}</p>
-        </div>
-        <button onClick={onClose} className="p-2 rounded-xl hover:bg-accent/50 transition-colors" aria-label="Close">
-          <ChevronUp className="w-5 h-5" />
-        </button>
-      </div>
-      <img src={member.image} alt={member.name} className="w-full h-64 object-cover rounded-xl mb-6" />
-      <p className="text-muted-foreground mb-6">{member.bio}</p>
-      <div className="flex flex-wrap gap-2 mb-6">
-        {member.skills.map(skill => (
-          <Badge key={skill} variant="outline">{skill}</Badge>
-        ))}
-      </div>
-      <div className="flex gap-4 pt-4 border-t border-border/50">
-        {member.social.linkedin && (
-          <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors" aria-label="LinkedIn">
-            <Link className="w-5 h-5" /> LinkedIn
-          </a>
-        )}
-        {member.social.github && (
-          <a href={member.social.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors" aria-label="GitHub">
-            <GitBranch className="w-5 h-5" /> GitHub
-          </a>
-        )}
-        {member.social.twitter && (
-          <a href={member.social.twitter} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors" aria-label="Twitter">
-            <X className="w-5 h-5" /> Twitter
-          </a>
-        )}
-      </div>
-    </div>
   );
 }

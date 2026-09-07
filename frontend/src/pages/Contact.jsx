@@ -7,6 +7,7 @@ import { Input, Textarea, Label } from '@/components/ui/Input';
 import { SectionHeader } from '@/components/sections/SectionHeader';
 import { AnimatedBackground } from '@/components/sections/AnimatedBackground';
 import { useTheme } from '@/context/ThemeContext';
+import { useContactForm, SUBJECT_OPTIONS } from '@/hooks/useContactForm';
 
 const contactInfo = [
   { icon: Mail, title: 'Email Us', value: 'hello@gdgcampus.dev', description: 'General inquiries, partnerships, and sponsorships', href: 'mailto:hello@gdgcampus.dev' },
@@ -52,35 +53,9 @@ const faqs = [
 ];
 
 export function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', 'loading', null
+  const { formData, submitStatus, errorMessage, handleChange, handleSubmit } = useContactForm();
   const [expandedFaq, setExpandedFaq] = useState(null);
   const { theme } = useTheme();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitStatus('loading');
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // In a real app, you'd send to your backend here
-    // const response = await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) });
-    
-    setSubmitStatus('success');
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    
-    setTimeout(() => setSubmitStatus(null), 5000);
-  };
-
-  const handleChange = (e) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
 
   return (
     <>
@@ -232,14 +207,11 @@ export function Contact() {
                     disabled={submitStatus === 'loading'}
                     className="w-full h-12 rounded-xl border border-border bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
                   >
-                    <option value="">Select a topic</option>
-                    <option value="general">General Inquiry</option>
-                    <option value="membership">Join GDGC</option>
-                    <option value="events">Event Question</option>
-                    <option value="partnership">Partnership/Sponsorship</option>
-                    <option value="speaking">Speak at Event</option>
-                    <option value="media">Media/Press</option>
-                    <option value="other">Other</option>
+                    {SUBJECT_OPTIONS.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div>

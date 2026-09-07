@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { Layout } from '@/components/layout/Layout';
+import { SplashScreen } from '@/components/layout/SplashScreen';
 import { Home } from '@/pages/Home';
 import { About } from '@/pages/About';
 import { Events } from '@/pages/Events';
@@ -21,8 +22,19 @@ function ScrollToTop() {
 }
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
   return (
     <ThemeProvider>
+      {showSplash && (
+        <SplashScreen
+          onComplete={() => {
+            window.__gdgc_splash_completed = true;
+            window.dispatchEvent(new CustomEvent('gdgc:splash-complete'));
+            setShowSplash(false);
+          }}
+        />
+      )}
       <BrowserRouter>
         <ScrollToTop />
         <Routes>

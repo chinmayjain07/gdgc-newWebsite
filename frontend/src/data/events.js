@@ -6,15 +6,15 @@ export const upcomingEvents = [
     time: '10:00 AM - 6:00 PM',
     location: 'Main Campus Arena & Cyber Labs',
     type: 'Hackathon',
-    domain: 'All',
+    domain: 'All Domains',
     isFlagship: true,
-    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=450&fit=crop',
-    description: 'The monumental debut event of our new tenure! A campus-wide mystery clue hunt where participants decode hidden ciphers, followed by an intensive sprint to build revolutionary solutions. Form teams, solve the blackout mystery, and win exclusive prizes.',
+    image: '/events/blackout-detective.jpg',
+    description: 'The monumental debut event of our new tenure! A campus-wide detective clue hunt where participants decode hidden ciphers, followed by an intensive sprint to build revolutionary solutions. Register on Unstop.',
     speakers: ['GDGC Core Team', 'Campus Tech Mentors'],
     registered: 312,
     capacity: 400,
-    tags: ['Tenure Opener', 'Detective Clue Hunt', 'Hackathon', 'Exclusive Swag', 'Cash Prizes'],
-    registrationUrl: '/contact',
+    tags: ['Flagship Opener', 'Detective Clue Hunt', 'Hackathon', 'Unstop Registration', 'Cash Prizes'],
+    registrationUrl: 'https://unstop.com',
   },
   {
     id: 2,
@@ -66,7 +66,135 @@ export const upcomingEvents = [
   },
 ];
 
-// Past events for this new tenure are empty
-export const pastEvents = [];
+export const upcomingEventPhotos = upcomingEvents.map((event) => ({
+  id: event.id,
+  src: event.image,
+  alt: event.title,
+  title: event.title,
+  subtitle: `${event.date} • ${event.location}`,
+  description: event.description,
+  domain: event.domain,
+  type: event.type,
+  date: event.date,
+  isFlagship: event.isFlagship,
+  registrationUrl: event.registrationUrl,
+  meta: [
+    { label: 'Type', value: event.type },
+    { label: 'Domain', value: event.domain },
+    { label: 'Seats', value: `${event.registered}/${event.capacity}` },
+  ],
+  event,
+}));
+
+export const pastEvents = [
+  {
+    id: 100,
+    title: 'GDGC PCCoE Coding Contest on HackerRank',
+    date: '2026-09-06',
+    time: '1 Hour Online Sprint',
+    location: 'Online • HackerRank Platform',
+    type: 'Coding Contest',
+    domain: 'Competitive Programming',
+    image: '/events/hackerrank-contest.jpg',
+    description: 'Conducted to foster competitive programming culture at PCCoE. 66 registrants across CSE, IT, AIML, and ENTC tackled 4 algorithmic challenges (Easy to Hard) testing problem-solving under time constraints.',
+    speakers: ['GDGC CP Domain Leads'],
+    registered: 66,
+    participants: 18,
+    duration: '1 Hour',
+    questions: 4,
+    platform: 'HackerRank',
+    tags: ['HackerRank', 'Coding Contest', 'Competitive Programming', 'Algorithms'],
+    registrationUrl: '/events/past',
+  },
+  {
+    id: 101,
+    title: 'DevFest Campus Edition',
+    date: '2024-11-10',
+    time: '9:00 AM - 5:00 PM',
+    location: 'Main Campus Auditorium',
+    type: 'Conference',
+    domain: 'All Domains',
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=800&fit=crop',
+    description: 'Our annual flagship conference with 500+ attendees and 18 industry speakers from Google, alumni, and community leaders.',
+    speakers: ['Google Developer Experts', 'GDGC Core Leads'],
+    tags: ['DevFest', 'Keynotes', 'Workshops', 'Networking'],
+    registrationUrl: '/events/past',
+  },
+  {
+    id: 102,
+    title: 'Cloud Community Day',
+    date: '2024-10-14',
+    time: '10:00 AM - 4:00 PM',
+    location: 'Tech Hub Arena',
+    type: 'Workshop',
+    domain: 'Cloud',
+    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&h=800&fit=crop',
+    description: 'GCP Architecture deep dive with Kubernetes, Serverless, and Cloud Run labs leading to 50+ official skill badges.',
+    speakers: ['Cloud Innovators Lead'],
+    tags: ['GCP', 'Kubernetes', 'Cloud Run', 'Certifications'],
+    registrationUrl: '/events/past',
+  },
+  {
+    id: 103,
+    title: 'HackSprint 36H Hackathon',
+    date: '2024-09-08',
+    time: '36 Hours Non-stop',
+    location: 'Innovation Lab',
+    type: 'Hackathon',
+    domain: 'All Domains',
+    image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&h=800&fit=crop',
+    description: 'Overnight prototyping marathon with 65 student teams building solutions across AI, Web3, and Mobile.',
+    speakers: ['Industry Mentors'],
+    tags: ['Hackathon', 'Overnight', 'Cash Prizes', 'Swag'],
+    registrationUrl: '/events/past',
+  },
+];
 
 export const allEvents = [...upcomingEvents, ...pastEvents];
+
+export const allEventPhotos = allEvents.map((event) => ({
+  id: event.id,
+  src: event.image,
+  alt: event.title,
+  title: event.title,
+  subtitle: `${event.date} • ${event.location || event.type}`,
+  description: event.description,
+  domain: event.domain,
+  type: event.type,
+  date: event.date,
+  isFlagship: event.isFlagship,
+  registrationUrl: event.registrationUrl,
+  isUpcoming: upcomingEvents.some((u) => u.id === event.id),
+  meta: [
+    { label: 'Type', value: event.type },
+    { label: 'Domain', value: event.domain },
+    { label: 'Timeline', value: upcomingEvents.some((u) => u.id === event.id) ? 'Upcoming' : 'Past Archive' },
+  ],
+  event,
+}));
+
+export const pastEventPhotos = pastEvents.map((event) => ({
+  id: event.id,
+  src: event.image,
+  alt: event.title,
+  title: event.title,
+  subtitle: `${event.date} • ${event.location}`,
+  description: event.description,
+  domain: event.domain,
+  type: event.type,
+  date: event.date,
+  registrationUrl: event.registrationUrl,
+  meta: [
+    { label: 'Type', value: event.type },
+    { label: 'Domain', value: event.domain },
+    { label: 'Highlights', value: event.tags?.[0] || 'Event' },
+  ],
+  event,
+}));
+
+// Spotlight events for the Home page
+export const spotlightEvents = [
+  upcomingEvents[0], // BLACKOUT
+  pastEvents[0],     // GDGC PCCoE Coding Contest on HackerRank
+  upcomingEvents[1], // Build with AI
+];

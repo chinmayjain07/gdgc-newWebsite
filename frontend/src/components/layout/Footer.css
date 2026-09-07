@@ -1,0 +1,203 @@
+/* ==========================================================================
+   Footer Ambient Animated Background & Micro-Texture
+   Google Ambient Palette: Blue (#4285F4), Cool Cyan/Indigo, Warm Yellow (#FBBC04), Green (#34A853)
+   ========================================================================== */
+
+.footer-ambient-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Multi-stop Google ambient aurora flow */
+.footer-gradient-aurora {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 12% 25%, rgba(66, 133, 244, 0.18) 0%, transparent 50%),
+              radial-gradient(circle at 88% 20%, rgba(66, 133, 244, 0.14) 0%, transparent 50%),
+              radial-gradient(circle at 35% 85%, rgba(251, 188, 4, 0.13) 0%, transparent 50%),
+              radial-gradient(circle at 82% 80%, rgba(52, 168, 83, 0.16) 0%, transparent 50%);
+  filter: blur(50px);
+  opacity: 0.85;
+  animation: footerAuroraFlow 13s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.dark .footer-gradient-aurora {
+  background: radial-gradient(circle at 12% 25%, rgba(66, 133, 244, 0.24) 0%, transparent 50%),
+              radial-gradient(circle at 88% 20%, rgba(66, 133, 244, 0.18) 0%, transparent 50%),
+              radial-gradient(circle at 35% 85%, rgba(251, 188, 4, 0.16) 0%, transparent 50%),
+              radial-gradient(circle at 82% 80%, rgba(52, 168, 83, 0.18) 0%, transparent 50%);
+  opacity: 0.75;
+}
+
+/* Fluid drifting wave layer for clearly perceptible background motion */
+.footer-motion-waves {
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(ellipse at 30% 30%, rgba(66, 133, 244, 0.14), transparent 50%),
+              radial-gradient(ellipse at 75% 70%, rgba(52, 168, 83, 0.12), transparent 50%),
+              radial-gradient(ellipse at 50% 90%, rgba(251, 188, 4, 0.10), transparent 50%);
+  filter: blur(45px);
+  opacity: 0.85;
+  will-change: transform;
+  animation: footerWaveDrift 15s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.dark .footer-motion-waves {
+  background: radial-gradient(ellipse at 30% 30%, rgba(66, 133, 244, 0.18), transparent 50%),
+              radial-gradient(ellipse at 75% 70%, rgba(52, 168, 83, 0.15), transparent 50%),
+              radial-gradient(ellipse at 50% 90%, rgba(251, 188, 4, 0.12), transparent 50%);
+  opacity: 0.75;
+}
+
+/* Subtle micro-dot matrix pattern */
+.footer-texture-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(66, 133, 244, 0.12) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  opacity: 0.75;
+}
+
+.dark .footer-texture-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1.2px, transparent 1.2px);
+  opacity: 0.6;
+}
+
+/* Floating ambient Google-color glowing orbs */
+.footer-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(55px);
+  opacity: 0.25;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.dark .footer-blob {
+  opacity: 0.28;
+  filter: blur(65px);
+}
+
+.footer-blob--blue {
+  width: 420px;
+  height: 420px;
+  top: -80px;
+  left: 3%;
+  background: radial-gradient(circle, rgba(66, 133, 244, 0.9) 0%, rgba(66, 133, 244, 0.35) 55%, transparent 75%);
+  animation: floatBlobBlue 12s ease-in-out infinite alternate;
+}
+
+.footer-blob--cyan {
+  width: 360px;
+  height: 360px;
+  top: 15%;
+  right: 5%;
+  background: radial-gradient(circle, rgba(66, 133, 244, 0.85) 0%, rgba(52, 168, 83, 0.3) 55%, transparent 75%);
+  animation: floatBlobCyan 14s ease-in-out infinite alternate;
+}
+
+.footer-blob--yellow {
+  width: 340px;
+  height: 340px;
+  bottom: -60px;
+  left: 30%;
+  background: radial-gradient(circle, rgba(251, 188, 4, 0.95) 0%, rgba(251, 188, 4, 0.35) 55%, transparent 75%);
+  animation: floatBlobYellow 13s ease-in-out infinite alternate;
+}
+
+.footer-blob--green {
+  width: 380px;
+  height: 380px;
+  bottom: -40px;
+  right: 20%;
+  background: radial-gradient(circle, rgba(52, 168, 83, 0.9) 0%, rgba(52, 168, 83, 0.35) 55%, transparent 75%);
+  animation: floatBlobGreen 15s ease-in-out infinite alternate;
+}
+
+/* GPU-accelerated Keyframe Animations using translate & rotate */
+@keyframes footerAuroraFlow {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(45px, -25px) scale(1.06);
+  }
+  100% {
+    transform: translate(-35px, 25px) scale(0.96);
+  }
+}
+
+@keyframes footerWaveDrift {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate(-40px, 30px) rotate(2.5deg) scale(1.06);
+  }
+  100% {
+    transform: translate(35px, -25px) rotate(-2deg) scale(0.96);
+  }
+}
+
+@keyframes floatBlobBlue {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(60px, 40px) scale(1.09);
+  }
+  100% {
+    transform: translate(-35px, 65px) scale(0.94);
+  }
+}
+
+@keyframes floatBlobCyan {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-50px, 35px) scale(1.07);
+  }
+  100% {
+    transform: translate(35px, -45px) scale(0.95);
+  }
+}
+
+@keyframes floatBlobYellow {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(45px, -35px) scale(1.06);
+  }
+  100% {
+    transform: translate(-45px, 30px) scale(0.93);
+  }
+}
+
+@keyframes floatBlobGreen {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-45px, -40px) scale(1.08);
+  }
+  100% {
+    transform: translate(55px, 30px) scale(0.94);
+  }
+}
+
+/* Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .footer-blob,
+  .footer-motion-waves,
+  .footer-gradient-aurora {
+    animation: none !important;
+    transform: none !important;
+  }
+}

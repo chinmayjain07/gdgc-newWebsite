@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useTheme } from '@/context/ThemeContext';
 import { cn } from '@/utils/cn';
 
 export function InteractiveLogo({
@@ -9,6 +11,9 @@ export function InteractiveLogo({
   showGlow = false,
   onSecretTrigger,
 }) {
+  const { theme } = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
   const containerRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [clickSpins, setClickSpins] = useState(0);
@@ -23,7 +28,7 @@ export function InteractiveLogo({
   const rotateY = useSpring(useTransform(mouseX, [-100, 100], [-25, 25]), springConfig);
   const rotateZ = useSpring(useTransform(mouseX, [-100, 100], [-15, 15]), springConfig);
 
-  // Secret 3-spin easter egg tracking (supports 3 clicks or 3 cursor swirls)
+  // Secret 3-spin easter egg tracking (redirects to mini laptop & devterminal.sh)
   const totalSpinsRef = useRef(0);
   const lastAngleRef = useRef(null);
   const accumulatedAngleRef = useRef(0);
@@ -37,13 +42,21 @@ export function InteractiveLogo({
         if (onSecretTrigger) {
           onSecretTrigger();
         } else {
-          window.dispatchEvent(new CustomEvent('gdgc:secret-mystery'));
+          // If on another page, navigate to home with hash
+          if (location.pathname !== '/') {
+            navigate('/#laptop-terminal');
+            setTimeout(() => {
+              window.dispatchEvent(new CustomEvent('gdgc:open-laptop-terminal'));
+            }, 350);
+          } else {
+            window.dispatchEvent(new CustomEvent('gdgc:open-laptop-terminal'));
+          }
         }
         setTimeout(() => {
           triggeredRef.current = false;
           totalSpinsRef.current = 0;
           accumulatedAngleRef.current = 0;
-        }, 4000);
+        }, 3000);
       }, 350);
     }
   };
@@ -91,7 +104,7 @@ export function InteractiveLogo({
     xs: 'w-7 h-7',
     sm: 'w-9 h-9',
     md: 'w-12 h-12',
-    navbar: 'w-14 h-14 sm:w-16 sm:h-16 lg:w-[70px] lg:h-[70px]',
+    navbar: 'w-16 h-16 sm:w-[72px] sm:h-[72px] lg:w-[80px] lg:h-[80px]',
     lg: 'w-16 h-16',
     xl: 'w-24 h-24',
     hero: 'w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28',
@@ -147,7 +160,7 @@ export function InteractiveLogo({
         className="relative w-full h-full flex items-center justify-center filter drop-shadow-md"
       >
         <img
-          src="/gdgc-logo.png"
+          src={theme === 'dark' ? '/GDGC-dark.png' : '/GDGC-Light.png'}
           alt="GDGC Logo"
           className="w-full h-full object-contain pointer-events-none transition-transform duration-300 group-hover:scale-105"
           draggable="false"
