@@ -1,11 +1,35 @@
+/**
+ * =========================================================================
+ * GDGC TEAM MEMBERS DATA
+ * =========================================================================
+ * To update or add team members, simply edit the objects in this file.
+ * 
+ * Fields:
+ * - id: Unique numeric ID
+ * - name: Full name of the member
+ * - designation: Title/Role (e.g., "Lead Organizer", "Web Dev Lead")
+ * - role: Kept identical to designation for backward compatibility
+ * - domain: Department / Domain track
+ * - bio: Short summary text shown on the back of the flip card
+ * - image: Avatar image URL (using Pravatar demo placeholders with unique img IDs)
+ * - linkedinUrl: LinkedIn profile URL (currently '#' for placeholder)
+ * - githubUrl: GitHub profile URL (currently '#' for placeholder)
+ * - social: Social media links object ({ linkedin: '#', github: '#', ... })
+ * - skills: Array of top skill/tool badges
+ * =========================================================================
+ */
+
 export const coreTeam = [
   {
     id: 1,
     name: 'Alexandra Chen',
+    designation: 'Lead Organizer',
     role: 'Lead Organizer',
     domain: 'AI/ML & Cloud',
-    bio: 'Passionate about making AI accessible. Google Cloud Certified. Leads our ML study jams and cloud workshops.',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
+    bio: 'Passionate about making AI accessible to all students. Google Cloud Certified, leading technical workshops and hackathons.',
+    image: 'https://i.pravatar.cc/150?img=1',
+    linkedinUrl: '#',
+    githubUrl: '#',
     social: {
       linkedin: '#',
       github: '#',
@@ -17,120 +41,147 @@ export const coreTeam = [
   {
     id: 2,
     name: 'Rahul Sharma',
+    designation: 'Co-Lead Organizer',
     role: 'Co-Lead Organizer',
     domain: 'Mobile & Web',
-    bio: 'Flutter & React enthusiast. Built 10+ production apps. Organizes our Flutter Festivals and Web Dev Summits.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
+    bio: 'Cross-platform app specialist with 10+ published apps. Directs campus study jams and developer outreach programs.',
+    image: 'https://i.pravatar.cc/150?img=3',
+    linkedinUrl: '#',
+    githubUrl: '#',
     social: {
       linkedin: '#',
       github: '#',
       twitter: '#',
       email: '#',
     },
-    skills: ['Flutter', 'React', 'Dart', 'TypeScript', 'Firebase'],
+    skills: ['Flutter', 'React', 'Dart', 'TypeScript'],
   },
   {
     id: 3,
     name: 'Priya Patel',
+    designation: 'Technical Lead',
     role: 'Technical Lead',
     domain: 'Web & Cloud',
-    bio: 'Full-stack developer specializing in scalable web architectures. Mentors our web development study jams.',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
+    bio: 'Full-stack software engineer building scalable web architectures and leading developer mentoring sprints.',
+    image: 'https://i.pravatar.cc/150?img=5',
+    linkedinUrl: '#',
+    githubUrl: '#',
     social: {
       linkedin: '#',
       github: '#',
       twitter: '#',
       email: '#',
     },
-    skills: ['Next.js', 'Node.js', 'PostgreSQL', 'Docker', 'AWS'],
+    skills: ['Next.js', 'Node.js', 'PostgreSQL', 'Docker'],
   },
   {
     id: 4,
     name: 'Marcus Johnson',
+    designation: 'Design Lead',
     role: 'Design Lead',
     domain: 'UI/UX & Design',
-    bio: 'Product designer with a passion for developer experience. Creates stunning visuals for all our events.',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop',
+    bio: 'Product and visual designer obsessed with modern UI design systems, micro-interactions, and visual storytelling.',
+    image: 'https://i.pravatar.cc/150?img=8',
+    linkedinUrl: '#',
+    githubUrl: '#',
     social: {
       linkedin: '#',
       github: '#',
       twitter: '#',
       email: '#',
     },
-    skills: ['Figma', 'Framer', 'React', 'Design Systems', 'Motion'],
+    skills: ['Figma', 'Framer', 'UI Systems', 'Motion'],
   },
   {
     id: 5,
     name: 'Sarah Williams',
+    designation: 'Community Manager',
     role: 'Community Manager',
     domain: 'Community & Outreach',
-    bio: 'Building inclusive tech communities. Manages partnerships, sponsorships, and member engagement.',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop',
+    bio: 'Dedicated to cultivating inclusive and engaging student tech spaces. Directs campus partnerships and member relations.',
+    image: 'https://i.pravatar.cc/150?img=9',
+    linkedinUrl: '#',
+    githubUrl: '#',
     social: {
       linkedin: '#',
       github: '#',
       twitter: '#',
       email: '#',
     },
-    skills: ['Community Building', 'Event Planning', 'Partnerships', 'Social Media'],
+    skills: ['Community', 'Events', 'Outreach', 'Networking'],
   },
   {
     id: 6,
     name: 'David Kim',
+    designation: 'Operations Lead',
     role: 'Operations Lead',
     domain: 'Operations & Logistics',
-    bio: 'Ensures every event runs smoothly. Handles logistics, venue management, and technical infrastructure.',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
+    bio: 'Ensures every GDGC event runs seamlessly. Manages logistics, staging, and technical infrastructure for the team.',
+    image: 'https://i.pravatar.cc/150?img=11',
+    linkedinUrl: '#',
+    githubUrl: '#',
     social: {
       linkedin: '#',
       github: '#',
       twitter: '#',
       email: '#',
     },
-    skills: ['Project Management', 'Logistics', 'AV Systems', 'Live Streaming'],
+    skills: ['Project Mgmt', 'Logistics', 'AV Tech', 'Streaming'],
   },
 ];
 
 export const domainLeads = [
   {
-    id: 1,
+    id: 7,
     name: 'Emily Zhang',
+    designation: 'AI/ML Domain Lead',
     role: 'AI/ML Domain Lead',
     domain: 'AI/ML',
-    bio: 'Research assistant in NLP. Leads our machine learning study jams and AI hackathons.',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop',
+    bio: 'NLP and deep learning researcher. Conducts hands-on neural network study jams and AI innovation sprints.',
+    image: 'https://i.pravatar.cc/150?img=16',
+    linkedinUrl: '#',
+    githubUrl: '#',
     social: { linkedin: '#', github: '#', twitter: '#' },
     skills: ['PyTorch', 'Transformers', 'NLP', 'Computer Vision'],
   },
   {
-    id: 2,
+    id: 8,
     name: 'Carlos Mendez',
+    designation: 'Mobile Domain Lead',
     role: 'Mobile Domain Lead',
     domain: 'Mobile',
-    bio: 'Senior Android developer. Organizes Android Study Jams and Flutter workshops.',
-    image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop',
+    bio: 'Android specialist and Kotlin enthusiast. Hosts Android study jams and modern mobile design workshops.',
+    image: 'https://i.pravatar.cc/150?img=12',
+    linkedinUrl: '#',
+    githubUrl: '#',
     social: { linkedin: '#', github: '#', twitter: '#' },
     skills: ['Kotlin', 'Jetpack Compose', 'Flutter', 'Firebase'],
   },
   {
-    id: 3,
+    id: 9,
     name: 'Aisha Rahman',
+    designation: 'Web Domain Lead',
     role: 'Web Domain Lead',
     domain: 'Web',
-    bio: 'Frontend architect. Leads Web Dev Summit and modern frontend workshops.',
-    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop',
+    bio: 'Frontend architect and web performance advocate. Leads modern web frameworks workshops and open source jams.',
+    image: 'https://i.pravatar.cc/150?img=20',
+    linkedinUrl: '#',
+    githubUrl: '#',
     social: { linkedin: '#', github: '#', twitter: '#' },
-    skills: ['React', 'Vue', 'Svelte', 'WebAssembly', 'Performance'],
+    skills: ['React', 'TypeScript', 'Tailwind', 'Next.js'],
   },
   {
-    id: 4,
+    id: 10,
     name: 'James Liu',
+    designation: 'Cloud Domain Lead',
     role: 'Cloud Domain Lead',
     domain: 'Cloud',
-    bio: 'DevOps engineer. Runs Cloud Hero hackathons and GCP certification prep sessions.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
+    bio: 'Cloud DevOps engineer. Leads Google Cloud study jams, certification tracks, and containerization labs.',
+    image: 'https://i.pravatar.cc/150?img=33',
+    linkedinUrl: '#',
+    githubUrl: '#',
     social: { linkedin: '#', github: '#', twitter: '#' },
-    skills: ['GCP', 'Kubernetes', 'Terraform', 'CI/CD', 'Observability'],
+    skills: ['GCP', 'Kubernetes', 'Docker', 'CI/CD'],
   },
 ];
 
