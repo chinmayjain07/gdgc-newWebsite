@@ -104,7 +104,8 @@ export function About() {
           </div>
         </div>
       </section>
-
+      {/* ── Our Journey / Timeline (Commented Out) ── */}
+      {/*
       <section className="relative py-20 lg:py-28 bg-muted/30" aria-labelledby="journey-title">
         <AnimatedBackground variant="grid" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,7 +126,6 @@ export function About() {
                 transition={{ delay: index * 0.1 }}
                 className="relative pl-14 pb-10 group"
               >
-                {/* Timeline node centered on left-6 line */}
                 <div className="absolute left-[17px] top-1.5 w-3.5 h-3.5 rounded-full bg-primary ring-4 ring-background shadow-md group-hover:scale-125 transition-transform" />
                 <Card className="hover:border-primary/40 transition-colors">
                   <CardContent className="p-5">
@@ -141,6 +141,7 @@ export function About() {
           </div>
         </div>
       </section>
+      */}
 
       <section className="relative py-20 lg:py-28" aria-labelledby="impact-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -175,6 +176,8 @@ export function About() {
         </div>
       </section>
 
+      {/* ── What Our Members Say / Testimonials (Commented Out) ── */}
+      {/*
       <section className="relative py-20 lg:py-28 bg-muted/30" aria-labelledby="team-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
@@ -210,6 +213,7 @@ export function About() {
           </div>
         </div>
       </section>
+      */}
 
       <section className="relative py-20 lg:py-28" aria-labelledby="cta-title">
         <AnimatedBackground variant="orb" />
