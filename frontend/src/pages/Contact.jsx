@@ -8,6 +8,7 @@ import { SectionHeader } from '@/components/sections/SectionHeader';
 import { AnimatedBackground } from '@/components/sections/AnimatedBackground';
 import { useTheme } from '@/context/ThemeContext';
 import { useContactForm, SUBJECT_OPTIONS } from '@/hooks/useContactForm';
+import { ArrowFillButton } from '@/components/ui/ArrowFillButton';
 
 const contactInfo = [
   { icon: Mail, title: 'Email Us', value: 'hello@gdgcampus.dev', description: 'General inquiries, partnerships, and sponsorships', href: 'mailto:hello@gdgcampus.dev' },
@@ -317,15 +318,19 @@ export function Contact() {
                     </p>
                   </div>
 
-                  <a
-                    href="https://maps.google.com/?q=Pimpri+Chinchwad+College+of+Engineering+Nigdi+Pune"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-primary/10 hover:bg-primary text-primary hover:text-primary-foreground font-medium text-sm transition-colors group"
-                  >
-                    <span>Open in Google Maps</span>
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </a>
+                  <div className="pt-2">
+                    <ArrowFillButton
+                      href="https://maps.google.com/?q=Pimpri+Chinchwad+College+of+Engineering+Nigdi+Pune"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      btnText="View on Google Maps"
+                      bgColor="#4285F4"
+                      textColor="#ffffff"
+                      fillBgColor="#ffffff"
+                      fillTextColor="#1a73e8"
+                      className="w-full justify-center"
+                    />
+                  </div>
                 </CardContent>
               </Card>
 

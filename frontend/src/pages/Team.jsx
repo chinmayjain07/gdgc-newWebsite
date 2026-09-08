@@ -46,10 +46,7 @@ export function Team() {
               transition={{ delay: 0.3 }}
               className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 text-foreground"
             >
-              The People Behind{' '}
-              <span className="text-black dark:text-white">
-                GDGC
-              </span>
+              The People Behind GDGC
               <InteractiveLogo size="md" className="inline-flex ml-3 align-middle" />
             </motion.h1>
             <motion.p
@@ -110,7 +107,7 @@ export function Team() {
                   <GraduationCap className="w-3.5 h-3.5" />
                   Academic Mentorship
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-bold text-foreground">Faculty Advisors & Mentors</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold text-foreground">Faculty Coordinators</h3>
                 <p className="text-muted-foreground text-sm mt-1">Guiding student developers and institutional excellence.</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto gap-6" role="list">
@@ -213,7 +210,7 @@ export function Team() {
                   <GraduationCap className="w-5 h-5 text-blue-500" />
                   <h3 className="text-2xl font-bold text-foreground">Faculties</h3>
                   <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-500">
-                    {faculties.length} Advisors
+                    {faculties.length} Coordinators
                   </span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto gap-6" role="list">

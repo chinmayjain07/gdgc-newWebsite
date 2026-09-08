@@ -40,17 +40,14 @@ export function InteractiveLogo({
       triggeredRef.current = true;
       setTimeout(() => {
         if (onSecretTrigger) {
+          // Only the logo along "Build the Future with GDGC" triggers the dev terminal
           onSecretTrigger();
         } else {
-          // If on another page, navigate to home with hash
+          // All other GDGC logos across the site navigate directly to the home page
           if (location.pathname !== '/') {
-            navigate('/#laptop-terminal');
-            setTimeout(() => {
-              window.dispatchEvent(new CustomEvent('gdgc:open-laptop-terminal'));
-            }, 350);
-          } else {
-            window.dispatchEvent(new CustomEvent('gdgc:open-laptop-terminal'));
+            navigate('/');
           }
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         setTimeout(() => {
           triggeredRef.current = false;
