@@ -293,7 +293,7 @@ export function TeamFlipCard({ member }) {
             </div>
           )}
 
-          {/* <!-- About section - temporarily commented out per request --> */}
+          {/* <!-- About section - temporarily commented out --> */}
           {/*
           <div className="space-y-1">
             <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">

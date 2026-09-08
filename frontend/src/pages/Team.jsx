@@ -206,7 +206,7 @@ export function Team() {
             <div className="space-y-20">
               {/* Section 1: Faculties */}
               <div className="space-y-6">
-                <div className="flex items-center gap-3 pb-3 border-b border-border/60">
+                <div className="flex items-center justify-center gap-3 pb-3 border-b border-border/60 text-center">
                   <GraduationCap className="w-5 h-5 text-blue-500" />
                   <h3 className="text-2xl font-bold text-foreground">Faculties</h3>
                   <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-500">
@@ -225,7 +225,7 @@ export function Team() {
               {/* <!-- Leads section - positions not finalized yet --> */}
               {/*
               <div className="space-y-6">
-                <div className="flex items-center gap-3 pb-3 border-b border-border/60">
+                <div className="flex items-center justify-center gap-3 pb-3 border-b border-border/60 text-center">
                   <Award className="w-5 h-5 text-red-500" />
                   <h3 className="text-2xl font-bold text-foreground">Leads</h3>
                   <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-500/10 text-red-500">
@@ -244,7 +244,7 @@ export function Team() {
 
               {/* Section 3: Domain Heads (3 Domains x 5 Cards) */}
               <div className="space-y-12">
-                <div className="flex items-center gap-3 pb-3 border-b border-border/60">
+                <div className="flex items-center justify-center gap-3 pb-3 border-b border-border/60 text-center">
                   <Layers className="w-5 h-5 text-green-500" />
                   <h3 className="text-2xl font-bold text-foreground">Domain Heads</h3>
                   <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-500/10 text-green-500">
@@ -254,11 +254,11 @@ export function Team() {
 
                 {domainGroups.map((group) => (
                   <div key={group.id} className="space-y-4">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-center">
                       <h4 className="text-lg sm:text-xl font-bold text-foreground">
                         {group.name}
                       </h4>
-                      <span className="text-xs text-muted-foreground">{group.description}</span>
+                      <span className="text-xs text-muted-foreground sm:before:content-['•'] sm:before:mx-2 sm:before:text-muted-foreground/60">{group.description}</span>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5" role="list">
                       {group.members.map((member) => (
