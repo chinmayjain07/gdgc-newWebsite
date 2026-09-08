@@ -73,8 +73,8 @@
 
 .closed-lid-gdgc-badge {
   position: absolute;
-  top: 80.6%;
-  left: 50.2%;
+  top: 82.4%;
+  left: 50.0%;
   transform: translate(-50%, -50%);
   z-index: 6;
   pointer-events: none;
@@ -85,8 +85,8 @@
 
 .lid-badge-surface {
   position: relative;
-  width: 74px;
-  height: 24px;
+  width: 98px;
+  height: 28px;
   border-radius: 9999px;
   background: radial-gradient(
     ellipse at center,
@@ -94,18 +94,35 @@
     rgba(46, 46, 50, 0.98) 70%,
     rgba(35, 35, 38, 0.98) 100%
   );
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.2);
   transform: perspective(300px) rotateX(62deg);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2px 12px;
+  padding: 2px 10px;
+  box-sizing: border-box;
 }
 
 .lid-badge-surface svg,
 .lid-badge-surface img {
+  height: 100%;
+  max-height: 18px;
+  width: auto;
+  object-fit: contain;
   filter: drop-shadow(0 0 3px rgba(66, 133, 244, 0.5));
+}
+
+@media (max-width: 768px) {
+  .lid-badge-surface {
+    width: 72px;
+    height: 22px;
+    padding: 1px 6px;
+  }
+  .lid-badge-surface svg,
+  .lid-badge-surface img {
+    max-height: 14px;
+  }
 }
 
 /* ==========================================================================

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExternalLink, RotateCw } from 'lucide-react';
+import { ExternalLink, RotateCw, User } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
 /**
@@ -15,6 +15,23 @@ function LinkedInIcon({ className = 'w-4 h-4' }) {
       aria-hidden="true"
     >
       <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+    </svg>
+  );
+}
+
+/**
+ * Official Google Scholar SVG Icon
+ */
+function GoogleScholarIcon({ className = 'w-4 h-4' }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z" />
     </svg>
   );
 }
@@ -70,6 +87,7 @@ export function TeamFlipCard({ member }) {
   );
   const linkedinLink = member.linkedinUrl || member.social?.linkedin || '#';
   const githubLink = member.githubUrl || member.social?.github || '#';
+  const scholarLink = member.googleScholarUrl || member.social?.scholar;
   const designation = isFaculty ? 'Faculty Coordinator' : (member.designation || member.role || 'Core Team');
 
   return (
@@ -92,12 +110,19 @@ export function TeamFlipCard({ member }) {
           <div className="my-auto pt-2 flex flex-col items-center text-center w-full px-1">
             {/* Avatar frame with subtle GDGC gradient ring */}
             <div className="relative p-1.5 rounded-full bg-gradient-to-tr from-[#4285F4] via-[#FBBC04] to-[#EA4335] shadow-lg group-hover:scale-105 transition-transform duration-300">
-              <img
-                src={member.image}
-                alt={member.name}
-                className="w-32 h-32 sm:w-36 sm:h-36 rounded-full object-cover bg-muted border-2 border-background shadow-inner"
-                loading="lazy"
-              />
+              {member.image ? (
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-32 h-32 sm:w-36 sm:h-36 rounded-full object-cover bg-muted border-2 border-background shadow-inner"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-muted/80 flex flex-col items-center justify-center border-2 border-background shadow-inner text-muted-foreground">
+                  <User className="w-14 h-14 sm:w-16 sm:h-16 text-muted-foreground/50 mb-1" />
+                  <span className="text-[10px] sm:text-[11px] font-medium tracking-wide uppercase text-muted-foreground/60">Photo Coming Soon</span>
+                </div>
+              )}
             </div>
 
             {/* Member Name */}
@@ -111,37 +136,68 @@ export function TeamFlipCard({ member }) {
             </p>
           </div>
 
-          {/* Bottom Social Media Links: LinkedIn only for faculty; LinkedIn & GitHub for others */}
-          <div className="w-full pt-3 border-t border-border/40 flex items-center justify-center gap-3">
-            {linkedinLink && (
-              <a
-                href={linkedinLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className={cn(
-                  "rounded-xl bg-muted/60 hover:bg-[#0A66C2] text-muted-foreground hover:text-white transition-all duration-200 border border-border/50 hover:border-[#0A66C2] shadow-sm hover:scale-110 active:scale-95 flex items-center justify-center gap-2",
-                  isFaculty ? "px-4 py-2 text-xs font-semibold" : "p-2"
+          {/* Bottom Social Media Links: LinkedIn & Scholar for faculty; LinkedIn & GitHub for others */}
+          <div className="w-full pt-3 border-t border-border/40 flex items-center justify-center gap-2.5">
+            {isFaculty ? (
+              <>
+                {linkedinLink && (
+                  <a
+                    href={linkedinLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex-1 max-w-[145px] px-3 py-2 rounded-xl bg-muted/60 hover:bg-[#0A66C2] text-muted-foreground hover:text-white transition-all duration-200 border border-border/50 hover:border-[#0A66C2] shadow-sm hover:scale-105 active:scale-95 flex items-center justify-center gap-1.5 text-xs font-semibold truncate"
+                    aria-label={`${member.name} on LinkedIn`}
+                    title="LinkedIn Profile"
+                  >
+                    <LinkedInIcon className="w-3.5 h-3.5 fill-current shrink-0" />
+                    <span className="truncate">LinkedIn</span>
+                  </a>
                 )}
-                aria-label={`${member.name} on LinkedIn`}
-                title="LinkedIn Profile"
-              >
-                <LinkedInIcon className="w-4 h-4 fill-current" />
-                {isFaculty && <span>Connect on LinkedIn</span>}
-              </a>
-            )}
-            {!isFaculty && githubLink && (
-              <a
-                href={githubLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="p-2 rounded-xl bg-muted/60 hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-black text-muted-foreground transition-all duration-200 border border-border/50 hover:border-foreground/30 shadow-sm hover:scale-110 active:scale-95"
-                aria-label={`${member.name} on GitHub`}
-                title="GitHub Profile"
-              >
-                <GitHubIcon className="w-4 h-4 fill-current" />
-              </a>
+                {scholarLink && (
+                  <a
+                    href={scholarLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex-1 max-w-[145px] px-3 py-2 rounded-xl bg-muted/60 hover:bg-[#4285F4] text-muted-foreground hover:text-white transition-all duration-200 border border-border/50 hover:border-[#4285F4] shadow-sm hover:scale-105 active:scale-95 flex items-center justify-center gap-1.5 text-xs font-semibold truncate"
+                    aria-label={`${member.name} on Google Scholar`}
+                    title="Google Scholar Profile"
+                  >
+                    <GoogleScholarIcon className="w-3.5 h-3.5 fill-current shrink-0" />
+                    <span className="truncate">Scholar</span>
+                  </a>
+                )}
+              </>
+            ) : (
+              <>
+                {linkedinLink && (
+                  <a
+                    href={linkedinLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="p-2 rounded-xl bg-muted/60 hover:bg-[#0A66C2] text-muted-foreground hover:text-white transition-all duration-200 border border-border/50 hover:border-[#0A66C2] shadow-sm hover:scale-110 active:scale-95"
+                    aria-label={`${member.name} on LinkedIn`}
+                    title="LinkedIn Profile"
+                  >
+                    <LinkedInIcon className="w-4 h-4 fill-current" />
+                  </a>
+                )}
+                {githubLink && (
+                  <a
+                    href={githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="p-2 rounded-xl bg-muted/60 hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-black text-muted-foreground transition-all duration-200 border border-border/50 hover:border-foreground/30 shadow-sm hover:scale-110 active:scale-95"
+                    aria-label={`${member.name} on GitHub`}
+                    title="GitHub Profile"
+                  >
+                    <GitHubIcon className="w-4 h-4 fill-current" />
+                  </a>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -202,20 +258,38 @@ export function TeamFlipCard({ member }) {
             </div>
           )}
 
-          {isFaculty && linkedinLink && (
-            <div className="pt-2.5 border-t border-border/40">
-              <a
-                href={linkedinLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-xl bg-[#0A66C2] hover:bg-[#004182] text-white font-medium text-xs transition-all duration-200 shadow-sm active:scale-95"
-                aria-label={`${member.name} on LinkedIn`}
-              >
-                <LinkedInIcon className="w-3.5 h-3.5 fill-current" />
-                <span>LinkedIn Profile</span>
-                <ExternalLink className="w-3 h-3 opacity-70" />
-              </a>
+          {isFaculty && (linkedinLink || scholarLink) && (
+            <div className="pt-2.5 border-t border-border/40 flex items-center gap-2">
+              {linkedinLink && (
+                <a
+                  href={linkedinLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-[#0A66C2] hover:bg-[#004182] text-white font-medium text-xs transition-all duration-200 shadow-sm active:scale-95 truncate"
+                  aria-label={`${member.name} on LinkedIn`}
+                  title="LinkedIn Profile"
+                >
+                  <LinkedInIcon className="w-3.5 h-3.5 fill-current shrink-0" />
+                  <span className="truncate">LinkedIn</span>
+                  <ExternalLink className="w-3 h-3 opacity-70 shrink-0" />
+                </a>
+              )}
+              {scholarLink && (
+                <a
+                  href={scholarLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-[#4285F4] hover:bg-[#2b6cb0] text-white font-medium text-xs transition-all duration-200 shadow-sm active:scale-95 truncate"
+                  aria-label={`${member.name} on Google Scholar`}
+                  title="Google Scholar Profile"
+                >
+                  <GoogleScholarIcon className="w-3.5 h-3.5 fill-current shrink-0" />
+                  <span className="truncate">Scholar</span>
+                  <ExternalLink className="w-3 h-3 opacity-70 shrink-0" />
+                </a>
+              )}
             </div>
           )}
 

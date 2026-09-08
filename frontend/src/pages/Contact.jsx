@@ -9,6 +9,46 @@ import { AnimatedBackground } from '@/components/sections/AnimatedBackground';
 import { useTheme } from '@/context/ThemeContext';
 import { useContactForm, SUBJECT_OPTIONS } from '@/hooks/useContactForm';
 import { ArrowFillButton } from '@/components/ui/ArrowFillButton';
+import { cn } from '@/utils/cn';
+
+const FAQ_COLOR_CYCLE = [
+  {
+    name: 'red',
+    borderHover: 'hover:border-[#EA4335]/70 hover:shadow-md hover:shadow-[#EA4335]/10',
+    borderActive: 'border-[#EA4335] shadow-lg shadow-[#EA4335]/15 ring-1 ring-[#EA4335]/30',
+    bgHover: 'hover:bg-[#EA4335]/[0.03]',
+    bgActive: 'bg-[#EA4335]/[0.07] dark:bg-[#EA4335]/10',
+    textActive: 'text-[#EA4335]',
+    iconActive: 'text-[#EA4335]',
+  },
+  {
+    name: 'blue',
+    borderHover: 'hover:border-[#4285F4]/70 hover:shadow-md hover:shadow-[#4285F4]/10',
+    borderActive: 'border-[#4285F4] shadow-lg shadow-[#4285F4]/15 ring-1 ring-[#4285F4]/30',
+    bgHover: 'hover:bg-[#4285F4]/[0.03]',
+    bgActive: 'bg-[#4285F4]/[0.07] dark:bg-[#4285F4]/10',
+    textActive: 'text-[#4285F4]',
+    iconActive: 'text-[#4285F4]',
+  },
+  {
+    name: 'green',
+    borderHover: 'hover:border-[#34A853]/70 hover:shadow-md hover:shadow-[#34A853]/10',
+    borderActive: 'border-[#34A853] shadow-lg shadow-[#34A853]/15 ring-1 ring-[#34A853]/30',
+    bgHover: 'hover:bg-[#34A853]/[0.03]',
+    bgActive: 'bg-[#34A853]/[0.07] dark:bg-[#34A853]/10',
+    textActive: 'text-[#34A853]',
+    iconActive: 'text-[#34A853]',
+  },
+  {
+    name: 'yellow',
+    borderHover: 'hover:border-[#FBBC04]/80 hover:shadow-md hover:shadow-[#FBBC04]/10',
+    borderActive: 'border-[#FBBC04] shadow-lg shadow-[#FBBC04]/15 ring-1 ring-[#FBBC04]/30',
+    bgHover: 'hover:bg-[#FBBC04]/[0.03]',
+    bgActive: 'bg-[#FBBC04]/[0.07] dark:bg-[#FBBC04]/10',
+    textActive: 'text-[#D97706] dark:text-[#FBBC04]',
+    iconActive: 'text-[#D97706] dark:text-[#FBBC04]',
+  },
+];
 
 const contactInfo = [
   { icon: Mail, title: 'Email Us', value: 'hello@gdgcampus.dev', description: 'General inquiries, partnerships, and sponsorships', href: 'mailto:hello@gdgcampus.dev' },
@@ -413,46 +453,64 @@ export function Contact() {
             badge="FAQ"
           />
           <div className="space-y-3" role="list">
-            {faqs.map((faq, index) => (
-              <motion.article
-                key={faq.question}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="relative"
-                role="listitem"
-              >
-                <Card>
-                  <CardContent className="p-0">
-                    <button
-                      onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                      className="w-full p-6 flex items-center justify-between gap-4 text-left hover:bg-accent/50 transition-colors"
-                      aria-expanded={expandedFaq === index}
-                    >
-                      <h3 className="font-semibold text-base pr-10">{faq.question}</h3>
-                      <div className="flex-shrink-0 text-muted-foreground">
-                        {expandedFaq === index ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-                      </div>
-                    </button>
-                    <AnimatePresence>
-                      {expandedFaq === index && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="px-6 pb-6 border-t border-border/50">
-                            <p className="text-muted-foreground">{faq.answer}</p>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </CardContent>
-                </Card>
-              </motion.article>
-            ))}
+            {faqs.map((faq, index) => {
+              const color = FAQ_COLOR_CYCLE[index % 4];
+              const isOpen = expandedFaq === index;
+
+              return (
+                <motion.article
+                  key={faq.question}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                  className="relative"
+                  role="listitem"
+                >
+                  <Card
+                    className={cn(
+                      'transition-all duration-300 border rounded-2xl overflow-hidden',
+                      isOpen
+                        ? cn(color.borderActive, color.bgActive)
+                        : cn('border-border/60 bg-card', color.borderHover, color.bgHover)
+                    )}
+                  >
+                    <CardContent className="p-0">
+                      <button
+                        onClick={() => setExpandedFaq(isOpen ? null : index)}
+                        className={cn(
+                          'w-full p-6 flex items-center justify-between gap-4 text-left transition-colors cursor-pointer',
+                          isOpen ? color.bgActive : color.bgHover
+                        )}
+                        aria-expanded={isOpen}
+                      >
+                        <h3 className={cn('font-semibold text-base pr-10 transition-colors', isOpen ? color.textActive : 'text-foreground')}>
+                          {faq.question}
+                        </h3>
+                        <div className={cn('flex-shrink-0 transition-colors', isOpen ? color.iconActive : 'text-muted-foreground')}>
+                          {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                        </div>
+                      </button>
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.25, ease: 'easeInOut' }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-6 pb-6 border-t border-border/40">
+                              <p className="text-muted-foreground pt-3 leading-relaxed">{faq.answer}</p>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </CardContent>
+                  </Card>
+                </motion.article>
+              );
+            })}
           </div>
         </div>
       </section>
