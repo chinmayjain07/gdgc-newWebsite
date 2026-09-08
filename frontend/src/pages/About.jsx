@@ -104,7 +104,7 @@ export function About() {
           </div>
         </div>
       </section>
-      {/* ── Our Journey / Timeline (Commented Out) ── */}
+      {/* <!-- Our Journey section - temporarily commented out per request --> */}
       {/*
       <section className="relative py-20 lg:py-28 bg-muted/30" aria-labelledby="journey-title">
         <AnimatedBackground variant="grid" />
@@ -176,7 +176,7 @@ export function About() {
         </div>
       </section>
 
-      {/* ── What Our Members Say / Testimonials (Commented Out) ── */}
+      {/* <!-- What Our Members Say section - temporarily commented out per request --> */}
       {/*
       <section className="relative py-20 lg:py-28 bg-muted/30" aria-labelledby="team-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

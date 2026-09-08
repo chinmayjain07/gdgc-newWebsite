@@ -9,9 +9,10 @@ import { TeamFlipCard } from '@/components/team/TeamFlipCard';
 
 const teamTabs = [
   { id: 'faculties', label: 'Faculties', count: faculties.length },
-  { id: 'leads', label: 'Leads', count: leads.length },
+  // <!-- Leads section - positions not finalized yet -->
+  // { id: 'leads', label: 'Leads', count: leads.length },
   { id: 'domainHeads', label: 'Domain Heads', count: domainHeads.length },
-  { id: 'all', label: 'All Members', count: allTeam.length },
+  { id: 'all', label: 'All Members', count: faculties.length + domainHeads.length },
 ];
 
 export function Team() {
@@ -130,7 +131,8 @@ export function Team() {
             </div>
           )}
 
-          {/* TAB 2: LEADS (3 Cards) */}
+          {/* <!-- Leads section - positions not finalized yet --> */}
+          {/*
           {activeTab === 'leads' && (
             <div className="space-y-8">
               <div className="text-center max-w-2xl mx-auto mb-8">
@@ -158,6 +160,7 @@ export function Team() {
               </div>
             </div>
           )}
+          */}
 
           {/* TAB 3: DOMAIN HEADS (15 cards across 3 domains, with domain heading above and cards in a row) */}
           {activeTab === 'domainHeads' && (
@@ -222,7 +225,8 @@ export function Team() {
                 </div>
               </div>
 
-              {/* Section 2: Leads (3 Cards) */}
+              {/* <!-- Leads section - positions not finalized yet --> */}
+              {/*
               <div className="space-y-6">
                 <div className="flex items-center gap-3 pb-3 border-b border-border/60">
                   <Award className="w-5 h-5 text-red-500" />
@@ -239,6 +243,7 @@ export function Team() {
                   ))}
                 </div>
               </div>
+              */}
 
               {/* Section 3: Domain Heads (3 Domains x 5 Cards) */}
               <div className="space-y-12">

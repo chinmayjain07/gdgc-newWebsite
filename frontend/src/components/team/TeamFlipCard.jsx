@@ -165,35 +165,48 @@ export function TeamFlipCard({ member }) {
             </button>
           </div>
 
-          {/* Middle: Bio & Skills */}
-          <div className="my-auto space-y-2.5 py-1">
-            <div className="space-y-1">
-              <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
-                About
-              </span>
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed italic border-l-2 border-primary/50 pl-2.5 line-clamp-4">
-                "{member.bio || 'Passionate student developer contributing to tech innovation and community workshops at GDGC.'}"
-              </p>
-            </div>
-
-            {/* Skills Pills */}
-            {member.skills && member.skills.length > 0 && (
-              <div className="pt-0.5">
-                <div className="flex flex-wrap gap-1">
-                  {member.skills.slice(0, 3).map((skill) => (
-                    <span
-                      key={skill}
-                      className="text-[10px] font-medium px-1.5 py-0.5 rounded-md bg-muted text-muted-foreground border border-border/50"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+          {/* Middle: Quote from TY (Third Year) Student */}
+          <div className="my-auto flex flex-col justify-center items-center text-center px-3 py-6">
+            <blockquote className="text-sm sm:text-base text-foreground/90 italic font-medium leading-relaxed">
+              "{member.quote || ' - '}"
+            </blockquote>
+            <p className="text-xs text-muted-foreground font-semibold mt-3">
+              - {member.name || 'TY Student'}
+            </p>
           </div>
 
-          {/* Bottom: LinkedIn & GitHub Profile Actions */}
+          {/* <!-- About section - temporarily commented out per request --> */}
+          {/*
+          <div className="space-y-1">
+            <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+              About
+            </span>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed italic border-l-2 border-primary/50 pl-2.5 line-clamp-4">
+              "{member.bio || 'Passionate student developer contributing to tech innovation and community workshops at GDGC.'}"
+            </p>
+          </div>
+          */}
+
+          {/* <!-- Tech stack display - temporarily commented out per request --> */}
+          {/*
+          {member.skills && member.skills.length > 0 && (
+            <div className="pt-0.5">
+              <div className="flex flex-wrap gap-1">
+                {member.skills.slice(0, 3).map((skill) => (
+                  <span
+                    key={skill}
+                    className="text-[10px] font-medium px-1.5 py-0.5 rounded-md bg-muted text-muted-foreground border border-border/50"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          */}
+
+          {/* <!-- LinkedIn and GitHub links on back - temporarily commented out per request --> */}
+          {/*
           <div className="pt-2.5 border-t border-border/40">
             <div className="flex items-center gap-2">
               {linkedinLink && (
@@ -225,6 +238,7 @@ export function TeamFlipCard({ member }) {
               )}
             </div>
           </div>
+          */}
         </div>
       </div>
     </div>

@@ -18,14 +18,65 @@ export const SUBJECT_OPTIONS = [
   { value: 'other', label: 'Other' },
 ];
 
+export function validateEmail(email) {
+  const trimmed = (email || '').trim();
+  if (!trimmed) {
+    return { isValid: false, message: 'Please enter your email address.' };
+  }
+  if (!trimmed.includes('@')) {
+    return {
+      isValid: false,
+      message: "Email is incorrect: missing '@' symbol (e.g. yourname@gmail.com).",
+    };
+  }
+  if (trimmed.startsWith('@')) {
+    return {
+      isValid: false,
+      message: "Email is incorrect: missing username before '@'.",
+    };
+  }
+  const parts = trimmed.split('@');
+  if (parts.length > 2) {
+    return {
+      isValid: false,
+      message: "Email is incorrect: multiple '@' symbols found.",
+    };
+  }
+  const domain = parts[1];
+  if (!domain || !domain.includes('.')) {
+    return {
+      isValid: false,
+      message: "Email is incorrect: missing valid domain extension (e.g. .com, .edu).",
+    };
+  }
+  if (domain.endsWith('.')) {
+    return {
+      isValid: false,
+      message: "Email is incorrect: domain cannot end with a period.",
+    };
+  }
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
+  if (!emailRegex.test(trimmed)) {
+    return {
+      isValid: false,
+      message: 'Incorrect email entered: please provide a valid email format.',
+    };
+  }
+  return { isValid: true, message: '' };
+}
+
 export function useContactForm(onSuccess) {
   const [formData, setFormData] = useState(INITIAL_CONTACT_FORM);
   const [submitStatus, setSubmitStatus] = useState(null); // 'loading' | 'success' | 'error' | null
   const [errorMessage, setErrorMessage] = useState('');
+  const [emailError, setEmailError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === 'email' && emailError) {
+      setEmailError('');
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -39,12 +90,25 @@ export function useContactForm(onSuccess) {
       setTimeout(() => {
         setSubmitStatus(null);
         setErrorMessage('');
-      }, 4000);
+      }, 5000);
+      return;
+    }
+
+    const emailCheck = validateEmail(formData.email);
+    if (!emailCheck.isValid) {
+      setSubmitStatus('error');
+      setErrorMessage(emailCheck.message);
+      setEmailError(emailCheck.message);
+      setTimeout(() => {
+        setSubmitStatus(null);
+        setErrorMessage('');
+      }, 6000);
       return;
     }
 
     setSubmitStatus('loading');
     setErrorMessage('');
+    setEmailError('');
 
     try {
       // Simulate network submission delay (or replace with live API endpoint)
@@ -67,18 +131,41 @@ export function useContactForm(onSuccess) {
     }
   };
 
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    if (name === 'email' && value.trim()) {
+      const check = validateEmail(value);
+      if (!check.isValid) {
+        setSubmitStatus('error');
+        setErrorMessage(check.message);
+        setEmailError(check.message);
+      }
+    }
+  };
+
+  const clearError = () => {
+    setSubmitStatus(null);
+    setErrorMessage('');
+    setEmailError('');
+  };
+
   const resetForm = () => {
     setFormData(INITIAL_CONTACT_FORM);
     setSubmitStatus(null);
     setErrorMessage('');
+    setEmailError('');
   };
 
   return {
     formData,
     submitStatus,
     errorMessage,
+    emailError,
+    setEmailError,
     handleChange,
+    handleBlur,
     handleSubmit,
+    clearError,
     resetForm,
     setFormData,
   };

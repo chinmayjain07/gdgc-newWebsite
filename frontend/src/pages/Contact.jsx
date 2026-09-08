@@ -53,12 +53,46 @@ const faqs = [
 ];
 
 export function Contact() {
-  const { formData, submitStatus, errorMessage, handleChange, handleSubmit } = useContactForm();
+  const { formData, submitStatus, errorMessage, emailError, setEmailError, handleChange, handleBlur, handleSubmit, clearError } = useContactForm();
   const [expandedFaq, setExpandedFaq] = useState(null);
   const { theme } = useTheme();
 
   return (
     <>
+      {/* Animated Validation Pop-up Alert Toast */}
+      <AnimatePresence>
+        {submitStatus === 'error' && errorMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -25, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -25, scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+            className="fixed top-24 right-4 sm:right-8 z-50 max-w-md p-4 rounded-2xl bg-card border-2 border-red-500/80 shadow-2xl shadow-red-500/25 text-foreground flex items-start gap-3 backdrop-blur-xl"
+            role="alert"
+          >
+            <div className="p-2 rounded-xl bg-red-500/10 text-red-500 shrink-0 mt-0.5">
+              <AlertCircle className="w-5 h-5 animate-pulse" />
+            </div>
+            <div className="flex-1 pr-2">
+              <h4 className="text-sm font-bold text-red-500">
+                Invalid Input Alert
+              </h4>
+              <p className="text-xs sm:text-sm text-foreground/90 mt-1 leading-relaxed">
+                {errorMessage}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={clearError}
+              className="p-1 rounded-lg text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              aria-label="Close alert"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <section className="relative min-h-[50vh] flex items-center overflow-hidden" aria-labelledby="contact-hero-title">
         <AnimatedBackground variant="orb" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 text-center">
@@ -97,6 +131,8 @@ export function Contact() {
         </div>
       </section>
 
+      {/* <!-- Contact info cards (Email Us, Visit Us, Call Us, Office Hours) - temporarily commented out per request --> */}
+      {/*
       <section className="relative py-10 lg:py-16" aria-labelledby="contact-info-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -121,6 +157,7 @@ export function Contact() {
           </div>
         </div>
       </section>
+      */}
 
       <section className="relative py-10 lg:py-16" aria-labelledby="contact-form-title">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -155,13 +192,17 @@ export function Contact() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="p-6 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 flex items-center gap-3 mb-6"
+                    className="p-5 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 flex items-center gap-3 mb-6"
                     role="alert"
                   >
                     <AlertCircle className="w-6 h-6 flex-shrink-0" />
                     <div>
-                      <p className="font-semibold">Something Went Wrong</p>
-                      <p className="text-sm">Please try again or email us directly.</p>
+                      <p className="font-semibold text-sm sm:text-base">
+                        {errorMessage || 'Something Went Wrong'}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Please review the highlighted fields and try again.
+                      </p>
                     </div>
                   </motion.div>
                 ) : null}
@@ -191,9 +232,17 @@ export function Contact() {
                       placeholder="you@university.edu"
                       value={formData.email}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       required
                       disabled={submitStatus === 'loading'}
+                      className={emailError ? 'border-red-500 focus-visible:ring-red-500 ring-1 ring-red-500/40' : ''}
                     />
+                    {emailError && (
+                      <p className="text-xs text-red-500 font-medium mt-1.5 flex items-center gap-1">
+                        <AlertCircle className="w-3.5 h-3.5" />
+                        {emailError}
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div>
@@ -205,10 +254,14 @@ export function Contact() {
                     onChange={handleChange}
                     required
                     disabled={submitStatus === 'loading'}
-                    className="w-full h-12 rounded-xl border border-border bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
+                    className="w-full h-12 rounded-xl border border-border bg-background text-foreground px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent cursor-pointer shadow-sm"
                   >
                     {SUBJECT_OPTIONS.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
+                      <option
+                        key={opt.value}
+                        value={opt.value}
+                        className="bg-card text-foreground py-2"
+                      >
                         {opt.label}
                       </option>
                     ))}
@@ -236,66 +289,112 @@ export function Contact() {
 
             <div>
               <SectionHeader
-                title="Other Ways to Connect"
-                subtitle="Join our community on your favorite platform."
+                title="Visit Us"
+                subtitle="Come visit our campus and connect with our community."
                 align="left"
-                badge="Stay Connected"
+                badge="Campus Location"
               />
 
-              <Card className="mb-8">
-                <CardContent className="p-6">
-                  <div className="flex flex-wrap gap-3">
-                    {socialLinks.map((social) => (
-                      <a
-                        key={social.label}
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`flex items-center gap-2 px-4 py-2.5 rounded-xl bg-muted text-foreground/70 hover:bg-accent/50 hover:text-foreground transition-colors ${social.color}`}
-                        aria-label={social.label}
-                      >
-                        <social.icon className="w-5 h-5" />
-                        {social.label}
-                      </a>
-                    ))}
+              <Card className="overflow-hidden border border-border/60 hover:shadow-xl transition-all duration-300">
+                <CardHeader className="pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl">Campus Address</CardTitle>
+                      <p className="text-xs text-muted-foreground mt-0.5">Google Developer Groups on Campus</p>
+                    </div>
                   </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="p-4 rounded-xl bg-muted/60 border border-border/40 space-y-1">
+                    <p className="font-semibold text-foreground text-base sm:text-lg">
+                      Pimpri Chinchwad College of Engineering, Pune.
+                    </p>
+                    <p className="text-muted-foreground text-sm sm:text-base">
+                      Sector No. 26, Nigdi Pradikaran - 411044.
+                    </p>
+                  </div>
+
+                  <a
+                    href="https://maps.google.com/?q=Pimpri+Chinchwad+College+of+Engineering+Nigdi+Pune"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-primary/10 hover:bg-primary text-primary hover:text-primary-foreground font-medium text-sm transition-colors group"
+                  >
+                    <span>Open in Google Maps</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </a>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Why Contact Us?</CardTitle>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <ul className="space-y-4" role="list">
-                    {[
-                      { icon: MessageSquare, title: 'General Questions', desc: 'Ask anything about GDGC, events, or membership.' },
-                      { icon: GitBranch, title: 'Partnership Proposals', desc: 'Sponsorships, hiring partnerships, or tech collaborations.' },
-                      { icon: Send, title: 'Speaker Applications', desc: 'Share your expertise with our community.' },
-                      { icon: CheckCircle, title: 'Event Feedback', desc: 'Help us improve future events and workshops.' },
-                      { icon: AlertCircle, title: 'Report an Issue', desc: 'Code of conduct violations, accessibility concerns, etc.' },
-                      { icon: Mail, title: 'Media Inquiries', desc: 'Press coverage, interviews, or brand asset requests.' },
-                    ].map((item, index) => (
-                      <motion.li
-                        key={item.title}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.05 }}
-                        className="flex items-start gap-4 p-4 rounded-xl bg-muted/50 hover:bg-muted transition-colors"
-                      >
-                        <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
-                          <item.icon className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <h4 className="font-semibold">{item.title}</h4>
-                          <p className="text-sm text-muted-foreground">{item.desc}</p>
-                        </div>
-                      </motion.li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+              {/* <!-- 'Other Ways to Connect' & 'Why Contact Us?' sections - temporarily commented out per request --> */}
+              {/*
+              <div className="mt-8">
+                <SectionHeader
+                  title="Other Ways to Connect"
+                  subtitle="Join our community on your favorite platform."
+                  align="left"
+                  badge="Stay Connected"
+                />
+
+                <Card className="mb-8">
+                  <CardContent className="p-6">
+                    <div className="flex flex-wrap gap-3">
+                      {socialLinks.map((social) => (
+                        <a
+                          key={social.label}
+                          href={social.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl bg-muted text-foreground/70 hover:bg-accent/50 hover:text-foreground transition-colors ${social.color}`}
+                          aria-label={social.label}
+                        >
+                          <social.icon className="w-5 h-5" />
+                          {social.label}
+                        </a>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Why Contact Us?</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <ul className="space-y-4" role="list">
+                      {[
+                        { icon: MessageSquare, title: 'General Questions', desc: 'Ask anything about GDGC, events, or membership.' },
+                        { icon: GitBranch, title: 'Partnership Proposals', desc: 'Sponsorships, hiring partnerships, or tech collaborations.' },
+                        { icon: Send, title: 'Speaker Applications', desc: 'Share your expertise with our community.' },
+                        { icon: CheckCircle, title: 'Event Feedback', desc: 'Help us improve future events and workshops.' },
+                        { icon: AlertCircle, title: 'Report an Issue', desc: 'Code of conduct violations, accessibility concerns, etc.' },
+                        { icon: Mail, title: 'Media Inquiries', desc: 'Press coverage, interviews, or brand asset requests.' },
+                      ].map((item, index) => (
+                        <motion.li
+                          key={item.title}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.05 }}
+                          className="flex items-start gap-4 p-4 rounded-xl bg-muted/50 hover:bg-muted transition-colors"
+                        >
+                          <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+                            <item.icon className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold">{item.title}</h4>
+                            <p className="text-sm text-muted-foreground">{item.desc}</p>
+                          </div>
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </div>
+              */}
             </div>
           </div>
         </div>
@@ -353,6 +452,8 @@ export function Contact() {
         </div>
       </section>
 
+      {/* <!-- 'Ready to Join the Community?' section - temporarily commented out per request --> */}
+      {/*
       <section className="relative py-20 lg:py-28" aria-labelledby="cta-title">
         <AnimatedBackground variant="orb" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -397,6 +498,7 @@ export function Contact() {
           </motion.div>
         </div>
       </section>
+      */}
     </>
   );
 }
