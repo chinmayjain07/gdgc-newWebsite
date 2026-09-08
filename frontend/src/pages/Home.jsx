@@ -438,7 +438,7 @@ export function Home() {
         </div>
       </section>
 
-      {/* 3D Interactive Laptop CTA Workstation (acm-vit inspired) */}
+      {/* 3D Interactive Laptop CTA Workstation */}
       <LaptopCTA />
     </>
   );

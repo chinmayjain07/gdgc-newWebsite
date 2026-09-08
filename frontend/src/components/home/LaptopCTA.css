@@ -1,10 +1,10 @@
 /* ==========================================================================
    GDGC PCCOE — Photorealistic 3D Laptop Workstation CTA
-   Canvas Frame-Scrub Engine (ACM-VIT Exact Implementation)
+   Canvas Frame-Scrub Engine
    ========================================================================== */
 
 /* Outer scroll track for sticky pinning */
-.acm-laptop-section {
+.laptop-section {
   --laptop-navbar-offset: 80px;
   position: relative;
   height: 300vh;
@@ -12,13 +12,13 @@
 }
 
 @media (max-width: 1024px) {
-  .acm-laptop-section {
+  .laptop-section {
     --laptop-navbar-offset: 64px;
   }
 }
 
 /* Ambient Radial Glow */
-.acm-ambient-glow {
+.ambient-glow {
   position: absolute;
   top: 52%;
   left: 50%;
@@ -42,7 +42,7 @@
    16:9 LAPTOP CANVAS STAGE
    ========================================================================== */
 
-.acm-laptop-stage {
+.laptop-stage {
   position: relative;
   width: min(1080px, 95vw, calc((100vh - var(--laptop-navbar-offset, 80px) - 30px) * 16 / 9));
   aspect-ratio: 16 / 9;
@@ -52,7 +52,7 @@
   z-index: 15;
 }
 
-.acm-laptop-canvas {
+.laptop-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -63,7 +63,7 @@
   z-index: 2;
 }
 
-.dark .acm-laptop-canvas {
+.dark .laptop-canvas {
   filter: drop-shadow(0 25px 60px rgba(0, 0, 0, 0.8)) brightness(1.08);
 }
 
@@ -129,7 +129,7 @@
    SCREEN OVERLAY (Fitted 100% edge-to-edge inside the laptop display glass)
    ========================================================================== */
 
-.acm-screen-overlay {
+.screen-overlay {
   position: absolute;
   top: 5.60%;
   left: 50.60%;
@@ -144,7 +144,7 @@
   pointer-events: auto;
 }
 
-.acm-screen-inner {
+.screen-inner {
   position: relative;
   width: 100%;
   height: 100%;
@@ -158,7 +158,7 @@
   transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-.dark .acm-screen-inner {
+.dark .screen-inner {
   background: #080c14;
   border: none;
   box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -935,10 +935,10 @@
    ========================================================================== */
 
 @media (max-width: 768px) {
-  .acm-laptop-stage {
+  .laptop-stage {
     width: 96vw;
   }
-  .acm-main-title {
+  .main-title {
     font-size: clamp(20px, 4.8vw, 28px);
   }
   .laptop-inner-title {

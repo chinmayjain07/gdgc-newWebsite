@@ -298,20 +298,20 @@ export function LaptopCTA() {
     <section
       ref={containerRef}
       id="cta-section"
-      className="acm-laptop-section relative w-full h-[300vh]"
+      className="laptop-section relative w-full h-[300vh]"
       aria-labelledby="cta-title"
     >
       {/* Sticky Viewport Container (Fixed at top-0 while scrolling with navbar clearance) */}
       <div className="sticky top-0 left-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden pt-16 lg:pt-20">
         {/* Soft Ambient Background Glow */}
-        <div className="acm-ambient-glow" aria-hidden="true" />
+        <div className="ambient-glow" aria-hidden="true" />
 
         {/* 16:9 Laptop Canvas Stage */}
-        <div className="acm-laptop-stage">
+        <div className="laptop-stage">
           {/* Photorealistic 3D Laptop Canvas (125 Frame Sequence) */}
           <canvas
             ref={canvasRef}
-            className="acm-laptop-canvas"
+            className="laptop-canvas"
             aria-label="3D Animated Laptop"
           />
 
@@ -337,10 +337,10 @@ export function LaptopCTA() {
           {/* Interactive Screen Display Overlay (Sits directly over the open laptop screen) */}
           <motion.div
             style={{ opacity: overlayOpacity }}
-            className="acm-screen-overlay"
+            className="screen-overlay"
           >
             {/* Screen Window Display */}
-            <div className="acm-screen-inner">
+            <div className="screen-inner">
               <div className="screen-reflection" aria-hidden="true" />
 
               {/* OS Window Header & Tabs */}
