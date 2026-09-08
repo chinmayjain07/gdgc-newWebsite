@@ -345,6 +345,11 @@ export function Home() {
                              FIRST EVENT OF TENURE
                           </span>
                         )}
+                        {!isBlackout && !isPast && (
+                          <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-600 text-white shadow-md">
+                             UPCOMING WORKSHOP
+                          </span>
+                        )}
                         {isPast && (
                           <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-md">
                              COMPLETED CONTEST

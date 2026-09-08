@@ -74,7 +74,7 @@ export function TeamFlipCard({ member }) {
 
   return (
     <div
-      className="flip-card group relative h-[380px] w-full cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-2xl"
+      className="flip-card group relative h-[400px] w-full cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-2xl"
       onClick={handleCardClick}
       onKeyDown={handleKeyDown}
       tabIndex={0}
@@ -91,17 +91,17 @@ export function TeamFlipCard({ member }) {
           {/* Center Content: Avatar, Name & Designation */}
           <div className="my-auto pt-2 flex flex-col items-center text-center w-full px-1">
             {/* Avatar frame with subtle GDGC gradient ring */}
-            <div className="relative p-1 rounded-full bg-gradient-to-tr from-[#4285F4] via-[#FBBC04] to-[#EA4335] shadow-md group-hover:scale-105 transition-transform duration-300">
+            <div className="relative p-1.5 rounded-full bg-gradient-to-tr from-[#4285F4] via-[#FBBC04] to-[#EA4335] shadow-lg group-hover:scale-105 transition-transform duration-300">
               <img
                 src={member.image}
                 alt={member.name}
-                className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover bg-muted border-2 border-background"
+                className="w-32 h-32 sm:w-36 sm:h-36 rounded-full object-cover bg-muted border-2 border-background shadow-inner"
                 loading="lazy"
               />
             </div>
 
             {/* Member Name */}
-            <h3 className="text-base sm:text-lg font-bold text-foreground mt-3.5 tracking-tight group-hover:text-primary transition-colors w-full truncate px-1">
+            <h3 className="text-base sm:text-lg font-bold text-foreground mt-4 tracking-tight group-hover:text-primary transition-colors w-full truncate px-1">
               {member.name}
             </h3>
 

@@ -299,7 +299,8 @@ export function LaptopCTA() {
             aria-label="3D Animated Laptop"
           />
 
-          {/* GDGC Lid Logo Badge (replaces Apple logo when laptop is closed) */}
+          {/* <!-- GDGC keyboard/lid logo badge - removed per request --> */}
+          {/*
           <motion.div
             style={{ opacity: lidLogoOpacity }}
             className="closed-lid-gdgc-badge"
@@ -313,6 +314,7 @@ export function LaptopCTA() {
               />
             </div>
           </motion.div>
+          */}
 
           {/* Interactive Screen Display Overlay (Sits directly over the open laptop screen) */}
           <motion.div
@@ -342,6 +344,8 @@ export function LaptopCTA() {
                     <span>contact.html</span>
                   </button>
 
+                  {/* <!-- team.json tab - temporarily commented out per request --> */}
+                  {/*
                   <button
                     type="button"
                     onClick={() => setActiveTab('team')}
@@ -350,6 +354,7 @@ export function LaptopCTA() {
                     <Users className="w-3.5 h-3.5 text-[#4285F4]" />
                     <span>team.json</span>
                   </button>
+                  */}
 
                   <button
                     type="button"
@@ -516,7 +521,8 @@ export function LaptopCTA() {
                     </motion.div>
                   )}
 
-                  {/* Tab 2: Leadership Team */}
+                  {/* <!-- Tab 2: Leadership Team / team.json - temporarily commented out per request --> */}
+                  {/*
                   {activeTab === 'team' && (
                     <motion.div
                       key="team"
@@ -561,7 +567,7 @@ export function LaptopCTA() {
                           </div>
                         ))}
                       </div>
-                                <div className="team-footer-cta">
+                      <div className="team-footer-cta">
                         <ArrowFillButton
                           to="/team"
                           btnText="View Full Team"
@@ -576,6 +582,7 @@ export function LaptopCTA() {
                       </div>
                     </motion.div>
                   )}
+                  */}
 
                   {/* Tab 2: Interactive Developer Terminal (No members count, interactive commands) */}
                   {activeTab === 'terminal' && (

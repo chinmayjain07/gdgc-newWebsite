@@ -18,20 +18,23 @@ export const upcomingEvents = [
   },
   {
     id: 2,
-    title: 'Build with AI: Gemini & Modern LLMs',
-    date: '2025-10-05',
-    time: '11:00 AM - 4:00 PM',
-    location: 'Innovation Hub Room 204',
+    title: 'Web Dev + Cloud Workshop',
+    date: 'Sept 12 - 13, 2026 (Saturday & Sunday)',
+    time: '5:00 PM - 7:00 PM (2 Hours / Day)',
+    duration: '2 Hours',
+    location: 'Online Mode • Google Meet',
+    mode: 'Online Mode',
     type: 'Workshop',
-    domain: 'AI/ML',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop',
-    description: "Hands-on workshop exploring Google's Generative AI tools including Gemini, Vertex AI, and Multimodal APIs. Build production-ready AI apps.",
-    speakers: ['Dr. Sarah Chen', 'Alex Kumar'],
-    registered: 145,
-    capacity: 180,
-    tags: ['Hands-on', 'AI Agents', 'Google Credits'],
+    domain: 'Web Dev + Cloud',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=450&fit=crop',
+    description: 'An intensive 2-day hands-on online workshop covering modern full-stack web development and Google Cloud deployment. Learn hands-on architecture, cloud integration, and deploy live applications.',
+    speakers: ['GDGC Web Dev & Cloud Domain Heads'],
+    registered: 140,
+    capacity: 250,
+    tags: ['Online Mode', '2 Hours Duration', 'Saturday & Sunday', 'Web Development', 'Google Cloud'],
     registrationUrl: '/contact',
   },
+  /* Demo upcoming events - temporarily commented out per request
   {
     id: 3,
     title: 'Flutter Forward: Cross-Platform Mastery',
@@ -64,6 +67,7 @@ export const upcomingEvents = [
     tags: ['Cloud Credits', 'Certification', 'DevOps'],
     registrationUrl: '/contact',
   },
+  */
 ];
 
 export const upcomingEventPhotos = upcomingEvents.map((event) => ({
@@ -106,6 +110,7 @@ export const pastEvents = [
     tags: ['HackerRank', 'Coding Contest', 'Competitive Programming', 'Algorithms'],
     registrationUrl: '/events/past',
   },
+  /* Demo past events - temporarily commented out per request
   {
     id: 101,
     title: 'DevFest Campus Edition',
@@ -148,6 +153,7 @@ export const pastEvents = [
     tags: ['Hackathon', 'Overnight', 'Cash Prizes', 'Swag'],
     registrationUrl: '/events/past',
   },
+  */
 ];
 
 export const allEvents = [...upcomingEvents, ...pastEvents];
@@ -195,6 +201,6 @@ export const pastEventPhotos = pastEvents.map((event) => ({
 // Spotlight events for the Home page
 export const spotlightEvents = [
   upcomingEvents[0], // BLACKOUT
+  upcomingEvents[1], // Web Dev + Cloud Workshop
   pastEvents[0],     // GDGC PCCoE Coding Contest on HackerRank
-  upcomingEvents[1], // Build with AI
 ];
