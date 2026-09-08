@@ -96,6 +96,7 @@ export function LaptopCTA() {
   // Easter Egg Listener: Logo 3x spin redirects here, opens laptop, and switches to DevTerminal.sh
   useEffect(() => {
     const handleOpenTerminal = () => {
+      setIsLidClosed(false);
       setActiveTab('terminal');
       setTerminalLogs((prev) => {
         if (prev.some((l) => l.text.includes('DevTerminal.sh Unlocked'))) return prev;
@@ -148,6 +149,14 @@ export function LaptopCTA() {
     mass: 0.6,
   });
 
+  const [isLidClosed, setIsLidClosed] = useState(() => {
+    try {
+      return scrollYProgress.get() < 0.06;
+    } catch {
+      return true;
+    }
+  });
+
   // Crossfade opacity for the screen display overlay
   const overlayOpacity = useTransform(
     scrollYProgress,
@@ -155,12 +164,17 @@ export function LaptopCTA() {
     [0, 0, 1, 1, 1]
   );
 
-  // Closed laptop lid GDGC logo badge opacity
-  // Fully visible when closed (0 -> 0.08), smoothly fades out as lid opens (0.08 -> 0.20)
+  // Closed laptop lid GDGC logo badge:
+  // Fully visible when closed on the lid (frame 0).
+  // Immediately hides (display: 'none') as soon as opening begins so it NEVER appears on the keyboard.
   const lidLogoOpacity = useTransform(
     scrollYProgress,
-    [0, 0.08, 0.20],
+    [0, 0.03, 0.06],
     [1, 1, 0]
+  );
+  const lidLogoDisplay = useTransform(
+    scrollYProgress,
+    (val) => (val >= 0.06 ? 'none' : 'flex')
   );
 
   const currentFrameRef = useRef(0);
@@ -227,6 +241,8 @@ export function LaptopCTA() {
       const targetFrame = progress * (TOTAL_FRAMES - 1);
       currentFrameRef.current = targetFrame;
       drawFrame(targetFrame);
+      const isClosed = targetFrame <= 2;
+      setIsLidClosed((prev) => (prev !== isClosed ? isClosed : prev));
     });
 
     return () => {
@@ -299,22 +315,24 @@ export function LaptopCTA() {
             aria-label="3D Animated Laptop"
           />
 
-          {/* <!-- GDGC keyboard/lid logo badge - removed per request --> */}
-          {/*
-          <motion.div
-            style={{ opacity: lidLogoOpacity }}
-            className="closed-lid-gdgc-badge"
-            aria-hidden="true"
-          >
-            <div className="lid-badge-surface">
-              <img
-                src="/GDGC-dark.png"
-                alt="GDGC Logo"
-                className="h-full w-auto object-contain pointer-events-none"
-              />
-            </div>
-          </motion.div>
-          */}
+          {/* Closed laptop lid GDGC logo badge:
+              Restored on closed lid (replaces Apple logo before opening).
+              Completely unmounted and hidden once opening so it never appears on keyboard. */}
+          {isLidClosed && (
+            <motion.div
+              style={{ opacity: lidLogoOpacity, display: lidLogoDisplay }}
+              className="closed-lid-gdgc-badge"
+              aria-hidden="true"
+            >
+              <div className="lid-badge-surface">
+                <img
+                  src="/GDGC-dark.png"
+                  alt="GDGC Logo"
+                  className="h-full w-auto object-contain pointer-events-none"
+                />
+              </div>
+            </motion.div>
+          )}
 
           {/* Interactive Screen Display Overlay (Sits directly over the open laptop screen) */}
           <motion.div
