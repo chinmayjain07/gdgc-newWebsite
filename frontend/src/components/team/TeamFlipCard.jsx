@@ -118,7 +118,7 @@ export function TeamFlipCard({ member }) {
           {/* Center Content: Avatar, Name & Designation */}
           <div className="my-auto pt-2 flex flex-col items-center text-center w-full px-1">
             {/* Avatar frame with subtle GDGC gradient ring */}
-            <div className="relative p-1.5 rounded-full bg-gradient-to-tr from-[#4285F4] via-[#FBBC04] to-[#EA4335] shadow-lg group-hover:scale-105 transition-transform duration-300">
+            <div className="relative p-1.5 rounded-full bg-gradient-to-tr from-[#4285F4] via-[#FBBC04] to-[#EA4335] shadow-lg group-hover:scale-115 transition-transform duration-300">
               {member.image && !imgError ? (
                 <img
                   src={member.image}

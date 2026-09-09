@@ -25,7 +25,7 @@ export const faculties = [
     designation: 'Faculty Coordinator',
     role: 'Faculty Coordinator',
     domain: 'Computer Engineering',
-    subheading: 'Faculty Coordinator – Assistant Professor | CSE Department',
+    subheading: 'Assistant Professor | CSE Department',
     bio: 'Prof. Kapil Tajane is an Assistant Professor with 12+ years of academic experience and expertise in Information Security. As the Faculty Coordinator of GDGC PCCOE, he mentors students and supports technical initiatives that foster innovation, collaboration, and continuous learning.',
     image: '/team/kapil-tajane.png',
     linkedinUrl: '#',
@@ -71,18 +71,18 @@ export const leads = [
     },
   },
   {
-    id: 2,
-    name: 'Pankaj Pandit',
-    designation: 'Secretary',
-    role: 'Secretary',
+    id: 5,
+    name: 'Sharvari Bangar',
+    designation: '',
+    role: '',
     domain: 'Management',
-    image: '/team/pankaj-pandit.jpg',
-    linkedinUrl: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
-    githubUrl: 'https://github.com/parcosm04',
-    quote: 'Curious by nature, Engineer by choice, Builder by passion.',
+    image: null,
+    linkedinUrl: '#',
+    githubUrl: '#',
+    quote: '',
     social: {
-      linkedin: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
-      github: 'https://github.com/parcosm04',
+      linkedin: '#',
+      github: '#',
     },
   },
   {
@@ -100,21 +100,21 @@ export const leads = [
       github: '#',
     },
   },
-  {
-    id: 5,
-    name: 'Sharvari Bangar',
+ /* {
+    id: 2,
+    name: 'Pankaj Pandit',
     designation: '',
     role: '',
     domain: 'Management',
-    image: null,
-    linkedinUrl: '#',
-    githubUrl: '#',
-    quote: '',
+    image: '/team/pankaj-pandit.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
+    githubUrl: 'https://github.com/parcosm04',
+    quote: 'Curious by nature, Engineer by choice, Builder by passion.',
     social: {
-      linkedin: '#',
-      github: '#',
+      linkedin: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
+      github: 'https://github.com/parcosm04',
     },
-  },
+  },*/
 ];
 
 /* =========================================================================
@@ -139,18 +139,18 @@ export const managementHeads = [
     },
   },
   {
-    id: 2,
-    name: 'Pankaj Pandit',
-    designation: 'Management Head',
-    role: 'Management Head',
+    id: 5,
+    name: 'Sharvari Bangar',
+    designation: '',
+    role: '',
     domain: 'Management',
-    image: '/team/pankaj-pandit.jpg',
-    linkedinUrl: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
-    githubUrl: 'https://github.com/parcosm04',
-    quote: 'Curious by nature, Engineer by choice, Builder by passion.',
+    image: null,
+    linkedinUrl: '#',
+    githubUrl: '#',
+    quote: '',
     social: {
-      linkedin: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
-      github: 'https://github.com/parcosm04',
+      linkedin: '#',
+      github: '#',
     },
   },
   {
@@ -169,18 +169,18 @@ export const managementHeads = [
     },
   },
   {
-    id: 5,
-    name: 'Sharvari Bangar',
-    designation: '',
-    role: '',
+    id: 2,
+    name: 'Pankaj Pandit',
+    designation: 'Secretary',
+    role: 'Secretary',
     domain: 'Management',
-    image: null,
-    linkedinUrl: '#',
-    githubUrl: '#',
-    quote: '',
+    image: '/team/pankaj-pandit.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
+    githubUrl: 'https://github.com/parcosm04',
+    quote: 'Curious by nature, Engineer by choice, Builder by passion.',
     social: {
-      linkedin: '#',
-      github: '#',
+      linkedin: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
+      github: 'https://github.com/parcosm04',
     },
   },
 ];
@@ -396,91 +396,7 @@ export const aimlHeads = [
   },
 ];
 
-// 6. PR & Outreach
-export const prOutreachHeads = [
-  {
-    id: 51,
-    name: 'Prachi Pawar',
-    designation: 'Social Media Head',
-    role: 'Social Media Head',
-    domain: 'PR & Outreach',
-    image: '/team/prachi-pawar.jpg',
-    linkedinUrl: 'https://www.linkedin.com/in/prachi-pawar-49483a350',
-    githubUrl: 'https://github.com/prachi-3011',
-    quote: "If everything seems under control, you're not going fast enough.",
-    social: {
-      linkedin: 'https://www.linkedin.com/in/prachi-pawar-49483a350',
-      github: 'https://github.com/prachi-3011',
-    },
-  },
-  {
-    id: 52,
-    name: 'Prince Vallecha',
-    designation: 'PR & Outreach',
-    role: 'PR & Outreach',
-    domain: 'PR & Outreach',
-    image: null,
-    linkedinUrl: null,
-    githubUrl: null,
-    quote: '',
-    social: {},
-  },
-];
-
-// 7. UI/UX & Creative Head
-export const uiUxCreativeHeads = [
-  {
-    id: 61,
-    name: 'Samiksha Mote',
-    designation: 'UI/UX Head',
-    role: 'UI/UX Head',
-    domain: 'UI/UX & Creative Head',
-    image: '/team/samiksha-mote.jpg',
-    linkedinUrl: 'https://in.linkedin.com/in/samiksha-mote-97a4a92b8',
-    githubUrl: 'https://github.com/samiksha2644',
-    quote: 'Just believe in yourself. The dots will somehow connect in your future.',
-    social: {
-      linkedin: 'https://in.linkedin.com/in/samiksha-mote-97a4a92b8',
-      github: 'https://github.com/samiksha2644',
-    },
-  },
-  {
-    id: 62,
-    name: 'Himanshu Patil',
-    designation: 'Creative & Flutter Head',
-    role: 'Creative & Flutter Head',
-    domain: 'UI/UX & Creative Head',
-    image: '/team/himanshu-patil.jpg',
-    linkedinUrl: 'https://www.linkedin.com/in/himanshupatil1111',
-    githubUrl: 'https://github.com/himanshu-codes-1111',
-    quote: 'I love working with a fun team',
-    social: {
-      linkedin: 'https://www.linkedin.com/in/himanshupatil1111',
-      github: 'https://github.com/himanshu-codes-1111',
-    },
-  },
-];
-
-// 8. AR/VR
-export const arVrHeads = [
-  {
-    id: 71,
-    name: 'Srushti Jadhav',
-    designation: 'AR/VR Head',
-    role: 'AR/VR Head',
-    domain: 'AR/VR',
-    image: '/team/srushti-jadhav.jpg',
-    linkedinUrl: 'https://www.linkedin.com/in/srushtijadhav-',
-    githubUrl: 'https://github.com/srushtijadhav18',
-    quote: "Photons scattering off both the real and the rasterized - i don't discriminate",
-    social: {
-      linkedin: 'https://www.linkedin.com/in/srushtijadhav-',
-      github: 'https://github.com/srushtijadhav18',
-    },
-  },
-];
-
-// 9. IoT
+// 6. IoT
 export const iotHeads = [
   {
     id: 81,
@@ -514,10 +430,87 @@ export const iotHeads = [
   },
 ];
 
+// Single-Head Domains (displayed in the final unified row)
+// 7. Social Media
+export const socialMediaHeads = [
+  {
+    id: 51,
+    name: 'Prachi Pawar',
+    designation: 'Social Media Head',
+    role: 'Social Media Head',
+    domain: 'Social Media',
+    image: '/team/prachi-pawar.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/prachi-pawar-49483a350',
+    githubUrl: 'https://github.com/prachi-3011',
+    quote: "If everything seems under control, you're not going fast enough.",
+    social: {
+      linkedin: 'https://www.linkedin.com/in/prachi-pawar-49483a350',
+      github: 'https://github.com/prachi-3011',
+    },
+  },
+];
+
+// 8. PR & Outreach
+export const prOutreachHeads = [
+  {
+    id: 52,
+    name: 'Prince Vallecha',
+    designation: 'PR & Outreach Head',
+    role: 'PR & Outreach Head',
+    domain: 'PR & Outreach',
+    image: null,
+    linkedinUrl: '#',
+    githubUrl: '#',
+    quote: '',
+    social: {
+      linkedin: '#',
+      github: '#',
+    },
+  },
+];
+
+// 9. UI/UX & Creative
+export const uiUxCreativeHeads = [
+  {
+    id: 61,
+    name: 'Samiksha Mote',
+    designation: 'UI/UX Head',
+    role: 'UI/UX Head',
+    domain: 'UI/UX & Creative',
+    image: '/team/samiksha-mote.jpg',
+    linkedinUrl: 'https://in.linkedin.com/in/samiksha-mote-97a4a92b8',
+    githubUrl: 'https://github.com/samiksha2644',
+    quote: 'Just believe in yourself. The dots will somehow connect in your future.',
+    social: {
+      linkedin: 'https://in.linkedin.com/in/samiksha-mote-97a4a92b8',
+      github: 'https://github.com/samiksha2644',
+    },
+  },
+];
+
+// 10. AR/VR
+export const arVrHeads = [
+  {
+    id: 71,
+    name: 'Srushti Jadhav',
+    designation: 'AR/VR Head',
+    role: 'AR/VR Head',
+    domain: 'AR/VR',
+    image: '/team/srushti-jadhav.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/srushtijadhav-',
+    githubUrl: 'https://github.com/srushtijadhav18',
+    quote: "Photons scattering off both the real and the rasterized - i don't discriminate",
+    social: {
+      linkedin: 'https://www.linkedin.com/in/srushtijadhav-',
+      github: 'https://github.com/srushtijadhav18',
+    },
+  },
+];
+
 /* =========================================================================
- * DOMAIN GROUPS (Exact specified sequence: 1 to 9)
+ * DOMAIN GROUPS
  * ========================================================================= */
-export const domainGroups = [
+export const multiHeadDomainGroups = [
   {
     id: 'management',
     name: 'Management',
@@ -549,29 +542,43 @@ export const domainGroups = [
     members: aimlHeads,
   },
   {
-    id: 'pr-outreach',
-    name: 'PR & Outreach',
-    description: 'Public relations, campus community outreach, partnerships, and social media engagement.',
-    members: prOutreachHeads,
-  },
-  {
-    id: 'ui-ux-creative',
-    name: 'UI/UX & Creative Head',
-    description: 'Visual design, design systems, interactive experiences, and creative brand media.',
-    members: uiUxCreativeHeads,
-  },
-  {
-    id: 'ar-vr',
-    name: 'AR/VR',
-    description: 'Immersive experiences, augmented and virtual reality prototyping, and spatial computing.',
-    members: arVrHeads,
-  },
-  {
     id: 'iot',
     name: 'IoT',
     description: 'Internet of Things hardware integration, embedded systems, and sensor networks.',
     members: iotHeads,
   },
+];
+
+export const singleHeadDomainGroups = [
+  {
+    id: 'social-media',
+    name: 'Social Media',
+    description: 'Social media presence, digital branding, and online community engagement.',
+    members: socialMediaHeads,
+  },
+  {
+    id: 'pr-outreach',
+    name: 'PR & Outreach',
+    description: 'Public relations, campus community outreach, and strategic partnerships.',
+    members: prOutreachHeads,
+  },
+  {
+    id: 'ui-ux-creative',
+    name: 'UI/UX & Creative',
+    description: 'Visual design, design systems, and creative brand media.',
+    members: uiUxCreativeHeads,
+  },
+  {
+    id: 'ar-vr',
+    name: 'AR/VR',
+    description: 'Immersive experiences, augmented & virtual reality prototyping.',
+    members: arVrHeads,
+  },
+];
+
+export const domainGroups = [
+  ...multiHeadDomainGroups,
+  ...singleHeadDomainGroups,
 ];
 
 export const domainHeads = [
@@ -580,10 +587,11 @@ export const domainHeads = [
   ...webDevCloudHeads,
   ...cpHeads,
   ...aimlHeads,
+  ...iotHeads,
+  ...socialMediaHeads,
   ...prOutreachHeads,
   ...uiUxCreativeHeads,
   ...arVrHeads,
-  ...iotHeads,
 ];
 
 // Backward-compatible exports
