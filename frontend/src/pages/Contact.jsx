@@ -295,13 +295,13 @@ export function Contact() {
                     onChange={handleChange}
                     required
                     disabled={submitStatus === 'loading'}
-                    className="w-full h-12 rounded-xl border border-border bg-background text-foreground px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent cursor-pointer shadow-sm"
+                    className="w-full h-12 rounded-xl border border-border bg-background text-foreground dark:bg-[#111827] dark:text-foreground px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent cursor-pointer shadow-sm dark:[color-scheme:dark]"
                   >
                     {SUBJECT_OPTIONS.map((opt) => (
                       <option
                         key={opt.value}
                         value={opt.value}
-                        className="bg-card text-foreground py-2"
+                        className="bg-white text-slate-900 dark:bg-[#111827] dark:text-slate-100 py-2"
                       >
                         {opt.label}
                       </option>

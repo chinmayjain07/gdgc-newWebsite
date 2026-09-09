@@ -89,9 +89,8 @@ const socialLinks = [
 ];
 
 const contactInfo = [
-  { icon: MapPin, text: 'Campus Hub, Innovation Center Room 204' },
-  { icon: Mail, text: 'contact@gdgcampus.dev' },
-  { icon: Clock, text: 'Mon - Fri: 9:00 AM - 6:00 PM' },
+  { icon: MapPin, text: 'Primpri Chinchwad College Of Engineering , Pune. Sector No. 26 , Nigdi Pradikaran - 411044 ' },
+  { icon: Mail, text: 'gdgcpccoe@gmail.com' },
 ];
 
 export function Footer() {

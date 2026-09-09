@@ -109,6 +109,7 @@
 }
 
 :root {
+  color-scheme: light;
   --color-background: #ffffff;
   --color-foreground: #1e293b;
   --color-card: #ffffff;
@@ -132,6 +133,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --color-background: #0B0F17;
   --color-foreground: #f8fafc;
   --color-card: #111827;
@@ -151,6 +153,17 @@
   --color-border: #1e293d;
   --color-input: #1e293d;
   --color-ring: #4285F4;
+}
+
+/* Ensure native select and options respect dark/light theme in all browsers */
+select option {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+.dark select option {
+  background-color: #111827;
+  color: #f8fafc;
 }
 
 .text-gradient-gdg {

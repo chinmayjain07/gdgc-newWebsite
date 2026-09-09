@@ -4,9 +4,17 @@
  * =========================================================================
  * Structure:
  * 1. faculties: Faculty advisors & coordinators
- * 2. leads: Chapter leadership (3 cards)
- * 3. domainHeads: 15 cards across 3 domains (Web Dev + Cloud, UI/UX, Management - 5 each)
- * 4. domainGroups: Grouped domains for organized display
+ * 2. leads: Chapter executive leadership (President, Secretary, AIML Lead)
+ * 3. domainGroups & domainHeads: 9 technical domains in exact sequence:
+ *    1. Management
+ *    2. Flutter
+ *    3. Web + Cloud
+ *    4. Competitive Programming
+ *    5. AIML
+ *    6. PR & Outreach
+ *    7. UI/UX & Creative Head
+ *    8. AR/VR
+ *    9. IoT
  * =========================================================================
  */
 
@@ -17,7 +25,7 @@ export const faculties = [
     designation: 'Faculty Coordinator',
     role: 'Faculty Coordinator',
     domain: 'Computer Engineering',
-    subheading: 'Faculty Coordinator – GDGC PCCOE | Assistant Professor, Computer Engineering',
+    subheading: 'Faculty Coordinator – Assistant Professor | CSE Department',
     bio: 'Prof. Kapil Tajane is an Assistant Professor with 12+ years of academic experience and expertise in Information Security. As the Faculty Coordinator of GDGC PCCOE, he mentors students and supports technical initiatives that foster innovation, collaboration, and continuous learning.',
     image: '/team/kapil-tajane.png',
     linkedinUrl: '#',
@@ -32,7 +40,7 @@ export const faculties = [
     designation: 'Faculty Coordinator',
     role: 'Faculty Coordinator',
     domain: 'Information Technology',
-    subheading: 'Assistant Professor, Information Technology',
+    subheading: 'Assistant Professor | IT Department',
     bio: 'Mrs. Tanuja S. Patankar is an Assistant Professor in the Department of Information Technology at Pimpri Chinchwad College of Engineering, with over 18 years of academic experience. Her areas of research interest include Algorithms, Image Processing, Video Processing, and Biometric Authentication. With her extensive experience and academic expertise, she is committed to fostering technical excellence, innovation, and the overall academic and professional development of students.',
     image: null,
     linkedinUrl: 'https://www.linkedin.com/in/tanuja-patankar-28965225b/',
@@ -43,7 +51,550 @@ export const faculties = [
   },
 ];
 
+/* =========================================================================
+ * CHAPTER LEADS (Executive Leadership)
+ * ========================================================================= */
 export const leads = [
+  {
+    id: 1,
+    name: 'Mayur Kharat',
+    designation: 'President',
+    role: 'President',
+    domain: 'Management',
+    image: '/team/mayur-kharat.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/mayur-kharat2006/',
+    githubUrl: 'https://github.com/MayurKharat0390',
+    quote: 'When I decide to do something, I make it happen.',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/mayur-kharat2006/',
+      github: 'https://github.com/MayurKharat0390',
+    },
+  },
+  {
+    id: 2,
+    name: 'Pankaj Pandit',
+    designation: 'Secretary',
+    role: 'Secretary',
+    domain: 'Management',
+    image: '/team/pankaj-pandit.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
+    githubUrl: 'https://github.com/parcosm04',
+    quote: 'Curious by nature, Engineer by choice, Builder by passion.',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
+      github: 'https://github.com/parcosm04',
+    },
+  },
+  {
+    id: 4,
+    name: 'Soumil Chandra',
+    designation: '',
+    role: '',
+    domain: 'Management',
+    image: null,
+    linkedinUrl: '#',
+    githubUrl: '#',
+    quote: '',
+    social: {
+      linkedin: '#',
+      github: '#',
+    },
+  },
+  {
+    id: 5,
+    name: 'Sharvari Bangar',
+    designation: '',
+    role: '',
+    domain: 'Management',
+    image: null,
+    linkedinUrl: '#',
+    githubUrl: '#',
+    quote: '',
+    social: {
+      linkedin: '#',
+      github: '#',
+    },
+  },
+];
+
+/* =========================================================================
+ * DOMAIN HEADS (9 DOMAINS IN EXACT SEQUENCE)
+ * ========================================================================= */
+
+// 1. Management
+export const managementHeads = [
+  {
+    id: 1,
+    name: 'Mayur Kharat',
+    designation: 'President',
+    role: 'President',
+    domain: 'Management',
+    image: '/team/mayur-kharat.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/mayur-kharat2006/',
+    githubUrl: 'https://github.com/MayurKharat0390',
+    quote: 'When I decide to do something, I make it happen.',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/mayur-kharat2006/',
+      github: 'https://github.com/MayurKharat0390',
+    },
+  },
+  {
+    id: 2,
+    name: 'Pankaj Pandit',
+    designation: 'Management Head',
+    role: 'Management Head',
+    domain: 'Management',
+    image: '/team/pankaj-pandit.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
+    githubUrl: 'https://github.com/parcosm04',
+    quote: 'Curious by nature, Engineer by choice, Builder by passion.',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
+      github: 'https://github.com/parcosm04',
+    },
+  },
+  {
+    id: 4,
+    name: 'Soumil Chandra',
+    designation: '',
+    role: '',
+    domain: 'Management',
+    image: null,
+    linkedinUrl: '#',
+    githubUrl: '#',
+    quote: '',
+    social: {
+      linkedin: '#',
+      github: '#',
+    },
+  },
+  {
+    id: 5,
+    name: 'Sharvari Bangar',
+    designation: '',
+    role: '',
+    domain: 'Management',
+    image: null,
+    linkedinUrl: '#',
+    githubUrl: '#',
+    quote: '',
+    social: {
+      linkedin: '#',
+      github: '#',
+    },
+  },
+];
+
+// 2. Flutter
+export const flutterHeads = [
+  {
+    id: 11,
+    name: 'Himanshu Patil',
+    designation: 'Flutter Head',
+    role: 'Flutter Head',
+    domain: 'Flutter',
+    image: '/team/himanshu-patil.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/himanshupatil1111',
+    githubUrl: 'https://github.com/himanshu-codes-1111',
+    quote: 'I love working with a fun team',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/himanshupatil1111',
+      github: 'https://github.com/himanshu-codes-1111',
+    },
+  },
+  {
+    id: 12,
+    name: 'Shreyash Dubewar',
+    designation: 'Flutter Head',
+    role: 'Flutter Head',
+    domain: 'Flutter',
+    image: '/team/shreyash-dubewar.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/shreyashdubewar',
+    githubUrl: 'https://github.com/shreyash-devs',
+    quote: "I don't believe in psychology, I believe in good moves",
+    social: {
+      linkedin: 'https://www.linkedin.com/in/shreyashdubewar',
+      github: 'https://github.com/shreyash-devs',
+    },
+  },
+];
+
+// 3. Web + Cloud
+export const webDevCloudHeads = [
+  {
+    id: 23,
+    name: 'Sanika Mahendra Patil',
+    designation: 'Web + Cloud Head',
+    role: 'Web + Cloud Head',
+    domain: 'Web + Cloud',
+    image: '/team/sanika-patil.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/sanika-patil-644754327?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+    githubUrl: 'https://github.com/sanikapatil01',
+    quote: '',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/sanika-patil-644754327?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+      github: 'https://github.com/sanikapatil01',
+    },
+  },
+  {
+    id: 22,
+    name: 'Yash Sonalekar',
+    designation: 'Web + Cloud Head',
+    role: 'Web + Cloud Head',
+    domain: 'Web + Cloud',
+    image: '/team/yash-sonalekar.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/yash-sonalekar',
+    githubUrl: 'https://github.com/yash-dot-com',
+    quote: 'You must understand that there are more than one path to the top of the mountain.',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/yash-sonalekar',
+      github: 'https://github.com/yash-dot-com',
+    },
+  },
+  {
+    id: 21,
+    name: 'Sarang Wasamwar',
+    designation: 'Web + Cloud Head',
+    role: 'Web + Cloud Head',
+    domain: 'Web + Cloud',
+    image: '/team/sarang-wasamwar.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/sarang-wasamwar-31b48532b/',
+    githubUrl: 'https://github.com/sarang-wasamwar',
+    quote: 'One Day, All these late nights will make sense.',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/sarang-wasamwar-31b48532b/',
+      github: 'https://github.com/sarang-wasamwar',
+    },
+  },
+  {
+    id: 24,
+    name: 'Manthan Marathe',
+    designation: 'Web + Cloud Head',
+    role: 'Web + Cloud Head',
+    domain: 'Web + Cloud',
+    image: '/team/manthan-marathe.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/manthanmarathe',
+    githubUrl: 'https://github.com/ManthanMarathe223',
+    quote: 'Progress, not perfection — chase growth, and mastery follows.',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/manthanmarathe',
+      github: 'https://github.com/ManthanMarathe223',
+    },
+  },
+  {
+    id: 25,
+    name: 'Anushka Sachin Parkhi',
+    designation: 'Web + Cloud Head',
+    role: 'Web + Cloud Head',
+    domain: 'Web + Cloud',
+    image: '/team/anushka-parkhi.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/anushka-parkhi',
+    githubUrl: 'https://github.com/wizboltez',
+    quote: 'Here for the love of the game',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/anushka-parkhi',
+      github: 'https://github.com/wizboltez',
+    },
+  },
+];
+
+// 4. Competitive Programming
+export const cpHeads = [
+  {
+    id: 31,
+    name: 'Harsh Kawale',
+    designation: 'CP Head',
+    role: 'CP Head',
+    domain: 'Competitive Programming',
+    image: '/team/harsh-kawale.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/hmk-672b00351',
+    githubUrl: 'https://github.com/HMK-007',
+    quote: "Math is the engineer's ultimate leverage",
+    social: {
+      linkedin: 'https://www.linkedin.com/in/hmk-672b00351',
+      github: 'https://github.com/HMK-007',
+    },
+  },
+  {
+    id: 32,
+    name: 'Nishant Gawande',
+    designation: 'CP Head',
+    role: 'CP Head',
+    domain: 'Competitive Programming',
+    image: '/team/nishant-gawande.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/nishant-gawande-1b8388376?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
+    githubUrl: 'https://github.com/Nishant333-stack',
+    quote: 'tuff',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/nishant-gawande-1b8388376?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
+      github: 'https://github.com/Nishant333-stack',
+    },
+  },
+];
+
+// 5. AIML
+export const aimlHeads = [
+  {
+    id: 41,
+    name: 'Aaryan Nerkar',
+    designation: 'AIML Head',
+    role: 'AIML Head',
+    domain: 'AIML',
+    image: '/team/aaryan-nerkar.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/aaryan-nerkar-16214b2b7/',
+    githubUrl: 'https://github.com/AaryanNerkar',
+    quote: 'Like an evolving model, I learn from data, adapt to change, and turn every error into a better iteration',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/aaryan-nerkar-16214b2b7/',
+      github: 'https://github.com/AaryanNerkar',
+    },
+  },
+  {
+    id: 3,
+    name: 'Harshwardhan Sambhaji Bavale',
+    designation: 'AIML Head',
+    role: 'AIML Head',
+    domain: 'AIML',
+    image: '/team/harshwardhan-bavale.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/harshwardhan-bavale-86007032b/',
+    githubUrl: 'https://github.com/Harshal1712',
+    quote: 'Stay curious. Keep building. Never stop growing.',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/harshwardhan-bavale-86007032b/',
+      github: 'https://github.com/Harshal1712',
+    },
+  },
+  {
+    id: 42,
+    name: 'Aryan Dalvi',
+    designation: 'AIML Head',
+    role: 'AIML Head',
+    domain: 'AIML',
+    image: '/team/aryan-dalvi.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/aryan-dalvi-258690318/',
+    githubUrl: 'https://github.com/AryanDalvi03',
+    quote: 'The first responsibility of a leader is to define reality.',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/aryan-dalvi-258690318/',
+      github: 'https://github.com/AryanDalvi03',
+    },
+  },
+  {
+    id: 43,
+    name: 'Om Kadu',
+    designation: 'AIML Head',
+    role: 'AIML Head',
+    domain: 'AIML',
+    image: '/team/om-kadu.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/omkadu786/',
+    githubUrl: 'https://github.com/OmKadu786',
+    quote: 'Code and have Fun.',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/omkadu786/',
+      github: 'https://github.com/OmKadu786',
+    },
+  },
+];
+
+// 6. PR & Outreach
+export const prOutreachHeads = [
+  {
+    id: 51,
+    name: 'Prachi Pawar',
+    designation: 'Social Media Head',
+    role: 'Social Media Head',
+    domain: 'PR & Outreach',
+    image: '/team/prachi-pawar.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/prachi-pawar-49483a350',
+    githubUrl: 'https://github.com/prachi-3011',
+    quote: "If everything seems under control, you're not going fast enough.",
+    social: {
+      linkedin: 'https://www.linkedin.com/in/prachi-pawar-49483a350',
+      github: 'https://github.com/prachi-3011',
+    },
+  },
+  {
+    id: 52,
+    name: 'Prince Vallecha',
+    designation: 'PR & Outreach',
+    role: 'PR & Outreach',
+    domain: 'PR & Outreach',
+    image: null,
+    linkedinUrl: null,
+    githubUrl: null,
+    quote: '',
+    social: {},
+  },
+];
+
+// 7. UI/UX & Creative Head
+export const uiUxCreativeHeads = [
+  {
+    id: 61,
+    name: 'Samiksha Mote',
+    designation: 'UI/UX Head',
+    role: 'UI/UX Head',
+    domain: 'UI/UX & Creative Head',
+    image: '/team/samiksha-mote.jpg',
+    linkedinUrl: 'https://in.linkedin.com/in/samiksha-mote-97a4a92b8',
+    githubUrl: 'https://github.com/samiksha2644',
+    quote: 'Just believe in yourself. The dots will somehow connect in your future.',
+    social: {
+      linkedin: 'https://in.linkedin.com/in/samiksha-mote-97a4a92b8',
+      github: 'https://github.com/samiksha2644',
+    },
+  },
+  {
+    id: 62,
+    name: 'Himanshu Patil',
+    designation: 'Creative & Flutter Head',
+    role: 'Creative & Flutter Head',
+    domain: 'UI/UX & Creative Head',
+    image: '/team/himanshu-patil.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/himanshupatil1111',
+    githubUrl: 'https://github.com/himanshu-codes-1111',
+    quote: 'I love working with a fun team',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/himanshupatil1111',
+      github: 'https://github.com/himanshu-codes-1111',
+    },
+  },
+];
+
+// 8. AR/VR
+export const arVrHeads = [
+  {
+    id: 71,
+    name: 'Srushti Jadhav',
+    designation: 'AR/VR Head',
+    role: 'AR/VR Head',
+    domain: 'AR/VR',
+    image: '/team/srushti-jadhav.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/srushtijadhav-',
+    githubUrl: 'https://github.com/srushtijadhav18',
+    quote: "Photons scattering off both the real and the rasterized - i don't discriminate",
+    social: {
+      linkedin: 'https://www.linkedin.com/in/srushtijadhav-',
+      github: 'https://github.com/srushtijadhav18',
+    },
+  },
+];
+
+// 9. IoT
+export const iotHeads = [
+  {
+    id: 81,
+    name: 'Harshwardhan Chitte',
+    designation: 'IoT Head',
+    role: 'IoT Head',
+    domain: 'IoT',
+    image: '/team/harshwardhan-chitte.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/harshwardhan-chitte-321717369',
+    githubUrl: 'https://github.com/HarshwardhanChitte',
+    quote: 'Seek to understand what lies beneath the obvious.',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/harshwardhan-chitte-321717369',
+      github: 'https://github.com/HarshwardhanChitte',
+    },
+  },
+  {
+    id: 82,
+    name: 'Pankaj Pandit',
+    designation: 'IoT Head',
+    role: 'IoT Head',
+    domain: 'IoT',
+    image: '/team/pankaj-pandit.jpg',
+    linkedinUrl: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
+    githubUrl: 'https://github.com/parcosm04',
+    quote: 'Curious by nature, Engineer by choice, Builder by passion.',
+    social: {
+      linkedin: 'https://www.linkedin.com/in/pankaj-pandit-96b952318',
+      github: 'https://github.com/parcosm04',
+    },
+  },
+];
+
+/* =========================================================================
+ * DOMAIN GROUPS (Exact specified sequence: 1 to 9)
+ * ========================================================================= */
+export const domainGroups = [
+  {
+    id: 'management',
+    name: 'Management',
+    description: 'Chapter executive leadership, operational coordination, and organizational management.',
+    members: managementHeads,
+  },
+  {
+    id: 'flutter',
+    name: 'Flutter',
+    description: 'Cross-platform mobile application development and modern UI engineering with Flutter.',
+    members: flutterHeads,
+  },
+  {
+    id: 'web-cloud',
+    name: 'Web + Cloud',
+    description: 'Full-stack web architecture, scalable backend systems, and Google Cloud infrastructure.',
+    members: webDevCloudHeads,
+  },
+  {
+    id: 'competitive-programming',
+    name: 'Competitive Programming',
+    description: 'Algorithmic problem solving, data structures, and competitive coding contests.',
+    members: cpHeads,
+  },
+  {
+    id: 'aiml',
+    name: 'AIML',
+    description: 'Machine learning models, artificial intelligence research, and intelligent data systems.',
+    members: aimlHeads,
+  },
+  {
+    id: 'pr-outreach',
+    name: 'PR & Outreach',
+    description: 'Public relations, campus community outreach, partnerships, and social media engagement.',
+    members: prOutreachHeads,
+  },
+  {
+    id: 'ui-ux-creative',
+    name: 'UI/UX & Creative Head',
+    description: 'Visual design, design systems, interactive experiences, and creative brand media.',
+    members: uiUxCreativeHeads,
+  },
+  {
+    id: 'ar-vr',
+    name: 'AR/VR',
+    description: 'Immersive experiences, augmented and virtual reality prototyping, and spatial computing.',
+    members: arVrHeads,
+  },
+  {
+    id: 'iot',
+    name: 'IoT',
+    description: 'Internet of Things hardware integration, embedded systems, and sensor networks.',
+    members: iotHeads,
+  },
+];
+
+export const domainHeads = [
+  ...managementHeads,
+  ...flutterHeads,
+  ...webDevCloudHeads,
+  ...cpHeads,
+  ...aimlHeads,
+  ...prOutreachHeads,
+  ...uiUxCreativeHeads,
+  ...arVrHeads,
+  ...iotHeads,
+];
+
+// Backward-compatible exports
+export const coreTeam = leads;
+export const domainLeads = domainHeads;
+export const allTeam = [...faculties, ...leads, ...domainHeads];
+
+/* =========================================================================
+ * PREVIOUS MOCK DATA (PRESERVED - COMMENTED OUT PER PROJECT POLICY)
+ * =========================================================================
+export const _previousMockLeads = [
   {
     id: 1,
     name: 'Mayur Kharat',
@@ -85,7 +636,7 @@ export const leads = [
   },
 ];
 
-export const webDevCloudHeads = [
+export const _previousMockWebDevCloudHeads = [
   {
     id: 11,
     name: 'Harshwardhan Deshmukh',
@@ -153,7 +704,7 @@ export const webDevCloudHeads = [
   },
 ];
 
-export const uiUxHeads = [
+export const _previousMockUiUxHeads = [
   {
     id: 21,
     name: 'Marcus Johnson',
@@ -221,7 +772,7 @@ export const uiUxHeads = [
   },
 ];
 
-export const managementHeads = [
+export const _previousMockManagementHeads = [
   {
     id: 31,
     name: 'Sarah Williams',
@@ -288,35 +839,4 @@ export const managementHeads = [
     skills: ['Photography', 'Video Editing', 'Social Strategy', 'Content Writing'],
   },
 ];
-
-export const domainGroups = [
-  {
-    id: 'web-cloud',
-    name: 'Web Dev + Cloud',
-    description: 'Leading full-stack engineering, scalable APIs, and Google Cloud infrastructure initiatives.',
-    members: webDevCloudHeads,
-  },
-  {
-    id: 'ui-ux',
-    name: 'UI/UX',
-    description: 'Directing design systems, user journey research, wireframing, and interactive UI experiences.',
-    members: uiUxHeads,
-  },
-  {
-    id: 'management',
-    name: 'Management',
-    description: 'Spearheading event logistics, public relations, community engagement, and sponsorship outreach.',
-    members: managementHeads,
-  },
-];
-
-export const domainHeads = [
-  ...webDevCloudHeads,
-  ...uiUxHeads,
-  ...managementHeads,
-];
-
-// Backward-compatible exports
-export const coreTeam = leads;
-export const domainLeads = domainHeads;
-export const allTeam = [...faculties, ...leads, ...domainHeads];
+========================================================================= */

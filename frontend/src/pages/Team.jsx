@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Users, GraduationCap, Award, Layers } from 'lucide-react';
 import { AnimatedBackground } from '@/components/sections/AnimatedBackground';
-import { faculties, leads, domainHeads, domainGroups, allTeam } from '@/data/team';
+import { faculties, leads, domainHeads, domainGroups } from '@/data/team';
 import { useState } from 'react';
 import { useStaggerAnimation } from '@/hooks/useScrollAnimation';
 import { InteractiveLogo } from '@/components/ui/InteractiveLogo';
@@ -9,10 +9,9 @@ import { TeamFlipCard } from '@/components/team/TeamFlipCard';
 
 const teamTabs = [
   { id: 'faculties', label: 'Faculties', count: faculties.length },
-  // <!-- Leads section - positions not finalized yet -->
-  // { id: 'leads', label: 'Leads', count: leads.length },
+  { id: 'leads', label: 'Leads', count: leads.length },
   { id: 'domainHeads', label: 'Domain Heads', count: domainHeads.length },
-  { id: 'all', label: 'All Members', count: faculties.length + domainHeads.length },
+  { id: 'all', label: 'All Members', count: faculties.length + leads.length + domainHeads.length },
 ];
 
 export function Team() {
@@ -128,8 +127,7 @@ export function Team() {
             </div>
           )}
 
-          {/* <!-- Leads section - positions not finalized yet --> */}
-          {/*
+          {/* TAB 2: CHAPTER LEADS */}
           {activeTab === 'leads' && (
             <div className="space-y-8">
               <div className="text-center max-w-2xl mx-auto mb-8">
@@ -157,9 +155,8 @@ export function Team() {
               </div>
             </div>
           )}
-          */}
 
-          {/* TAB 3: DOMAIN HEADS (15 cards across 3 domains, with domain heading above and cards in a row) */}
+          {/* TAB 3: DOMAIN HEADS */}
           {activeTab === 'domainHeads' && (
             <div className="space-y-16">
               {domainGroups.map((group, gIdx) => (
@@ -172,7 +169,7 @@ export function Team() {
                         {group.name}
                       </h3>
                       <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary">
-                        {group.members.length} Heads
+                        {group.members.length} {group.members.length === 1 ? 'Head' : 'Heads'}
                       </span>
                     </div>
                     <p className="text-xs sm:text-sm text-muted-foreground">
@@ -180,15 +177,28 @@ export function Team() {
                     </p>
                   </div>
 
-                  {/* 5 Cards in a Row */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5" role="list">
+                  {/* Cards Grid: Centered and responsive according to card count */}
+                  <div
+                    className={`grid grid-cols-1 sm:grid-cols-2 ${
+                      group.members.length === 1
+                        ? 'sm:grid-cols-1 max-w-sm mx-auto'
+                        : group.members.length === 2
+                        ? 'sm:grid-cols-2 max-w-2xl mx-auto'
+                        : group.members.length === 3
+                        ? 'md:grid-cols-3 max-w-4xl mx-auto'
+                        : group.members.length === 4
+                        ? 'md:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto'
+                        : 'md:grid-cols-3 lg:grid-cols-5'
+                    } gap-4 sm:gap-5`}
+                    role="list"
+                  >
                     {group.members.map((member, index) => (
                       <motion.article
-                        key={member.id}
+                        key={`${group.id}-${member.id}`}
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: (gIdx * 0.1) + (index * 0.05) }}
+                        transition={{ delay: (gIdx * 0.05) + (index * 0.05) }}
                         className="h-full"
                         role="listitem"
                       >
@@ -222,8 +232,7 @@ export function Team() {
                 </div>
               </div>
 
-              {/* <!-- Leads section - positions not finalized yet --> */}
-              {/*
+              {/* Section 2: Leads */}
               <div className="space-y-6">
                 <div className="flex items-center justify-center gap-3 pb-3 border-b border-border/60 text-center">
                   <Award className="w-5 h-5 text-red-500" />
@@ -234,15 +243,14 @@ export function Team() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-4xl mx-auto gap-5" role="list">
                   {leads.map((member) => (
-                    <div key={member.id} role="listitem">
+                    <div key={`all-lead-${member.id}`} role="listitem">
                       <TeamFlipCard member={member} />
                     </div>
                   ))}
                 </div>
               </div>
-              */}
 
-              {/* Section 3: Domain Heads (3 Domains x 5 Cards) */}
+              {/* Section 3: Domain Heads (9 Domains) */}
               <div className="space-y-12">
                 <div className="flex items-center justify-center gap-3 pb-3 border-b border-border/60 text-center">
                   <Layers className="w-5 h-5 text-green-500" />
@@ -252,17 +260,41 @@ export function Team() {
                   </span>
                 </div>
 
-                {domainGroups.map((group) => (
-                  <div key={group.id} className="space-y-4">
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-center">
-                      <h4 className="text-lg sm:text-xl font-bold text-foreground">
-                        {group.name}
-                      </h4>
-                      <span className="text-xs text-muted-foreground sm:before:content-['•'] sm:before:mx-2 sm:before:text-muted-foreground/60">{group.description}</span>
+                {domainGroups.map((group, idx) => (
+                  <div key={group.id} className={`space-y-6 ${idx !== 0 ? 'pt-8 border-t border-border/40' : ''}`}>
+                    {/* Highlighted & Centered Domain Name Header */}
+                    <div className="flex flex-col items-center justify-center text-center gap-1.5 mx-auto max-w-2xl">
+                      <div className="inline-flex items-center justify-center gap-2.5 flex-wrap">
+                        <span className="w-2.5 h-2.5 rounded-full bg-primary" />
+                        <h4 className="text-xl sm:text-2xl font-black tracking-tight text-foreground">
+                          {group.name}
+                        </h4>
+                        <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20">
+                          {group.members.length} {group.members.length === 1 ? 'Head' : 'Heads'}
+                        </span>
+                      </div>
+                      {group.description && (
+                        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                          {group.description}
+                        </p>
+                      )}
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5" role="list">
+                    <div
+                      className={`grid grid-cols-1 sm:grid-cols-2 ${
+                        group.members.length === 1
+                          ? 'sm:grid-cols-1 max-w-sm mx-auto'
+                          : group.members.length === 2
+                          ? 'sm:grid-cols-2 max-w-2xl mx-auto'
+                          : group.members.length === 3
+                          ? 'md:grid-cols-3 max-w-4xl mx-auto'
+                          : group.members.length === 4
+                          ? 'md:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto'
+                          : 'md:grid-cols-3 lg:grid-cols-5'
+                      } gap-4 sm:gap-5`}
+                      role="list"
+                    >
                       {group.members.map((member) => (
-                        <div key={member.id} role="listitem">
+                        <div key={`all-${group.id}-${member.id}`} role="listitem">
                           <TeamFlipCard member={member} />
                         </div>
                       ))}
