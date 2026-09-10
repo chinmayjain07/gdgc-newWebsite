@@ -18,7 +18,7 @@ export const upcomingEvents = [
   },
   {
     id: 2,
-    title: 'Web Dev + Cloud Workshop',
+    title: 'Web Development Workshop',
     date: 'Sept 12 - 13, 2026 (Saturday & Sunday)',
     time: '5:00 PM - 7:00 PM (2 Hours / Day)',
     duration: '2 Hours',
@@ -201,6 +201,6 @@ export const pastEventPhotos = pastEvents.map((event) => ({
 // Spotlight events for the Home page
 export const spotlightEvents = [
   upcomingEvents[0], // BLACKOUT
-  upcomingEvents[1], // Web Dev + Cloud Workshop
+  upcomingEvents[1], // Web Development Workshop
   pastEvents[0],     // GDGC PCCoE Coding Contest on HackerRank
 ];

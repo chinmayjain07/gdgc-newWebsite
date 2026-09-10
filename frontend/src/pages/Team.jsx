@@ -10,8 +10,8 @@ import { TeamFlipCard } from '@/components/team/TeamFlipCard';
 const teamTabs = [
   { id: 'faculties', label: 'Faculties', count: faculties.length },
   { id: 'leads', label: 'Leads', count: leads.length },
-  { id: 'domainHeads', label: 'Domain Heads', count: domainHeads.length },
-  { id: 'all', label: 'All Members', count: faculties.length + leads.length + domainHeads.length },
+  { id: 'domainHeads', label: 'Domain Heads', count: 22 },
+  { id: 'all', label: 'All Members', count: 24 },
 ];
 
 export function Team() {
@@ -294,7 +294,7 @@ export function Team() {
                   <Layers className="w-5 h-5 text-green-500" />
                   <h3 className="text-2xl font-bold text-foreground">Domain Heads</h3>
                   <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-500/10 text-green-500">
-                    {domainHeads.length} Heads
+                    22 Heads
                   </span>
                 </div>
 

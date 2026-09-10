@@ -118,24 +118,24 @@ export function TeamFlipCard({ member }) {
           {/* Center Content: Avatar, Name & Designation */}
           <div className="my-auto pt-2 flex flex-col items-center text-center w-full px-1">
             {/* Avatar frame with subtle GDGC gradient ring */}
-            <div className="relative p-1.5 rounded-full bg-gradient-to-tr from-[#4285F4] via-[#FBBC04] to-[#EA4335] shadow-lg group-hover:scale-115 transition-transform duration-300">
+            <div className="relative p-2 rounded-full bg-gradient-to-tr from-[#4285F4] via-[#FBBC04] to-[#EA4335] shadow-lg group-hover:scale-105 transition-transform duration-300">
               {member.image && !imgError ? (
                 <img
                   src={member.image}
                   alt={member.name}
                   onError={() => setImgError(true)}
-                  className="w-32 h-32 sm:w-36 sm:h-36 rounded-full object-cover bg-muted border-2 border-background shadow-inner"
+                  className="w-36 h-36 sm:w-40 sm:h-40 rounded-full object-cover bg-muted border-2 border-background shadow-inner"
                   loading="lazy"
                 />
               ) : (
-                <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-muted/80 flex flex-col items-center justify-center border-2 border-background shadow-inner text-muted-foreground">
-                  <User className="w-14 h-14 sm:w-16 sm:h-16 text-muted-foreground/50 mb-1" />
+                <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-full bg-muted/80 flex flex-col items-center justify-center border-2 border-background shadow-inner text-muted-foreground">
+                  <User className="w-16 h-16 sm:w-18 sm:h-18 text-muted-foreground/50 mb-1" />
                 </div>
               )}
             </div>
 
             {/* Member Name */}
-            <h3 className="text-base sm:text-lg font-bold text-foreground mt-4 tracking-tight group-hover:text-primary transition-colors w-full truncate px-1">
+            <h3 className="text-base sm:text-lg font-bold text-foreground mt-3 tracking-tight group-hover:text-primary transition-colors w-full truncate px-1">
               {member.name}
             </h3>
 
